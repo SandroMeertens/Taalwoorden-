@@ -1,4 +1,4 @@
-<!doctype html><html lang="nl"><head><meta charset=utf8><title>Themawoorden groep 8</title><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="nl"><head><meta charset=utf8><title>Taalwoorden groep 8</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Taalwoorden"><meta name="theme-color" content="#14879B"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
 <style>
 /* Layout: één scherm zonder scrollen. Bovenaan een smalle band (titel, meanderende rivier als voortgang, weekkeuze); daaronder één speelvlak dat de rest van het scherm vult. Alles schaalt mee met het scherm, van iPad tot digibord. */
@@ -91,6 +91,24 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,6vw,2.1rem)
 .ico{width:62%;height:62%;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 [data-m="flash"]{--m:var(--m-flash);--m-bg:var(--m-flash-bg)} [data-m="match"]{--m:var(--m-match);--m-bg:var(--m-match-bg)} [data-m="fill"]{--m:var(--m-fill);--m-bg:var(--m-fill-bg)} [data-m="quiz"]{--m:var(--m-quiz);--m-bg:var(--m-quiz-bg)} [data-m="type"]{--m:var(--m-type);--m-bg:var(--m-type-bg)} [data-m="test"]{--m:var(--m-test);--m-bg:var(--m-test-bg)} [data-m="klas"]{--m:var(--on-buoy);--m-bg:var(--buoy)}
 .mode[data-m]:hover{border-color:var(--m)}
+.duos.duos3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.spk{border:0;background:none;padding:.1rem .3rem;font-size:1.1em;line-height:1;cursor:pointer;vertical-align:middle;border-radius:.4rem}
+.spk:hover{background:var(--river-pale)}
+.count .spk{margin-right:.5rem}
+.wl-w .spk{font-size:.9em;margin-right:.2rem}
+.pin-in{width:6.5rem;font:inherit;font-size:var(--fs-1);padding:.2rem .5rem;border:2px solid var(--line);border-radius:.5rem;background:var(--surface);color:var(--ink);letter-spacing:.2em}
+.zin-m{margin:.4rem 0 0;font-size:var(--fs-2);color:var(--ink-soft)}
+.zin-form{display:flex;flex-wrap:wrap;gap:.5rem .75rem;align-items:flex-end}
+.zin-in{flex:1 1 20rem;font-size:var(--fs-2);font-weight:600;resize:vertical;line-height:1.35}
+.naam-in{flex:0 1 18rem}
+.tcode{display:inline-block;font-family:var(--display);font-weight:800;background:var(--river);color:var(--on-river);padding:.1rem .6rem;border-radius:.5rem;letter-spacing:.02em}
+.zinlijst{border:2px solid var(--line);border-radius:.8rem;padding:.4rem .8rem}.zinlijst summary{font-weight:700;cursor:pointer}.zinlijst p{margin:.3rem 0 0}
+.kopts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.kopt{display:flex;align-items:center;gap:.8rem;padding:.5rem .9rem;border:3px solid var(--line);border-radius:1rem;background:var(--surface);font-family:var(--display);font-weight:800;font-size:clamp(1.3rem,2.6vw,2.4rem);line-height:1.15;transition:opacity .3s}
+.kopt-l{flex:none;display:grid;place-items:center;width:2.2em;height:2.2em;border-radius:50%;background:var(--river);color:var(--on-river);font-size:.75em}
+.kopt-goed{border-color:var(--good);background:var(--good-bg)} .kopt-goed .kopt-l{background:var(--good)}
+.kopt-weg{opacity:.35}
+.klas .klas-a{display:none}
 .mode.dicht,.duo.dicht{opacity:.5;cursor:not-allowed;transform:none!important;filter:grayscale(.6)}
 .mode.dicht .badge,.duo.dicht .badge{background:var(--line);color:var(--ink-soft)}
 .mode.nu{border-color:var(--m,var(--river));box-shadow:0 0 0 3px var(--m-bg,var(--river-pale))}
@@ -247,7 +265,8 @@ body[data-deep] .start .link{color:var(--on-band)}
   .top-info{flex-wrap:wrap}
   .r-status{white-space:normal}
   .modes{grid-template-columns:minmax(0,1fr)}
-  .duos{grid-template-columns:minmax(0,1fr)}
+  .duos,.duos.duos3{grid-template-columns:minmax(0,1fr)}
+  .kopts{grid-template-columns:minmax(0,1fr)}
   .weeks{grid-template-columns:minmax(0,1fr)}
   .themes{grid-template-columns:minmax(0,1fr)}
   .wl li{grid-template-columns:minmax(0,1fr) auto}
@@ -516,13 +535,19 @@ function inSmallFrame(){try{return FSOK&&!fsOn()&&window.screen&&window.innerHei
 /* Pictogram en naam per oefenvorm. */
 /* Stappen achter elkaar: een stap gaat open als de vorige één keer is afgerond. De race is de laatste stap.
    Per thema en per woordkeuze (week 1, week 2, alle) apart. De klassenquiz is voor de juf en staat altijd open. */
-var ORDER=["flash","match","fill","type","quiz","test","race"], stap={}, askOpen=false;
+var ORDER=["flash","match","fill","type","quiz","zin","test","race"], stap={}, askOpen=false, pinFout=false;
+/* Pincode voor "Zet alles open". Alleen de leerkracht kent hem. */
+var PIN="2580";
+/* Hoeveel goed je nodig hebt om door te gaan bij Invullen, Typen en de Quiz. */
+var MINSCORE=0.8;
+var zinnen={}, NAAM="";
 function sKey(){return blk+":"+setId;}
 function curStap(){var k=sKey();if(!(k in stap))stap[k]=tests[k]?ORDER.length-1:0;return stap[k];}
 function isOpen(m){var i=ORDER.indexOf(m);return i<0||i<=curStap();}
 function markDone(m){var i=ORDER.indexOf(m),k=sKey();if(i<0)return;if(i===curStap()&&i<ORDER.length){stap[k]=i+1;save();}}
-function lockInfo(m){var i=ORDER.indexOf(m);return i>0?MODES[ORDER[i-1]]||"":"";}
-var MODES={flash:"Flitskaarten",match:"Koppelen",fill:"Invullen",type:"Typen",quiz:"Quiz",test:"Toets",klas:"Klassenquiz"};
+var laatsteFout=[];
+function lockInfo(m){var i=ORDER.indexOf(m),p=i>0?ORDER[i-1]:"";return p?(MODES[p]||"")+(p==="fill"||p==="type"||p==="quiz"?" met "+Math.ceil(10*MINSCORE)+" van de 10 goed":""):"";}
+var MODES={flash:"Flitskaarten",match:"Koppelen",fill:"Invullen",type:"Typen",quiz:"Quiz",zin:"Eigen zin",test:"Toets",klas:"Klassenquiz"};
 function ico(d){return '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">'+d+'</svg>';}
 var ICONS={
   flash:ico('<rect x="8" y="3.5" width="12" height="15" rx="2.5"/><path d="M5 7.5V18a2.5 2.5 0 0 0 2.5 2.5H15"/>'),
@@ -532,7 +557,8 @@ var ICONS={
   race:ico('<path d="M6 21V4"/><path d="M6 5h11l-2.5 3.5L17 12H6"/>'),
   type:ico('<path d="M4 20l1-4.5L16 4.5l3.5 3.5L8.5 19z"/><path d="M13.5 7l3.5 3.5"/>'),
   test:ico('<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6M9 13l2 2 4-4"/>'),
-  klas:ico('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/>')
+  klas:ico('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/>'),
+  zin:ico('<path d="M4 6h16M4 11h10M4 16h7"/><path d="M14 20l.6-2.6L20 12l2 2-5.4 5.4z"/>')
 };
 var stage=el("stage"), statusEl=el("status"), topEl=el("top"), progEl=el("prog"), riv=null, rivDone=null, boat=null, L=0;
 
@@ -540,7 +566,9 @@ function el(id){return document.getElementById(id);}
 function load(){try{var d=JSON.parse(localStorage.getItem(KEY)||"null");if(d){
   if(["w1","w2","all"].indexOf(d.set)>=0)setId=d.set;
   if(BYID[d.blk]){blk=d.blk;B=BYID[blk];}
-  if(d.stap&&typeof d.stap==="object")Object.keys(d.stap).forEach(function(k){var n=d.stap[k];if(Number.isInteger(n))stap[k]=Math.max(0,Math.min(ORDER.length,n));});
+  if(d.stap&&typeof d.stap==="object")Object.keys(d.stap).forEach(function(k){var n=d.stap[k];if(Number.isInteger(n)){if(d.stapv!==2&&n>=5)n++;stap[k]=Math.max(0,Math.min(ORDER.length,n));}});
+  if(d.zinnen&&typeof d.zinnen==="object")Object.keys(d.zinnen).forEach(function(k){if(Array.isArray(d.zinnen[k]))zinnen[k]=d.zinnen[k].filter(function(z){return z&&typeof z.w==="string"&&typeof z.z==="string";}).slice(-30);});
+  if(typeof d.naam==="string")NAAM=d.naam.slice(0,30);
   if(d.fin&&typeof d.fin==="object")Object.keys(d.fin).forEach(function(k){if(d.fin[k])fin[k]=1;});
   if(d.tests&&typeof d.tests==="object")Object.keys(d.tests).forEach(function(k){var t=d.tests[k];if(t&&Number.isInteger(t.s)&&Number.isInteger(t.n))tests[k]={s:t.s,n:t.n,d:String(t.d||"")};});
   ["rep","due"].forEach(function(k){if(Array.isArray(d[k]))d[k].slice(0,W.length).forEach(function(n,i){(k==="rep"?rep:due)[i]=Number.isInteger(n)&&n>0?n:0;});});
@@ -550,7 +578,7 @@ function load(){try{var d=JSON.parse(localStorage.getItem(KEY)||"null");if(d){
   /* Woorden die al geleerd waren voordat de herhaling bestond: de telling begint vandaag. */
   var t=today();W.forEach(function(x){rep[x.id]=Math.min(STEPS.length-1,rep[x.id]);if(lvl[x.id]>=GOAL&&!due[x.id])due[x.id]=t+STEPS[0];});
 }
-function save(){try{localStorage.setItem(KEY,JSON.stringify({blk:blk,set:setId,lvl:lvl,fin:fin,rep:rep,due:due,tests:tests,stap:stap}));}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({blk:blk,set:setId,lvl:lvl,fin:fin,rep:rep,due:due,tests:tests,stap:stap,stapv:2,zinnen:zinnen,naam:NAAM}));}catch(e){}}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function words(bid,set){return W.filter(function(x){return x.b===bid&&(set==="all"||x.wk===(set==="w1"?1:2));});}
@@ -717,21 +745,29 @@ function updateRiver(){
 }
 function setButtons(){["w1","w2","all"].forEach(function(s){el("set-"+s).setAttribute("aria-pressed",String(s===setId));});}
 
-var VIEWS={start:start,block:blockPage,home:home,flash:flashStart,match:matchStart,fill:function(){quizStart("fill");},quiz:function(){quizStart("quiz");},list:list,race:raceSetup,type:typeStart,test:testIntro,klas:klasStart};
+var VIEWS={zin:zinStart,start:start,block:blockPage,home:home,flash:flashStart,match:matchStart,fill:function(){quizStart("fill");},quiz:function(){quizStart("quiz");},list:list,race:raceSetup,type:typeStart,test:testIntro,klas:klasStart};
 function go(v){if(ORDER.indexOf(v)>=0&&!isOpen(v))v="home";if(S&&S.timer)clearInterval(S.timer);S=null;raceClose();closeFin();curPager=null;view=v;
   var plain=v==="start"||v==="block"||v==="home";
   stage.className=plain?"":"panel";topEl.hidden=v==="start"||v==="block";
   if(v==="start")document.body.removeAttribute("data-blk");else document.body.setAttribute("data-blk",blk);
   if(v==="block")document.body.setAttribute("data-deep","");else document.body.removeAttribute("data-deep");
   VIEWS[v]();decoAll();}
+/* Voorlezen met de Nederlandse stem van het apparaat. */
+var SPK=!!(window.speechSynthesis&&window.SpeechSynthesisUtterance), stemNL=null;
+function kiesStem(){try{var v=speechSynthesis.getVoices();stemNL=v.filter(function(x){return /^nl(-|_)NL/i.test(x.lang);})[0]||v.filter(function(x){return /^nl/i.test(x.lang);})[0]||null;}catch(e){}}
+if(SPK){kiesStem();try{speechSynthesis.onvoiceschanged=kiesStem;}catch(e){}}
+function zeg(t){if(!SPK||!t)return;try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(String(t).replace(/\u00a0+/g," ... "));u.lang="nl-NL";if(stemNL)u.voice=stemNL;u.rate=.9;speechSynthesis.speak(u);}catch(e){}}
+function spkBtn(v,lab){return SPK?'<button class="spk" data-a="spk"'+(v?' data-v="'+esc(v)+'"':'')+' aria-label="'+(lab||"Lees voor")+'" title="'+(lab||"Lees voor")+'">🔊</button>':'';}
+function leesScherm(){var q=document.querySelector("#qmain,.card-main");if(!q)return;var t=q.textContent;
+  var o=[].slice.call(document.querySelectorAll(".opt span:nth-child(2),.kopt-t"));if(o.length)t+=". "+o.map(function(x,i){return (document.querySelector(".kopt-t")?"ABCD"[i]:(i+1))+": "+x.textContent;}).join(". ");zeg(t);}
 function bar(right,mid){return '<div class="bar"><span class="bar-left"><button class="link" data-a="go" data-v="home">← Terug</button>'
-  +(MODES[view]?'<span class="bar-mode" data-m="'+view+'"><span class="badge badge-s">'+ICONS[view]+'</span>'+MODES[view]+'</span>':'')+'</span>'+(mid?'<span class="bar-mid">'+mid+'</span>':'')+'<span class="count" id="count">'+right+'</span></div>';}
+  +(MODES[view]?'<span class="bar-mode" data-m="'+view+'"><span class="badge badge-s">'+ICONS[view]+'</span>'+MODES[view]+'</span>':'')+'</span>'+(mid?'<span class="bar-mid">'+mid+'</span>':'')+'<span class="count" id="count">'+(view!=="test"&&view!=="zin"?spkBtn("","Lees de vraag voor"):"")+right+'</span></div>';}
 function zin(w,open,i){var p=w.z[i||0].split("___");
   return esc(p[0])+(open?'<span class="gap">&nbsp;</span>':'<b class="gap-filled">'+esc(w.w)+'</b>')+esc(p[1]);}
 function wlItems(ws,full){return ws.map(function(x){
   var tags=!full?'<span></span>':'<span class="wl-tags">'+(setId==="all"?'<span class="wl-wk">week '+x.wk+'</span>':'')
     +(isDue(x)?'<span class="pill pill-half">opfrissen</span>':lvl[x.id]>=GOAL?'<span class="pill">geleerd</span>':lvl[x.id]===1?'<span class="pill pill-half">1 keer goed</span>':'')+'</span>';
-  return '<li><span class="wl-w">'+esc(x.w)+'</span><span class="wl-m">'+esc(x.m)+'</span>'+tags+(full?'<span class="wl-z">'+zin(x,false)+'</span>':'')+'</li>';});}
+  return '<li><span class="wl-w">'+(full?spkBtn(x.w+". "+x.m,"Lees "+x.w+" voor"):"")+esc(x.w)+'</span><span class="wl-m">'+esc(x.m)+'</span>'+tags+(full?'<span class="wl-z">'+zin(x,false)+'</span>':'')+'</li>';});}
 var PGNAV='<span class="pg" id="pg" hidden></span>', WLBOX='<ul class="wl wl-2" id="wl"></ul>';
 /* Bladeren: de lijst toont zoveel regels als er op het scherm passen; de rest staat op een volgende bladzijde. */
 function makePager(ul,nav,items,always){
@@ -812,14 +848,15 @@ function home(askReset){
    +mt("fill","Stap 3 · gebruiken","Welk woord past in de zin?")
    +mt("type","Stap 4 · schrijven","Typ het woord bij de betekenis.")
    +mt("quiz","Stap 5 · testen","Tien vragen, met je score.")
-   +mt("test","Afsluiten · toets","Alle woorden één keer, zonder hulp.")
-   +'</div><div class="duos">'
+   +mt("zin","Stap 6 · eigen zin","Schrijf zelf een zin met het woord.")
+   +'</div><div class="duos duos3">'
+   +mt("test","Stap 7 · toets","Alle woorden één keer, zonder hulp.")
    +duo("race","",(ORDER.indexOf("race")===curStap()?'Laatste stap <span class="nu-lab">nu</span>':curStap()>=ORDER.length?'Laatste stap <span class="vink">✓ klaar</span>':'Laatste stap')+' · samen',B.race,"Met z’n tweeën op één iPad of het digibord. "+B.raceVraag)
    +duo("klas","","Met de hele klas","Klassenquiz","Eén vraag groot op het digibord, antwoorden op je wisbordje.")
    +'</div><div class="foot">'
    +(askReset
      ? '<div class="foot-ask"><span>Weet je het zeker? Je begint dan opnieuw met deze woorden.</span><button class="btn btn-quiet" data-a="reset">Ja, begin opnieuw</button><button class="btn btn-primary" data-a="go" data-v="home">Nee</button></div>'
-     : '<button class="link" data-a="go" data-v="start">← Alle thema’s</button><button class="link" data-a="go" data-v="list">Bekijk de woordenlijst</button><button class="link" data-a="askreset">Begin opnieuw</button>'+(curStap()<ORDER.length-1?(askOpen?'<span class="foot-ask2">Alle stappen openzetten? <button class="link" data-a="allopen">Ja</button> <button class="link" data-a="go" data-v="home">Nee</button></span>':'<button class="link" data-a="askopen">Zet alles open</button>'):''))
+     : '<button class="link" data-a="go" data-v="start">← Alle thema’s</button><button class="link" data-a="go" data-v="list">Bekijk de woordenlijst</button><button class="link" data-a="askreset">Begin opnieuw</button>'+(curStap()<ORDER.length-1?(askOpen?'<form class="foot-ask2" id="pinForm" autocomplete="off"><label for="pinIn">'+(pinFout?'Onjuiste code. Probeer opnieuw:':'Code van de juf of meester:')+'</label><input id="pinIn" class="pin-in" type="password" inputmode="numeric" maxlength="8" autocomplete="off"><button class="link" type="submit">Open</button> <button class="link" type="button" data-a="go" data-v="home">Annuleer</button></form>':'<button class="link" data-a="askopen">Zet alles open</button>'):''))
    +'</div></div>';
   maybeFin();
 }
@@ -899,9 +936,9 @@ function matchEnd(){
 }
 
 /* ---------- Invullen en Quiz ---------- */
-function quizStart(kind){
-  var ws=pick(10);
-  S={kind:kind,qs:ws.map(function(w,i){var dir=kind==="fill"?"zin":(i%2?"mw":"wm");
+function quizStart(kind,lijst){
+  var ws=lijst||pick(10);
+  S={oefen:!!lijst,kind:kind,qs:ws.map(function(w,i){var dir=kind==="fill"?"zin":(i%2?"mw":"wm");
     return {w:w,dir:dir,zi:pickZin(w),opts:shuffle([w].concat(distract(w,dir==="zin")))};}),i:0,score:0,missed:[],answered:false};
   renderQ();
 }
@@ -929,7 +966,20 @@ function answer(k){
 }
 function next(){
   if(++S.i<S.qs.length)return S.kind==="type"?renderType():renderQ();
-  var sc=S.score, n=S.qs.length, missed=S.missed, kind=S.kind;S=null;markDone(kind);
+  var sc=S.score, n=S.qs.length, missed=S.missed, kind=S.kind, oefen=S.oefen, nodig=Math.ceil(n*MINSCORE), gehaald=sc>=nodig;S=null;
+  if(!oefen&&gehaald)markDone(kind);
+  laatsteFout=missed;
+  var vast=!oefen&&!gehaald&&ORDER.indexOf(kind)===curStap();
+  if(oefen||vast){
+    stage.innerHTML='<div class="end-top"><h2 class="end-h">'+(oefen?"Foute woorden geoefend":"Bijna!")+'</h2><div class="score">'+sc+' / '+n+'</div></div>'
+     +'<p>'+(oefen?"Goed geoefend. Doe nu een nieuwe ronde: met "+Math.ceil(10*MINSCORE)+" van de 10 goed gaat de volgende stap open."
+       :"Je hebt er "+nodig+" van de "+n+" goed nodig om door te gaan. Oefen eerst de woorden die je fout had.")+'</p>'
+     +(missed.length?'<div class="lab-row"><p>'+(oefen?"Deze zijn nog lastig:":"Deze had je fout:")+'</p>'+PGNAV+'</div>'+WLBOX:'')
+     +'<div class="row">'+(!oefen&&missed.length?'<button class="btn btn-primary" data-a="retry" data-v="'+kind+'">Oefen de foute woorden</button>':'')
+     +'<button class="btn '+(oefen||!missed.length?"btn-primary":"btn-quiet")+'" data-a="go" data-v="'+kind+'">Nieuwe ronde</button>'
+     +'<button class="btn btn-quiet" data-a="go" data-v="flash">Flitskaarten</button><button class="btn btn-quiet" data-a="go" data-v="home">Terug</button></div>';
+    if(missed.length)makePager(el("wl"),el("pg"),wlItems(missed,false));
+    return;}
   var msg=sc===n?"Alles goed. Jij kent deze woorden!":sc>=n*0.7?"Goed gedaan. Nog een paar woorden om te oefenen.":"Deze woorden zijn nog lastig. Oefen ze met de flitskaarten.";
   stage.innerHTML='<div class="end-top"><h2 class="end-h">Jouw score</h2><div class="score">'+sc+' / '+n+'</div></div><p>'+msg+'</p>'
    +(missed.length?'<div class="lab-row"><p>Deze had je fout:</p>'+PGNAV+'</div>'+WLBOX:'')
@@ -937,7 +987,7 @@ function next(){
      ? '<button class="btn btn-primary" data-a="go" data-v="fill">Nog een ronde</button><button class="btn btn-quiet" data-a="go" data-v="type">Door naar Typen</button>'
      : kind==="type"
      ? '<button class="btn btn-primary" data-a="go" data-v="type">Nog een ronde</button><button class="btn btn-quiet" data-a="go" data-v="quiz">Door naar de quiz</button>'
-     : '<button class="btn btn-primary" data-a="go" data-v="quiz">Nog een quiz</button><button class="btn btn-quiet" data-a="go" data-v="test">Naar de toets</button>')
+     : '<button class="btn btn-primary" data-a="go" data-v="quiz">Nog een quiz</button><button class="btn btn-quiet" data-a="go" data-v="zin">Door naar Eigen zin</button>')
    +'<button class="btn btn-quiet" data-a="go" data-v="home">Terug</button></div>';
   if(missed.length)makePager(el("wl"),el("pg"),wlItems(missed,false));
   maybeFin();
@@ -949,7 +999,7 @@ function bare(t){return t.replace(/^(de|het) /,"");}
 function lev(a,b){var m=[],i,j;for(i=0;i<=a.length;i++)m[i]=[i];for(j=1;j<=b.length;j++)m[0][j]=j;
   for(i=1;i<=a.length;i++)for(j=1;j<=b.length;j++)m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
   return m[a.length][b.length];}
-function typeStart(){var q=pick(10);S={kind:"type",qs:q,i:0,score:0,missed:[],tries:0,answered:false};renderType();}
+function typeStart(lijst){var q=lijst||pick(10);S={oefen:!!lijst,kind:"type",qs:q,i:0,score:0,missed:[],tries:0,answered:false};renderType();}
 function renderType(){
   var w=S.qs[S.i];S.answered=false;S.tries=0;
   stage.innerHTML=bar("Woord "+(S.i+1)+" van "+S.qs.length)
@@ -984,9 +1034,10 @@ function testIntro(){
    +'<h2 class="end-h">Toets</h2>'
    +'<p>Je krijgt alle '+n+' woorden één keer. Je ziet pas aan het eind wat goed was, en je kunt niet terug naar een vorige vraag. De toets telt niet mee voor je voortgang.</p>'
    +(t?'<p>Je laatste toets: <b>'+t.s+' van '+t.n+'</b>'+(t.d?' op '+esc(t.d):'')+'.</p>':'')
+   +'<div class="type-row"><label class="type-lab" for="naam-in">Je voornaam</label><input class="type-in naam-in" id="naam-in" maxlength="30" autocomplete="off" autocapitalize="words" spellcheck="false" value="'+esc(NAAM)+'"></div>'
    +'<div class="row"><button class="btn btn-primary" data-a="tstart">Begin de toets</button></div>';
 }
-function testStart(){
+function testStart(){var ni=el("naam-in");if(ni){NAAM=ni.value.replace(/\s+/g," ").trim().slice(0,30);save();}
   S={kind:"test",qs:shuffle(pool()).map(function(w,i){var dir=["wm","mw","zin"][i%3];
     return {w:w,dir:dir,zi:pickZin(w),opts:shuffle([w].concat(distract(w,dir==="zin"))),pick:-1};}),i:0,answered:true};
   renderTest();
@@ -1013,29 +1064,56 @@ function testNext(){
   var datum="";try{datum=new Date().toLocaleDateString("nl-NL",{day:"numeric",month:"long",year:"numeric"});}catch(e){}
   tests[blk+":"+setId]={s:sc,n:n,d:datum};markDone("test");save();
   var wat=B.naam+", "+(setId==="all"?"week 1 en 2":setId==="w1"?"week 1":"week 2");
-  stage.innerHTML='<div class="end-top"><h2 class="end-h">Uitslag toets</h2><div class="score">'+sc+' / '+n+'</div></div>'
-   +'<p><b>'+esc(wat)+'</b>'+(datum?' · '+esc(datum):'')+' · oefentijd '+timerEl.textContent+'</p>'
+  var code=B.naam+" "+(setId==="all"?"W1+2":setId==="w1"?"W1":"W2")+" · "+sc+"/"+n, zs=(zinnen[sKey()]||[]).slice(-3);
+  stage.innerHTML='<div class="end-top"><h2 class="end-h">Uitslag toets'+(NAAM?' van '+esc(NAAM):'')+'</h2><div class="score">'+sc+' / '+n+'</div></div>'
+   +'<p><span class="tcode">'+esc(code)+'</span> '+(datum?esc(datum):'')+' · oefentijd '+timerEl.textContent+'</p>'
    +'<p>Laat dit scherm aan je juf of meester zien.</p>'
+   +(zs.length?'<details class="zinlijst"><summary>Jouw eigen zinnen ('+zs.length+')</summary>'+zs.map(function(z){return '<p><b>'+esc(z.w)+'</b>: '+esc(z.z)+'</p>';}).join("")+'</details>':'')
    +(fout.length?'<div class="lab-row"><p>Deze had je fout:</p>'+PGNAV+'</div>'+WLBOX:'<p>Alles goed. Knap gedaan!</p>')
    +'<div class="row"><button class="btn btn-primary" data-a="go" data-v="home">Klaar</button><button class="btn btn-quiet" data-a="go" data-v="flash">Oefen met de flitskaarten</button></div>';
   if(fout.length)makePager(el("wl"),el("pg"),fout.map(function(q){var jij=q.opts[q.pick];
     return '<li><span class="wl-w">'+esc(q.w.w)+'</span><span class="wl-m">'+esc(q.w.m)+'</span><span></span><span class="wl-z">Jouw antwoord: '+esc(q.dir==="wm"?jij.m:jij.w)+'</span></li>';}));
 }
 
+/* ---------- Eigen zin: zelf een zin maken met drie woorden ---------- */
+function stam(w){var b=norm(bare(w)), d=b.split(" ").filter(function(x){return x.length>3&&["zich","naar","met","een","aan","van","als","in","ergens","iets","eraan","ermee"].indexOf(x)<0;});
+  var k=d.sort(function(a,c){return c.length-a.length;})[0]||b;return k.length>6?k.slice(0,Math.max(5,k.length-3)):k.slice(0,Math.max(3,k.length-1));}
+function zinStart(){S={kind:"zin",qs:pick(3,true),i:0,ok:0,klaar:false};renderZin();}
+function renderZin(){var w=S.qs[S.i];S.klaar=false;
+  stage.innerHTML=bar("Zin "+(S.i+1)+" van "+S.qs.length)
+   +'<div><p class="q-lead">Schrijf een eigen zin met dit woord. Laat zien dat je weet wat het betekent.</p>'
+   +'<h2 class="q-main" id="qmain">'+esc(w.w)+'</h2><p class="zin-m">'+esc(w.m)+' '+spkBtn(w.w+". "+w.m)+'</p></div>'
+   +'<form class="zin-form" id="zin-form" autocomplete="off"><label class="type-lab" for="zin-in">Jouw zin</label>'
+   +'<textarea class="type-in zin-in" id="zin-in" rows="2" maxlength="240" autocapitalize="sentences" spellcheck="true"></textarea>'
+   +'<button class="btn btn-primary" type="submit" id="zin-ok">Klaar</button></form><div class="fb" id="fb" aria-live="polite"></div>';
+  el("zin-in").focus({preventScroll:true});}
+function zinCheck(){if(!S||S.kind!=="zin")return;if(S.klaar)return zinNext();
+  var w=S.qs[S.i], inp=el("zin-in"), t=inp.value.replace(/\s+/g," ").trim(), fb=el("fb");
+  if(t.split(" ").length<5){fb.innerHTML='<p>Maak je zin wat langer: minstens vijf woorden.</p>';inp.focus();return;}
+  if(norm(t).indexOf(stam(w.w))<0){fb.innerHTML='<p>Gebruik het woord <b>'+esc(w.w)+'</b> in je zin.</p>';inp.focus();return;}
+  var k=sKey();(zinnen[k]=zinnen[k]||[]).push({w:w.w,z:t.slice(0,240)});zinnen[k]=zinnen[k].slice(-30);save();
+  S.klaar=true;inp.readOnly=true;inp.classList.add("type-good");
+  fb.innerHTML='<p>Mooie zin! Je juf of meester ziet hem na de toets.</p>';
+  var b=el("zin-ok");b.textContent=S.i===S.qs.length-1?"Klaar met zinnen":"Volgende woord";b.focus({preventScroll:true});}
+function zinNext(){if(++S.i<S.qs.length)return renderZin();S=null;markDone("zin");
+  stage.innerHTML='<h2 class="end-h">Drie zinnen geschreven!</h2><p>Je zinnen worden bewaard. Je juf of meester ziet ze bij de uitslag van de toets.</p>'
+   +'<div class="row"><button class="btn btn-primary" data-a="go" data-v="test">Door naar de toets</button><button class="btn btn-quiet" data-a="go" data-v="zin">Nog drie zinnen</button><button class="btn btn-quiet" data-a="go" data-v="home">Terug</button></div>';}
+
 /* ---------- Klassenquiz: één vraag groot op het digibord ---------- */
 function klasStart(){S={kind:"klas",qs:shuffle(pool()),i:0,shown:false,zi:0};renderKlas();}
 function renderKlas(){
-  var w=S.qs[S.i], metZin=S.i%2===1;S.shown=false;S.zi=pickZin(w);
-  stage.innerHTML=bar("Vraag "+(S.i+1)+" van "+S.qs.length,"Schrijf het woord op je wisbordje.")
+  var w=S.qs[S.i], metZin=S.i%2===1;S.shown=false;S.zi=pickZin(w);S.opts=shuffle([w].concat(distract(w,metZin)));
+  stage.innerHTML=bar("Vraag "+(S.i+1)+" van "+S.qs.length,"Kies A, B, C of D: steek je vingers op of schrijf de letter op je wisbordje.")
    +'<div class="klas"><p class="q-lead">'+(metZin?"Welk woord past in de zin?":"Welk woord hoort bij deze betekenis?")+'</p>'
    +'<h2 class="klas-q" id="qmain">'+(metZin?zin(w,true,S.zi):esc(w.m))+'</h2>'
+   +'<div class="kopts">'+S.opts.map(function(o,k){return '<div class="kopt" id="kopt'+k+'"><span class="kopt-l">'+"ABCD"[k]+'</span><span class="kopt-t">'+esc(o.w)+'</span></div>';}).join("")+'</div>'
    +'<p class="klas-a klas-hide" id="klas-a">'+esc(w.w)+'</p></div>'
    +'<div class="row"><button class="btn btn-primary" data-a="kshow" id="kbtn">Toon het antwoord</button></div>';
   el("kbtn").focus({preventScroll:true});
 }
 function klasStep(){
   if(!S||S.kind!=="klas")return;
-  if(!S.shown){S.shown=true;el("klas-a").classList.remove("klas-hide");
+  if(!S.shown){S.shown=true;el("klas-a").classList.remove("klas-hide");S.opts.forEach(function(o,k){var d=el("kopt"+k);if(d)d.classList.add(o===S.qs[S.i]?"kopt-goed":"kopt-weg");});
     if(S.i%2===1)el("qmain").innerHTML=zin(S.qs[S.i],false,S.zi);
     el("kbtn").textContent="Volgende vraag";return;}
   if(++S.i>=S.qs.length){S.qs=shuffle(pool());S.i=0;}
@@ -1152,8 +1230,12 @@ stage.addEventListener("click",function(e){
   var a=b.dataset.a, v=b.dataset.v;
   if(a==="go")go(v);
   else if(a==="askreset")home(true);
-  else if(a==="askopen"){askOpen=true;home();askOpen=false;}
-  else if(a==="allopen"){stap[sKey()]=Math.max(curStap(),ORDER.length-1);save();home();}
+  else if(a==="askopen"){askOpen=true;pinFout=false;home();askOpen=false;var p=el("pinIn");if(p)p.focus();}
+  else if(a==="spk"){if(v)zeg(v);else leesScherm();}
+  else if(a==="retry"){var lijst=laatsteFout.slice();if(lijst.length){view=v;if(v==="type")typeStart(lijst);else quizStart(v,lijst);}}
+  else if(a==="zcheck")zinCheck();
+  else if(a==="znext")zinNext();
+  else if(a==="kpick"){}
   else if(a==="pickblk"){setBlock(v);go("block");}
   else if(a==="pickset"){setId=v;save();setButtons();updateRiver();go("home");}
   else if(a==="reset"){stap[sKey()]=0;pool().forEach(function(x){lvl[x.id]=0;rep[x.id]=0;due[x.id]=0;});checkFin();save();updateRiver();home();}
@@ -1172,7 +1254,10 @@ stage.addEventListener("click",function(e){
   else if(a==="tnext")testNext();
   else if(a==="kshow")klasStep();
 });
-stage.addEventListener("submit",function(e){e.preventDefault();typeCheck();});
+stage.addEventListener("submit",function(e){e.preventDefault();
+  if(e.target.id==="pinForm"){var p=el("pinIn");if(p&&p.value===PIN){stap[sKey()]=Math.max(curStap(),ORDER.length-1);save();home();}else{askOpen=true;pinFout=true;home();askOpen=false;var q=el("pinIn");if(q)q.focus();}return;}
+  if(e.target.id==="zin-form"){zinCheck();return;}
+  typeCheck();});
 document.addEventListener("click",function(e){if(e.target.closest("[data-fs]"))fsToggle();});
 ["fullscreenchange","webkitfullscreenchange"].forEach(function(n){document.addEventListener(n,function(){fsPaint();if(view==="start")go("start");});});
 stage.addEventListener("change",function(e){if(e.target.id==="flash-rev"&&S){flashRev=e.target.checked;S.flipped=false;renderFlash();}});
@@ -1203,4 +1288,5 @@ load();setBlock(blk);fsPaint();go("start");
 })();
 </script>
 
+<script>if("serviceWorker" in navigator&&/github\.io$/.test(location.hostname)){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
 </body></html>
