@@ -819,7 +819,7 @@ function home(askReset){
    +'</div><div class="foot">'
    +(askReset
      ? '<div class="foot-ask"><span>Weet je het zeker? Je begint dan opnieuw met deze woorden.</span><button class="btn btn-quiet" data-a="reset">Ja, begin opnieuw</button><button class="btn btn-primary" data-a="go" data-v="home">Nee</button></div>'
-     : '<button class="link" data-a="go" data-v="start">← Alle thema’s</button><button class="link" data-a="go" data-v="list">Bekijk de woordenlijst</button><button class="link" data-a="askreset">Begin opnieuw</button>'+(curStap()<ORDER.length-1?(askOpen?'<span class="foot-ask2">Alle stappen openzetten? <button class="link" data-a="allopen">Ja</button> <button class="link" data-a="go" data-v="home">Nee</button></span>':'<button class="link" data-a="askopen">Juf: zet alles open</button>'):''))
+     : '<button class="link" data-a="go" data-v="start">← Alle thema’s</button><button class="link" data-a="go" data-v="list">Bekijk de woordenlijst</button><button class="link" data-a="askreset">Begin opnieuw</button>'+(curStap()<ORDER.length-1?(askOpen?'<span class="foot-ask2">Alle stappen openzetten? <button class="link" data-a="allopen">Ja</button> <button class="link" data-a="go" data-v="home">Nee</button></span>':'<button class="link" data-a="askopen">Zet alles open</button>'):''))
    +'</div></div>';
   maybeFin();
 }
