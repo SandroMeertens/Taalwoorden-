@@ -560,7 +560,7 @@ function pasToe(o){if(!o||typeof o!=="object")return;INST=o;
   PIN=(typeof o.pin==="string"&&/^[0-9]{4,8}$/.test(o.pin))?o.pin:"2580";
   UIT={};if(o.uit&&typeof o.uit==="object")ORDER.forEach(function(k){if(o.uit[k]===true)UIT[k]=true;});
   if(ORDER.every(function(k){return UIT[k];}))UIT={};
-  ALLES=o.alles===true;
+  ALLES=o.alles!==false; /* standaard staan alle stappen open */
   ACTIEF="";if(typeof o.actief==="string"){var p=o.actief.split(":");if(BYID[p[0]]&&["w1","w2","all"].indexOf(p[1])>=0)ACTIEF=o.actief;}
   if(ACTIEF){var q=ACTIEF.split(":");if(blk!==q[0])setBlock(q[0]);setId=q[1];setButtons();updateRiver();}
   zetWeekKnoppen();}
@@ -1130,7 +1130,7 @@ function leerkracht(){
    +'<section class="lk-blok"><h3>Pincode</h3><p class="note">Voor "Zet alles open" op een iPad. 4 tot 8 cijfers.</p><input class="type-in lk-pin" id="lk-pin" inputmode="numeric" maxlength="8" autocomplete="off" value="'+esc(typeof f.pin==="string"?f.pin:"2580")+'"></section>'
    +'<section class="lk-blok"><h3>Stappen</h3><p class="note">Vink uit wat je klas overslaat.</p><div class="lk-stappen">'
    +ORDER.map(function(k){return '<label class="check"><input type="checkbox" id="lk-s-'+k+'"'+(uit[k]?'':' checked')+'> '+stapNaam[k]+'</label>';}).join("")+'</div>'
-   +'<label class="check lk-alles"><input type="checkbox" id="lk-alles"'+(f.alles===true?' checked':'')+'> Alle stappen meteen open voor iedereen</label></section>'
+   +'<label class="check lk-alles"><input type="checkbox" id="lk-alles"'+(f.alles!==false?' checked':'')+'> Alle stappen meteen open voor iedereen</label></section>'
    +'<section class="lk-blok"><h3>Thema en week</h3><p class="note">Kies wat de leerlingen deze week oefenen.</p><select class="lk-sel" id="lk-act"><option value="">Leerlingen kiezen zelf</option>'
    +BLOCKS.map(function(b){return [["w1","week 1"],["w2","week 2"],["all","alle woorden"]].map(function(x){var v=b.id+":"+x[0];return '<option value="'+v+'"'+(f.actief===v?' selected':'')+'>'+esc(b.naam)+' · '+x[1]+'</option>';}).join("");}).join("")
    +'</select></section></div>'
