@@ -547,8 +547,6 @@ function inSmallFrame(){try{return FSOK&&!fsOn()&&window.screen&&window.innerHei
 /* Stappen achter elkaar: een stap gaat open als de vorige één keer is afgerond. De race is de laatste stap.
    Per thema en per woordkeuze (week 1, week 2, alle) apart. De klassenquiz is voor de juf en staat altijd open. */
 var ORDER=["flash","match","fill","type","quiz","zin","test","race"], stap={}, askOpen=false, pinFout=false;
-/* Pincode voor "Zet alles open". Alleen de leerkracht kent hem. */
-var PIN="2580";
 /* Hoeveel goed je nodig hebt om door te gaan bij Invullen, Typen en de Quiz. */
 var MINSCORE=0.8;
 var zinnen={}, NAAM="";
@@ -557,7 +555,6 @@ var zinnen={}, NAAM="";
 var INSTKEY="taalwoorden.inst", INST={}, UIT={}, ALLES=false, ACTIEF="", LKMELD="", LKBEZIG=false, LKFORM=null;
 function pasToe(o){if(!o||typeof o!=="object")return;INST=o;
   var m=Number(o.min);MINSCORE=(m>=0.5&&m<=1)?m:0.8;
-  PIN=(typeof o.pin==="string"&&/^[0-9]{4,8}$/.test(o.pin))?o.pin:"2580";
   UIT={};if(o.uit&&typeof o.uit==="object")ORDER.forEach(function(k){if(o.uit[k]===true)UIT[k]=true;});
   if(ORDER.every(function(k){return UIT[k];}))UIT={};
   ALLES=o.alles!==false; /* standaard staan alle stappen open */
@@ -884,7 +881,7 @@ function home(askReset){
    +'</div><div class="foot">'
    +(askReset
      ? '<div class="foot-ask"><span>Weet je het zeker? Je begint dan opnieuw met deze woorden.</span><button class="btn btn-quiet" data-a="reset">Ja, begin opnieuw</button><button class="btn btn-primary" data-a="go" data-v="home">Nee</button></div>'
-     : (ACTIEF?'<span></span>':'<button class="link" data-a="go" data-v="start">← Alle thema’s</button>')+'<button class="link" data-a="go" data-v="list">Bekijk de woordenlijst</button><button class="link" data-a="askreset">Begin opnieuw</button>'+(!ALLES&&curStap()<ORDER.length-1?(askOpen?'<form class="foot-ask2" id="pinForm" autocomplete="off"><label for="pinIn">'+(pinFout?'Onjuiste code. Probeer opnieuw:':'Code van de juf of meester:')+'</label><input id="pinIn" class="pin-in" type="password" inputmode="numeric" maxlength="8" autocomplete="off"><button class="link" type="submit">Open</button> <button class="link" type="button" data-a="go" data-v="home">Annuleer</button></form>':'<button class="link" data-a="askopen">Zet alles open</button>'):''))
+     : (ACTIEF?'<span></span>':'<button class="link" data-a="go" data-v="start">← Alle thema’s</button>')+'<button class="link" data-a="go" data-v="list">Bekijk de woordenlijst</button><button class="link" data-a="askreset">Begin opnieuw</button>'+(!ALLES&&curStap()<ORDER.length-1?(window.twFB?'<button class="link" data-a="go" data-v="leerkracht">Leerkracht: alles openzetten</button>':''):''))
    +'</div></div>';
   maybeFin();
 }
@@ -1108,14 +1105,14 @@ function lkFout(e){var c=(e&&e.code)||"";
   if(/closed-by-user|cancelled-popup/.test(c))return "";
   if(c==="auth/unauthorized-domain")return "Dit adres mag nog niet inloggen. Voeg sandromeertens.github.io toe in Firebase bij Authentication > Settings > Authorized domains.";
   if(c==="auth/popup-blocked")return "Het inlogvenster werd tegengehouden. Sta pop-ups toe voor deze site.";
-  if(/permission-denied/.test(c))return "De database weigert. Zijn de nieuwe regels al gepubliceerd? Of zijn deze instellingen van een andere leerkracht?";
+  if(/permission-denied/.test(c))return "Opslaan mag alleen met je schoolaccount. Log uit en log in met je account van school. Lukt het dan nog niet, dan zijn de instellingen van een andere leerkracht.";
   if(c==="unavailable")return "Geen verbinding met de database. Controleer de internetverbinding.";
   return "Dat lukte niet"+(c?" ("+c+")":"")+". Probeer het nog eens.";}
 function leerkracht(){
   var fb=window.twFB, u=fb&&fb.user();
   var h='<div class="lk"><div class="bar"><button class="link" data-a="go" data-v="start">← Terug</button><span class="count">Leerkracht</span></div><h2 class="end-h">Instellingen voor de klas</h2>';
   if(!fb){stage.innerHTML=h+'<p>Inloggen kan alleen op de website van Taalwoorden.</p></div>';return;}
-  if(!u){stage.innerHTML=h+'<p>Log in met je Google-account van school. Wat je hier instelt, geldt op alle iPads die Taalwoorden openen.</p>'
+  if(!u){stage.innerHTML=h+'<p>Log in met je <b>schoolaccount</b> (Google). Andere accounts kunnen niets opslaan. Wat je hier instelt, geldt op alle iPads die Taalwoorden openen.</p>'
     +'<div class="row"><button class="btn btn-primary lk-btn" data-a="lklogin"'+(LKBEZIG?' disabled':'')+'>Inloggen met Google</button></div><p class="lk-meld" aria-live="polite">'+esc(LKMELD)+'</p></div>';return;}
   if(!LKFORM){stage.innerHTML=h+'<p>Instellingen ophalen…</p></div>';
     fb.lees().then(function(d){if(d&&d.owner&&d.owner!==u.uid){LKFORM={vreemd:true};}else{LKFORM=JSON.parse(JSON.stringify(d||INST||{}));}if(view==="leerkracht")leerkracht();})
@@ -1127,7 +1124,7 @@ function leerkracht(){
   h+=wie+'<div class="lk-grid">'
    +'<section class="lk-blok"><h3>Minimumscore</h3><p class="note">Nodig bij Invullen, Typen en de Quiz om door te gaan.</p><div class="lk-chips">'
    +[0.6,0.7,0.8,0.9,1].map(function(x){return '<button class="seg-btn lk-chip" data-a="lkmin" data-v="'+x+'" aria-pressed="'+(Math.abs(min-x)<.01)+'">'+Math.round(x*10)+' van 10</button>';}).join("")+'</div></section>'
-   +'<section class="lk-blok"><h3>Pincode</h3><p class="note">Voor "Zet alles open" op een iPad. 4 tot 8 cijfers.</p><input class="type-in lk-pin" id="lk-pin" inputmode="numeric" maxlength="8" autocomplete="off" value="'+esc(typeof f.pin==="string"?f.pin:"2580")+'"></section>'
+   
    +'<section class="lk-blok"><h3>Stappen</h3><p class="note">Vink uit wat je klas overslaat.</p><div class="lk-stappen">'
    +ORDER.map(function(k){return '<label class="check"><input type="checkbox" id="lk-s-'+k+'"'+(uit[k]?'':' checked')+'> '+stapNaam[k]+'</label>';}).join("")+'</div>'
    +'<label class="check lk-alles"><input type="checkbox" id="lk-alles"'+(f.alles!==false?' checked':'')+'> Alle stappen meteen open voor iedereen</label></section>'
@@ -1136,7 +1133,7 @@ function leerkracht(){
    +'</select></section></div>'
    +'<div class="row"><button class="btn btn-primary" data-a="lksave"'+(LKBEZIG?' disabled':'')+'>Opslaan voor alle iPads</button></div><p class="lk-meld" aria-live="polite">'+esc(LKMELD)+'</p></div>';
   stage.innerHTML=h;}
-function lkLeesForm(){var f=LKFORM||{}, p=el("lk-pin"), a=el("lk-act"), o={min:Number(f.min)>=0.5?Number(f.min):0.8,pin:p?p.value.trim():"2580",uit:{},alles:!!(el("lk-alles")&&el("lk-alles").checked),actief:a?a.value:""};
+function lkLeesForm(){var f=LKFORM||{}, p=el("lk-pin"), a=el("lk-act"), o={min:Number(f.min)>=0.5?Number(f.min):0.8,uit:{},alles:!!(el("lk-alles")&&el("lk-alles").checked),actief:a?a.value:""};
   ORDER.forEach(function(k){var c=el("lk-s-"+k);if(c&&!c.checked)o.uit[k]=true;});return o;}
 
 /* ---------- Eigen zin: zelf een zin maken met drie woorden ---------- */
@@ -1302,7 +1299,6 @@ stage.addEventListener("click",function(e){
   else if(a==="lkuit"){window.twFB.uit().then(function(){LKFORM=null;LKMELD="";leerkracht();});}
   else if(a==="lkmin"){LKFORM=lkLeesForm();LKFORM.min=Number(v);leerkracht();}
   else if(a==="lksave"){var o=lkLeesForm();
-    if(!/^[0-9]{4,8}$/.test(o.pin)){LKMELD="De pincode moet 4 tot 8 cijfers zijn.";LKFORM=o;leerkracht();return;}
     if(ORDER.every(function(k){return o.uit[k];})){LKMELD="Laat minstens één stap aan staan.";LKFORM=o;leerkracht();return;}
     LKBEZIG=true;LKFORM=o;LKMELD="Opslaan…";leerkracht();
     window.twFB.bewaar(o).then(function(){LKBEZIG=false;LKMELD="Opgeslagen. De iPads krijgen dit zodra ze Taalwoorden openen.";window.twInst(o);leerkracht();},
@@ -1329,7 +1325,6 @@ stage.addEventListener("click",function(e){
   else if(a==="kshow")klasStep();
 });
 stage.addEventListener("submit",function(e){e.preventDefault();
-  if(e.target.id==="pinForm"){var p=el("pinIn");if(p&&p.value===PIN){stap[sKey()]=Math.max(curStap(),ORDER.length-1);save();home();}else{askOpen=true;pinFout=true;home();askOpen=false;var q=el("pinIn");if(q)q.focus();}return;}
   if(e.target.id==="zin-form"){zinCheck();return;}
   typeCheck();});
 document.addEventListener("click",function(e){if(e.target.closest("[data-fs]"))fsToggle();});
@@ -1376,10 +1371,10 @@ try{
       try{await F.signInWithPopup(auth,pr);}catch(e){if(e&&e.code==="auth/popup-blocked"){await F.signInWithRedirect(auth,pr);return;}throw e;}},
     uit:()=>F.signOut(auth),
     lees:async()=>{const s=await F.getDoc(ref);return s.exists()?s.data():null;},
-    bewaar:(o)=>F.setDoc(ref,{min:o.min,pin:o.pin,uit:o.uit,alles:o.alles,actief:o.actief,owner:user.uid,t:Date.now()})};
+    bewaar:(o)=>F.setDoc(ref,{min:o.min,uit:o.uit,alles:o.alles,actief:o.actief,owner:user.uid,t:Date.now()})};
   F.onAuthStateChanged(auth,(u)=>{user=u&&!u.isAnonymous?u:null;if(window.twFBklaar)window.twFBklaar();});
   if(window.twFBklaar)window.twFBklaar();
-  F.getDoc(ref).then((s)=>{if(s.exists()&&window.twInst){const d=s.data();window.twInst({min:d.min,pin:d.pin,uit:d.uit,alles:d.alles,actief:d.actief});}}).catch(()=>{});
+  F.getDoc(ref).then((s)=>{if(s.exists()&&window.twInst){const d=s.data();window.twInst({min:d.min,uit:d.uit,alles:d.alles,actief:d.actief});}}).catch(()=>{});
 }catch(e){console.warn(e);}
 </script>
 </body></html>
