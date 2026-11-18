@@ -92,6 +92,17 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,6vw,2.1rem)
 [data-m="flash"]{--m:var(--m-flash);--m-bg:var(--m-flash-bg)} [data-m="match"]{--m:var(--m-match);--m-bg:var(--m-match-bg)} [data-m="fill"]{--m:var(--m-fill);--m-bg:var(--m-fill-bg)} [data-m="quiz"]{--m:var(--m-quiz);--m-bg:var(--m-quiz-bg)} [data-m="type"]{--m:var(--m-type);--m-bg:var(--m-type-bg)} [data-m="test"]{--m:var(--m-test);--m-bg:var(--m-test-bg)} [data-m="klas"]{--m:var(--on-buoy);--m-bg:var(--buoy)}
 .mode[data-m]:hover{border-color:var(--m)}
 .duos.duos3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.lk-link{margin-top:.6rem;font-size:var(--fs-0);color:var(--band-soft)}
+.lk{display:flex;flex-direction:column;gap:.8rem}
+.lk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+.lk-blok{border:2px solid var(--line);border-radius:1rem;padding:.8rem 1rem;display:flex;flex-direction:column;gap:.45rem;min-width:0}
+.lk-blok h3{margin:0;font-family:var(--display);font-size:var(--fs-2)}
+.lk-chips{display:flex;flex-wrap:wrap;gap:.35rem}
+.lk-chip{border:2px solid var(--line);background:var(--surface)}
+.lk-stappen{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.2rem .8rem}
+.lk-pin{flex:none;width:12rem;max-width:100%;min-height:3rem;height:auto;letter-spacing:.2em}.lk-grid{align-items:start}.lk .lk-blok>*{flex:none}
+.lk-sel{font:inherit;font-size:var(--fs-1);padding:.5rem .7rem;border:2px solid var(--line);border-radius:.8rem;background:var(--surface);color:var(--ink);max-width:100%}
+.lk-meld{margin:0;font-weight:700;min-height:1.4em}
 .spk{border:0;background:none;padding:.1rem .3rem;font-size:1.1em;line-height:1;cursor:pointer;vertical-align:middle;border-radius:.4rem}
 .spk:hover{background:var(--river-pale)}
 .count .spk{margin-right:.5rem}
@@ -265,7 +276,7 @@ body[data-deep] .start .link{color:var(--on-band)}
   .top-info{flex-wrap:wrap}
   .r-status{white-space:normal}
   .modes{grid-template-columns:minmax(0,1fr)}
-  .duos,.duos.duos3{grid-template-columns:minmax(0,1fr)}
+  .duos,.duos.duos3,.lk-grid{grid-template-columns:minmax(0,1fr)}
   .kopts{grid-template-columns:minmax(0,1fr)}
   .weeks{grid-template-columns:minmax(0,1fr)}
   .themes{grid-template-columns:minmax(0,1fr)}
@@ -541,12 +552,29 @@ var PIN="2580";
 /* Hoeveel goed je nodig hebt om door te gaan bij Invullen, Typen en de Quiz. */
 var MINSCORE=0.8;
 var zinnen={}, NAAM="";
+/* Instellingen van de leerkracht. Op de website komen ze uit de database (inloggen met Google);
+   ze worden ook op het apparaat bewaard, zodat ze zonder internet blijven gelden. */
+var INSTKEY="taalwoorden.inst", INST={}, UIT={}, ALLES=false, ACTIEF="", LKMELD="", LKBEZIG=false, LKFORM=null;
+function pasToe(o){if(!o||typeof o!=="object")return;INST=o;
+  var m=Number(o.min);MINSCORE=(m>=0.5&&m<=1)?m:0.8;
+  PIN=(typeof o.pin==="string"&&/^[0-9]{4,8}$/.test(o.pin))?o.pin:"2580";
+  UIT={};if(o.uit&&typeof o.uit==="object")ORDER.forEach(function(k){if(o.uit[k]===true)UIT[k]=true;});
+  if(ORDER.every(function(k){return UIT[k];}))UIT={};
+  ALLES=o.alles===true;
+  ACTIEF="";if(typeof o.actief==="string"){var p=o.actief.split(":");if(BYID[p[0]]&&["w1","w2","all"].indexOf(p[1])>=0)ACTIEF=o.actief;}
+  if(ACTIEF){var q=ACTIEF.split(":");if(blk!==q[0])setBlock(q[0]);setId=q[1];setButtons();updateRiver();}
+  zetWeekKnoppen();}
+function zetWeekKnoppen(){["w1","w2","all"].forEach(function(x){var b=el("set-"+x);if(b)b.hidden=!!ACTIEF&&ACTIEF.split(":")[1]!==x;});}
+function eersteVoor(i){for(var j=i-1;j>=0;j--)if(!UIT[ORDER[j]])return ORDER[j];return "";}
+window.twInst=function(o){try{localStorage.setItem(INSTKEY,JSON.stringify(o||{}));}catch(e){}pasToe(o||{});
+  if(!S&&(view==="start"||view==="block"||view==="home"||view==="list"))go(ACTIEF&&(view==="start"||view==="block")?"home":view);};
+window.twFBklaar=function(){if(view==="leerkracht")leerkracht();else if(view==="start"&&!S)go("start");};
 function sKey(){return blk+":"+setId;}
-function curStap(){var k=sKey();if(!(k in stap))stap[k]=tests[k]?ORDER.length-1:0;return stap[k];}
-function isOpen(m){var i=ORDER.indexOf(m);return i<0||i<=curStap();}
+function curStap(){var k=sKey();if(!(k in stap))stap[k]=tests[k]?ORDER.indexOf("race"):0;var n=stap[k];while(n<ORDER.length&&UIT[ORDER[n]])n++;return n;}
+function isOpen(m){var i=ORDER.indexOf(m);if(i<0)return true;if(UIT[m])return false;return ALLES||i<=curStap();}
 function markDone(m){var i=ORDER.indexOf(m),k=sKey();if(i<0)return;if(i===curStap()&&i<ORDER.length){stap[k]=i+1;save();}}
 var laatsteFout=[];
-function lockInfo(m){var i=ORDER.indexOf(m),p=i>0?ORDER[i-1]:"";return p?(MODES[p]||"")+(p==="fill"||p==="type"||p==="quiz"?" met "+Math.ceil(10*MINSCORE)+" van de 10 goed":""):"";}
+function lockInfo(m){var i=ORDER.indexOf(m),p=i>0?eersteVoor(i):"";return p?(MODES[p]||"")+(p==="fill"||p==="type"||p==="quiz"?" met "+Math.ceil(10*MINSCORE)+" van de 10 goed":""):"";}
 var MODES={flash:"Flitskaarten",match:"Koppelen",fill:"Invullen",type:"Typen",quiz:"Quiz",zin:"Eigen zin",test:"Toets",klas:"Klassenquiz"};
 function ico(d){return '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">'+d+'</svg>';}
 var ICONS={
@@ -745,10 +773,10 @@ function updateRiver(){
 }
 function setButtons(){["w1","w2","all"].forEach(function(s){el("set-"+s).setAttribute("aria-pressed",String(s===setId));});}
 
-var VIEWS={zin:zinStart,start:start,block:blockPage,home:home,flash:flashStart,match:matchStart,fill:function(){quizStart("fill");},quiz:function(){quizStart("quiz");},list:list,race:raceSetup,type:typeStart,test:testIntro,klas:klasStart};
-function go(v){if(ORDER.indexOf(v)>=0&&!isOpen(v))v="home";if(S&&S.timer)clearInterval(S.timer);S=null;raceClose();closeFin();curPager=null;view=v;
+var VIEWS={leerkracht:leerkracht,zin:zinStart,start:start,block:blockPage,home:home,flash:flashStart,match:matchStart,fill:function(){quizStart("fill");},quiz:function(){quizStart("quiz");},list:list,race:raceSetup,type:typeStart,test:testIntro,klas:klasStart};
+function go(v){if(ORDER.indexOf(v)>=0&&!isOpen(v))v="home";if(v==="start"&&ACTIEF)v="block";if(S&&S.timer)clearInterval(S.timer);S=null;raceClose();closeFin();curPager=null;view=v;
   var plain=v==="start"||v==="block"||v==="home";
-  stage.className=plain?"":"panel";topEl.hidden=v==="start"||v==="block";
+  stage.className=plain?"":"panel";topEl.hidden=v==="start"||v==="block"||v==="leerkracht";
   if(v==="start")document.body.removeAttribute("data-blk");else document.body.setAttribute("data-blk",blk);
   if(v==="block")document.body.setAttribute("data-deep","");else document.body.removeAttribute("data-deep");
   VIEWS[v]();decoAll();}
@@ -798,13 +826,13 @@ function start(){
   stage.innerHTML='<div class="start"><div class="start-bar"><span></span>'+fsBtn()+'</div><p class="eyebrow">Woordenschat · groep 8</p><h1 class="start-h start-big">Themawoorden</h1>'
    +'<p class="start-lead">Kies een thema en leer de 40 woorden die erbij horen.</p>'
    +(inSmallFrame()?'<p class="note">Is het beeld klein? Tik rechtsboven op Volledig scherm.</p>':'')
-   +'<div class="themes'+(BLOCKS.length<=3?' themes-few':'')+'">'+BLOCKS.map(function(b){
+   +'<div class="themes'+(BLOCKS.length<=3?' themes-few':'')+'">'+BLOCKS.filter(function(b){return !ACTIEF||ACTIEF.split(":")[0]===b.id;}).map(function(b){
       return '<button class="mode theme" data-blk="'+b.id+'" data-a="pickblk" data-v="'+b.id+'">'
        +routeSvg(b,"hero",{cls:"theme-svg",main:"tr-"+b.id,tokens:[{id:"tt-"+b.id,team:0}]})
        +'<span class="mode-name">'+b.naam+'</span><span class="mode-desc">'+b.words.length+' woorden in twee weken</span>'+meter(stats(words(b.id,"all")))+'</button>';
-    }).join("")+'</div></div>';
+    }).join("")+'</div>'+(window.twFB?'<button class="link lk-link" data-a="go" data-v="leerkracht">Leerkracht</button>':'')+'</div>';
   /* Op elke themakaart staat het bootje of de vondst op de plek waar de leerling is gebleven. */
-  BLOCKS.forEach(function(b){var p=el("tr-"+b.id),len=0;try{len=p.getTotalLength();}catch(e){}
+  BLOCKS.forEach(function(b){var p=el("tr-"+b.id),len=0;if(!p)return;try{len=p.getTotalLength();}catch(e){}
     if(len)moveTok(el("tt-"+b.id),p,len,stats(words(b.id,"all")).f,geo("hero",b.kind));});
 }
 
@@ -814,12 +842,12 @@ function blockPage(){
     var t=tests[blk+":"+id];
     return '<button class="mode week" data-a="pickset" data-v="'+id+'"><span class="mode-name">'+name+'</span><span class="mode-desc">'+desc+'</span>'+meter(stats(words(blk,id)))
      +(t?'<span class="week-n">Laatste toets: '+t.s+' van '+t.n+'</span>':'')+'</button>';}
-  stage.innerHTML='<div class="start"><div class="start-bar"><button class="link" data-a="go" data-v="start">← Alle thema’s</button>'+fsBtn()+'</div>'
+  stage.innerHTML='<div class="start"><div class="start-bar">'+(ACTIEF?'<span></span>':'<button class="link" data-a="go" data-v="start">← Alle thema’s</button>')+fsBtn()+'</div>'
    +'<p class="eyebrow">Thema · groep 8</p><h1 class="start-h">'+B.titel+'</h1>'
    +'<p class="start-lead">Leer de '+B.words.length+' woorden van dit thema. '+B.lead+'</p>'
    +routeSvg(B,"hero",{cls:"start-river",main:"sriv",tokens:[{id:"sboat",team:0}]})
    +'<p class="setup-q">Kies je woorden</p><div class="weeks">'
-   +wk("w1","Week 1",words(blk,"w1").length+" woorden")+wk("w2","Week 2",words(blk,"w2").length+" woorden")+wk("all","Alle "+B.words.length,"Week 1 en 2 door elkaar")
+   +[["w1","Week 1",words(blk,"w1").length+" woorden"],["w2","Week 2",words(blk,"w2").length+" woorden"],["all","Alle "+B.words.length,"Week 1 en 2 door elkaar"]].filter(function(x){return !ACTIEF||ACTIEF.split(":")[1]===x[0];}).map(function(x){return wk(x[0],x[1],x[2]);}).join("")
    +'</div><p class="note">Een woord is geleerd na twee keer goed. Na een paar dagen komt het terug om op te frissen. Bron: Staal taal, groep 8 (Malmberg).</p></div>';
   /* Het bootje of de vondst legt rustig de hele route af. */
   var path=el("sriv"), b=el("sboat"), len=0;
@@ -835,11 +863,11 @@ function blockPage(){
 
 /* ---------- Kiesscherm ---------- */
 function home(askReset){
-  function mt(m,stp,desc){var i=ORDER.indexOf(m),cs=curStap(),dicht=i>cs,klaar=i<cs,nu=i===cs;
+  function mt(m,stp,desc){if(UIT[m])return '';var i=ORDER.indexOf(m),cs=curStap(),dicht=!isOpen(m),klaar=i<cs,nu=i===cs&&!ALLES;
     return '<button class="mode'+(dicht?' dicht':'')+(nu?' nu':'')+'" data-m="'+m+'" data-a="go" data-v="'+m+'"'+(dicht?' disabled aria-disabled="true"':'')+'><span class="mode-top"><span class="badge">'+(dicht?LOCK:ICONS[m])+'</span><span class="mode-ttl"><span class="eyebrow">'+stp+(klaar?' <span class="vink">✓ klaar</span>':nu?' <span class="nu-lab">nu</span>':'')+'</span><span class="mode-name">'+MODES[m]+'</span></span></span>'
     +'<span class="mode-desc">'+(dicht?'Eerst '+lockInfo(m)+' afronden.':desc)+'</span></button>';}
   var LOCK='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
-  function duo(v,m,kop,naam,desc){var dicht=!isOpen(v),nu=ORDER.indexOf(v)===curStap();if(dicht)desc="Eerst de Toets afronden. Dan mag je racen!";
+  function duo(v,m,kop,naam,desc){if(UIT[v])return '';var dicht=!isOpen(v),nu=ORDER.indexOf(v)===curStap()&&!ALLES;if(dicht)desc="Eerst "+lockInfo(v)+" afronden. Dan mag je racen!";
     return '<button class="duo'+(dicht?' dicht':'')+(nu?' nu':'')+'" data-m="'+m+'" data-a="go" data-v="'+v+'"'+(dicht?' disabled aria-disabled="true"':'')+'><span class="mode-top"><span class="badge badge-duo">'+(dicht?LOCK:ICONS[v])+'</span><span class="mode-ttl"><span class="eyebrow">'+kop+'</span><span class="mode-name">'+naam+'</span></span></span>'
     +'<span class="mode-desc">'+desc+'</span></button>';}
   stage.innerHTML='<div class="home"><div class="modes">'
@@ -856,7 +884,7 @@ function home(askReset){
    +'</div><div class="foot">'
    +(askReset
      ? '<div class="foot-ask"><span>Weet je het zeker? Je begint dan opnieuw met deze woorden.</span><button class="btn btn-quiet" data-a="reset">Ja, begin opnieuw</button><button class="btn btn-primary" data-a="go" data-v="home">Nee</button></div>'
-     : '<button class="link" data-a="go" data-v="start">← Alle thema’s</button><button class="link" data-a="go" data-v="list">Bekijk de woordenlijst</button><button class="link" data-a="askreset">Begin opnieuw</button>'+(curStap()<ORDER.length-1?(askOpen?'<form class="foot-ask2" id="pinForm" autocomplete="off"><label for="pinIn">'+(pinFout?'Onjuiste code. Probeer opnieuw:':'Code van de juf of meester:')+'</label><input id="pinIn" class="pin-in" type="password" inputmode="numeric" maxlength="8" autocomplete="off"><button class="link" type="submit">Open</button> <button class="link" type="button" data-a="go" data-v="home">Annuleer</button></form>':'<button class="link" data-a="askopen">Zet alles open</button>'):''))
+     : (ACTIEF?'<span></span>':'<button class="link" data-a="go" data-v="start">← Alle thema’s</button>')+'<button class="link" data-a="go" data-v="list">Bekijk de woordenlijst</button><button class="link" data-a="askreset">Begin opnieuw</button>'+(!ALLES&&curStap()<ORDER.length-1?(askOpen?'<form class="foot-ask2" id="pinForm" autocomplete="off"><label for="pinIn">'+(pinFout?'Onjuiste code. Probeer opnieuw:':'Code van de juf of meester:')+'</label><input id="pinIn" class="pin-in" type="password" inputmode="numeric" maxlength="8" autocomplete="off"><button class="link" type="submit">Open</button> <button class="link" type="button" data-a="go" data-v="home">Annuleer</button></form>':'<button class="link" data-a="askopen">Zet alles open</button>'):''))
    +'</div></div>';
   maybeFin();
 }
@@ -1075,6 +1103,42 @@ function testNext(){
     return '<li><span class="wl-w">'+esc(q.w.w)+'</span><span class="wl-m">'+esc(q.w.m)+'</span><span></span><span class="wl-z">Jouw antwoord: '+esc(q.dir==="wm"?jij.m:jij.w)+'</span></li>';}));
 }
 
+/* ---------- Leerkracht: inloggen met Google en de instellingen voor alle iPads ---------- */
+function lkFout(e){var c=(e&&e.code)||"";
+  if(/closed-by-user|cancelled-popup/.test(c))return "";
+  if(c==="auth/unauthorized-domain")return "Dit adres mag nog niet inloggen. Voeg sandromeertens.github.io toe in Firebase bij Authentication > Settings > Authorized domains.";
+  if(c==="auth/popup-blocked")return "Het inlogvenster werd tegengehouden. Sta pop-ups toe voor deze site.";
+  if(/permission-denied/.test(c))return "De database weigert. Zijn de nieuwe regels al gepubliceerd? Of zijn deze instellingen van een andere leerkracht?";
+  if(c==="unavailable")return "Geen verbinding met de database. Controleer de internetverbinding.";
+  return "Dat lukte niet"+(c?" ("+c+")":"")+". Probeer het nog eens.";}
+function leerkracht(){
+  var fb=window.twFB, u=fb&&fb.user();
+  var h='<div class="lk"><div class="bar"><button class="link" data-a="go" data-v="start">← Terug</button><span class="count">Leerkracht</span></div><h2 class="end-h">Instellingen voor de klas</h2>';
+  if(!fb){stage.innerHTML=h+'<p>Inloggen kan alleen op de website van Taalwoorden.</p></div>';return;}
+  if(!u){stage.innerHTML=h+'<p>Log in met je Google-account van school. Wat je hier instelt, geldt op alle iPads die Taalwoorden openen.</p>'
+    +'<div class="row"><button class="btn btn-primary lk-btn" data-a="lklogin"'+(LKBEZIG?' disabled':'')+'>Inloggen met Google</button></div><p class="lk-meld" aria-live="polite">'+esc(LKMELD)+'</p></div>';return;}
+  if(!LKFORM){stage.innerHTML=h+'<p>Instellingen ophalen…</p></div>';
+    fb.lees().then(function(d){if(d&&d.owner&&d.owner!==u.uid){LKFORM={vreemd:true};}else{LKFORM=JSON.parse(JSON.stringify(d||INST||{}));}if(view==="leerkracht")leerkracht();})
+      .catch(function(e){LKMELD=lkFout(e);LKFORM=JSON.parse(JSON.stringify(INST||{}));if(view==="leerkracht")leerkracht();});return;}
+  var wie='<p class="note">Ingelogd als '+esc(u.email||u.displayName||"leerkracht")+' · <button class="link" data-a="lkuit">Uitloggen</button></p>';
+  if(LKFORM.vreemd){stage.innerHTML=h+wie+'<p>Deze instellingen zijn al van een andere leerkracht. Log in met dat account om ze te veranderen.</p></div>';return;}
+  var f=LKFORM, min=Number(f.min)>=0.5?Number(f.min):0.8, uit=f.uit||{};
+  var stapNaam={flash:"Flitskaarten",match:"Koppelen",fill:"Invullen",type:"Typen",quiz:"Quiz",zin:"Eigen zin",test:"Toets",race:"Race"};
+  h+=wie+'<div class="lk-grid">'
+   +'<section class="lk-blok"><h3>Minimumscore</h3><p class="note">Nodig bij Invullen, Typen en de Quiz om door te gaan.</p><div class="lk-chips">'
+   +[0.6,0.7,0.8,0.9,1].map(function(x){return '<button class="seg-btn lk-chip" data-a="lkmin" data-v="'+x+'" aria-pressed="'+(Math.abs(min-x)<.01)+'">'+Math.round(x*10)+' van 10</button>';}).join("")+'</div></section>'
+   +'<section class="lk-blok"><h3>Pincode</h3><p class="note">Voor "Zet alles open" op een iPad. 4 tot 8 cijfers.</p><input class="type-in lk-pin" id="lk-pin" inputmode="numeric" maxlength="8" autocomplete="off" value="'+esc(typeof f.pin==="string"?f.pin:"2580")+'"></section>'
+   +'<section class="lk-blok"><h3>Stappen</h3><p class="note">Vink uit wat je klas overslaat.</p><div class="lk-stappen">'
+   +ORDER.map(function(k){return '<label class="check"><input type="checkbox" id="lk-s-'+k+'"'+(uit[k]?'':' checked')+'> '+stapNaam[k]+'</label>';}).join("")+'</div>'
+   +'<label class="check lk-alles"><input type="checkbox" id="lk-alles"'+(f.alles===true?' checked':'')+'> Alle stappen meteen open voor iedereen</label></section>'
+   +'<section class="lk-blok"><h3>Thema en week</h3><p class="note">Kies wat de leerlingen deze week oefenen.</p><select class="lk-sel" id="lk-act"><option value="">Leerlingen kiezen zelf</option>'
+   +BLOCKS.map(function(b){return [["w1","week 1"],["w2","week 2"],["all","alle woorden"]].map(function(x){var v=b.id+":"+x[0];return '<option value="'+v+'"'+(f.actief===v?' selected':'')+'>'+esc(b.naam)+' · '+x[1]+'</option>';}).join("");}).join("")
+   +'</select></section></div>'
+   +'<div class="row"><button class="btn btn-primary" data-a="lksave"'+(LKBEZIG?' disabled':'')+'>Opslaan voor alle iPads</button></div><p class="lk-meld" aria-live="polite">'+esc(LKMELD)+'</p></div>';
+  stage.innerHTML=h;}
+function lkLeesForm(){var f=LKFORM||{}, p=el("lk-pin"), a=el("lk-act"), o={min:Number(f.min)>=0.5?Number(f.min):0.8,pin:p?p.value.trim():"2580",uit:{},alles:!!(el("lk-alles")&&el("lk-alles").checked),actief:a?a.value:""};
+  ORDER.forEach(function(k){var c=el("lk-s-"+k);if(c&&!c.checked)o.uit[k]=true;});return o;}
+
 /* ---------- Eigen zin: zelf een zin maken met drie woorden ---------- */
 function stam(w){var b=norm(bare(w)), d=b.split(" ").filter(function(x){return x.length>3&&["zich","naar","met","een","aan","van","als","in","ergens","iets","eraan","ermee"].indexOf(x)<0;});
   var k=d.sort(function(a,c){return c.length-a.length;})[0]||b;return k.length>6?k.slice(0,Math.max(5,k.length-3)):k.slice(0,Math.max(3,k.length-1));}
@@ -1233,11 +1297,21 @@ stage.addEventListener("click",function(e){
   else if(a==="askopen"){askOpen=true;pinFout=false;home();askOpen=false;var p=el("pinIn");if(p)p.focus();}
   else if(a==="spk"){if(v)zeg(v);else leesScherm();}
   else if(a==="retry"){var lijst=laatsteFout.slice();if(lijst.length){view=v;if(v==="type")typeStart(lijst);else quizStart(v,lijst);}}
+  else if(a==="lklogin"){LKBEZIG=true;LKMELD="Kies je Google-account in het venster dat opent…";leerkracht();
+    window.twFB.login().then(function(){LKBEZIG=false;LKMELD="";LKFORM=null;leerkracht();},function(e){LKBEZIG=false;LKMELD=lkFout(e);leerkracht();});}
+  else if(a==="lkuit"){window.twFB.uit().then(function(){LKFORM=null;LKMELD="";leerkracht();});}
+  else if(a==="lkmin"){LKFORM=lkLeesForm();LKFORM.min=Number(v);leerkracht();}
+  else if(a==="lksave"){var o=lkLeesForm();
+    if(!/^[0-9]{4,8}$/.test(o.pin)){LKMELD="De pincode moet 4 tot 8 cijfers zijn.";LKFORM=o;leerkracht();return;}
+    if(ORDER.every(function(k){return o.uit[k];})){LKMELD="Laat minstens één stap aan staan.";LKFORM=o;leerkracht();return;}
+    LKBEZIG=true;LKFORM=o;LKMELD="Opslaan…";leerkracht();
+    window.twFB.bewaar(o).then(function(){LKBEZIG=false;LKMELD="Opgeslagen. De iPads krijgen dit zodra ze Taalwoorden openen.";window.twInst(o);leerkracht();},
+      function(e){LKBEZIG=false;LKMELD=lkFout(e);leerkracht();});}
   else if(a==="zcheck")zinCheck();
   else if(a==="znext")zinNext();
   else if(a==="kpick"){}
   else if(a==="pickblk"){setBlock(v);go("block");}
-  else if(a==="pickset"){setId=v;save();setButtons();updateRiver();go("home");}
+  else if(a==="pickset"){if(ACTIEF&&ACTIEF.split(":")[1]!==v)return;setId=v;save();setButtons();updateRiver();go("home");}
   else if(a==="reset"){stap[sKey()]=0;pool().forEach(function(x){lvl[x.id]=0;rep[x.id]=0;due[x.id]=0;});checkFin();save();updateRiver();home();}
   else if(a==="flip"){S.flipped=!S.flipped;renderFlash();}
   else if(a==="fyes")flashAnswer(true);
@@ -1267,7 +1341,7 @@ document.addEventListener("keydown",function(e){
   else if(view==="test"&&S.kind==="test")testPick(Number(e.key)-1);
 });
 document.querySelector(".seg").addEventListener("click",function(e){
-  var b=e.target.closest("[data-set]");if(!b)return;
+  var b=e.target.closest("[data-set]");if(!b||b.hidden)return;
   setId=b.dataset.set;save();setButtons();updateRiver();go("home");
 });
 
@@ -1284,9 +1358,28 @@ setInterval(function(){
 /* Bij draaien of een ander schermformaat de bladzijden opnieuw indelen. */
 var rsT=0;window.addEventListener("resize",function(){clearTimeout(rsT);rsT=setTimeout(function(){if(curPager)curPager.redraw();},150);});
 
-load();setBlock(blk);fsPaint();go("start");
+load();setBlock(blk);try{pasToe(JSON.parse(localStorage.getItem(INSTKEY)||"{}")||{});}catch(e){}fsPaint();go("start");
 })();
 </script>
 
 <script>if("serviceWorker" in navigator&&/github\.io$/.test(location.hostname)){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
+<script type="module">
+/* Inloggen voor de leerkracht en de instellingen voor alle iPads (Firebase-project van Bookflix).
+   Dit is geen wachtwoord: de beveiliging zit in de regels van de database. */
+const cfg={apiKey:"AIzaSyA7BKuBItoAJNLE27MDDw87x-OMKI-efvs",authDomain:"bookflix-a358c.firebaseapp.com",projectId:"bookflix-a358c",storageBucket:"bookflix-a358c.firebasestorage.app",messagingSenderId:"806338891267",appId:"1:806338891267:web:e6ec391a0de051af05c836"};
+try{
+  const F=await import("./vendor/firebase.js");
+  const app=F.initializeApp(cfg,"taalwoorden"), auth=F.getAuth(app), db=F.initializeFirestore(app,{}), ref=F.doc(db,"taalwoorden","instellingen");
+  let user=null;
+  window.twFB={user:()=>user,
+    login:async()=>{const pr=new F.GoogleAuthProvider();pr.setCustomParameters({prompt:"select_account"});
+      try{await F.signInWithPopup(auth,pr);}catch(e){if(e&&e.code==="auth/popup-blocked"){await F.signInWithRedirect(auth,pr);return;}throw e;}},
+    uit:()=>F.signOut(auth),
+    lees:async()=>{const s=await F.getDoc(ref);return s.exists()?s.data():null;},
+    bewaar:(o)=>F.setDoc(ref,{min:o.min,pin:o.pin,uit:o.uit,alles:o.alles,actief:o.actief,owner:user.uid,t:Date.now()})};
+  F.onAuthStateChanged(auth,(u)=>{user=u&&!u.isAnonymous?u:null;if(window.twFBklaar)window.twFBklaar();});
+  if(window.twFBklaar)window.twFBklaar();
+  F.getDoc(ref).then((s)=>{if(s.exists()&&window.twInst){const d=s.data();window.twInst({min:d.min,pin:d.pin,uit:d.uit,alles:d.alles,actief:d.actief});}}).catch(()=>{});
+}catch(e){console.warn(e);}
+</script>
 </body></html>
