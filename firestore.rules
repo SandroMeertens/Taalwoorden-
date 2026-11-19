@@ -3,12 +3,13 @@ rules_version = '2';
 // Plak dit in de Firebase-console: Firestore Database > Rules > Publish.
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Alleen een leerkracht met een schoolaccount (@kindante.nl) mag de instellingen veranderen.
+    // Mag opslaan: het account van de leerkracht (uid hieronder) of een Google-account van @kindante.nl.
     function school() {
       return request.auth != null
-        && request.auth.token.firebase.sign_in_provider == 'google.com'
-        && request.auth.token.email_verified == true
-        && request.auth.token.email.matches('.*@kindante[.]nl$');
+        && (request.auth.uid == 'ABE54Ab1yWh7zrM3XtDFf9TKriz2'
+          || (request.auth.token.firebase.sign_in_provider == 'google.com'
+            && request.auth.token.email_verified == true
+            && request.auth.token.email.matches('.*@kindante[.]nl$')));
     }
     function goed() {
       let d = request.resource.data;
