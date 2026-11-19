@@ -1,0 +1,33 @@
+rules_version = '2';
+// Regels voor het Firebase-project "taalwoorden".
+// Plak dit in de Firebase-console: Firestore Database > Rules > Publish.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Alleen een leerkracht met een schoolaccount (@kindante.nl) mag de instellingen veranderen.
+    function school() {
+      return request.auth != null
+        && request.auth.token.firebase.sign_in_provider == 'google.com'
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.matches('.*@kindante[.]nl$');
+    }
+    function goed() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['owner', 'min', 'uit', 'alles', 'actief', 'open', 't'])
+        && d.owner == request.auth.uid
+        && (!('open' in d) || (d.open is list && d.open.size() <= 40));
+    }
+    match /taalwoorden/{d} {
+      // Iedere iPad mag de instellingen lezen, verder niets.
+      allow get: if d == 'instellingen';
+      allow list: if false;
+      // De eerste leerkracht die opslaat, wordt de eigenaar.
+      allow create: if d == 'instellingen' && school() && goed();
+      allow update: if d == 'instellingen' && school() && goed() && resource.data.owner == request.auth.uid;
+      allow delete: if false;
+    }
+    // Alles wat hierboven niet staat, is dicht.
+    match /{pad=**} {
+      allow read, write: if false;
+    }
+  }
+}

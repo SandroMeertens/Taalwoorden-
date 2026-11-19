@@ -1705,9 +1705,9 @@ load();setBlock(blk);try{pasToe(JSON.parse(localStorage.getItem(INSTKEY)||"{}")|
 
 <script>if("serviceWorker" in navigator&&/github\.io$/.test(location.hostname)){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
 <script type="module">
-/* Inloggen voor de leerkracht en de instellingen voor alle iPads (Firebase-project van Bookflix).
+/* Inloggen voor de leerkracht en de instellingen voor alle iPads (eigen Firebase-project "taalwoorden").
    Dit is geen wachtwoord: de beveiliging zit in de regels van de database. */
-const cfg={apiKey:"AIzaSyA7BKuBItoAJNLE27MDDw87x-OMKI-efvs",authDomain:"bookflix-a358c.firebaseapp.com",projectId:"bookflix-a358c",storageBucket:"bookflix-a358c.firebasestorage.app",messagingSenderId:"806338891267",appId:"1:806338891267:web:e6ec391a0de051af05c836"};
+const cfg={apiKey:"AIzaSyDJaJZ6kkFfouvkbXSL83kRPJkDd80_15k",authDomain:"taalwoorden.firebaseapp.com",projectId:"taalwoorden",storageBucket:"taalwoorden.firebasestorage.app",messagingSenderId:"225493093962",appId:"1:225493093962:web:182a20ed8e1bf07dd1a0b3"};
 try{
   const F=await import("./vendor/firebase.js");
   const app=F.initializeApp(cfg,"taalwoorden"), auth=F.getAuth(app), db=F.initializeFirestore(app,{}), ref=F.doc(db,"taalwoorden","instellingen");
