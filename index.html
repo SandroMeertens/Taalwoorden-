@@ -114,6 +114,7 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,6vw,2.1rem)
 .lk-chips{display:flex;flex-wrap:wrap;gap:.35rem}
 .lk-chip{border:2px solid var(--line);background:var(--surface)}
 .lk-stappen{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.2rem .8rem}
+.lk-themas .lk-chips{gap:1.2rem;margin-top:.6rem}
 .lk-pin{flex:none;width:12rem;max-width:100%;min-height:3rem;height:auto;letter-spacing:.2em}.lk-grid{align-items:start}.lk .lk-blok>*{flex:none}
 .lk-sel{font:inherit;font-size:var(--fs-1);padding:.5rem .7rem;border:2px solid var(--line);border-radius:.8rem;background:var(--surface);color:var(--ink);max-width:100%}
 .lk-meld{margin:0;font-weight:700;min-height:1.4em}
@@ -874,19 +875,26 @@ var MINSCORE=0.8;
 var zinnen={}, NAAM="";
 /* Instellingen van de leerkracht. Op de website komen ze uit de database (inloggen met Google);
    ze worden ook op het apparaat bewaard, zodat ze zonder internet blijven gelden. */
-var INSTKEY="taalwoorden.inst", INST={}, UIT={}, ALLES=false, ACTIEF="", LKMELD="", LKBEZIG=false, LKFORM=null;
+var INSTKEY="taalwoorden.inst", INST={}, UIT={}, ALLES=false, ACTIEF="", OPEN=null, LKMELD="", LKBEZIG=false, LKFORM=null;
 function pasToe(o){if(!o||typeof o!=="object")return;INST=o;
   var m=Number(o.min);MINSCORE=(m>=0.5&&m<=1)?m:0.8;
   UIT={};if(o.uit&&typeof o.uit==="object")ORDER.forEach(function(k){if(o.uit[k]===true)UIT[k]=true;});
   if(ORDER.every(function(k){return UIT[k];}))UIT={};
   ALLES=o.alles!==false; /* standaard staan alle stappen open */
   ACTIEF="";if(typeof o.actief==="string"){var p=o.actief.split(":");if(BYID[p[0]]&&["w1","w2","all"].indexOf(p[1])>=0)ACTIEF=o.actief;}
+  OPEN=null;if(Array.isArray(o.open)){var ok=o.open.filter(function(x){return typeof x==="string"&&BYID[x];});if(ok.length)OPEN=ok;}
+  if(OPEN&&ACTIEF&&OPEN.indexOf(ACTIEF.split(":")[0])<0)OPEN.push(ACTIEF.split(":")[0]);
   if(ACTIEF){var q=ACTIEF.split(":");if(blk!==q[0])setBlock(q[0]);setId=q[1];setButtons();updateRiver();}
+  else if(!blkOpen(blk))setBlock(OPEN[0]);
   zetWeekKnoppen();}
+/* Thema's die de leerkracht heeft opengezet (geen lijst = alles open). */
+function aantalOpen(){return ACTIEF?1:BLOCKS.filter(function(b){return blkOpen(b.id);}).length;}
+function blkOpen(id){return !OPEN||OPEN.indexOf(id)>=0;}
 function zetWeekKnoppen(){["w1","w2","all"].forEach(function(x){var b=el("set-"+x);if(b)b.hidden=!!ACTIEF&&ACTIEF.split(":")[1]!==x;});}
 function eersteVoor(i){for(var j=i-1;j>=0;j--)if(!UIT[ORDER[j]])return ORDER[j];return "";}
 window.twInst=function(o){try{localStorage.setItem(INSTKEY,JSON.stringify(o||{}));}catch(e){}pasToe(o||{});
-  if(!S&&(view==="start"||view==="block"||view==="home"||view==="list"))go(ACTIEF&&(view==="start"||view==="block")?"home":view);};
+  if(!S&&(view==="start"||view==="block"||view==="home"||view==="list"))go(ACTIEF&&(view==="start"||view==="block")?"home":view);
+  else if(S&&!blkOpen(blk)){go("start");}};
 window.twFBklaar=function(){if(view==="leerkracht")leerkracht();else if(view==="start"&&!S)go("start");};
 function sKey(){return blk+":"+setId;}
 function curStap(){var k=sKey();if(!(k in stap))stap[k]=tests[k]?ORDER.indexOf("race"):0;var n=stap[k];while(n<ORDER.length&&UIT[ORDER[n]])n++;return n;}
@@ -1101,7 +1109,7 @@ function updateRiver(){
 function setButtons(){["w1","w2","all"].forEach(function(s){el("set-"+s).setAttribute("aria-pressed",String(s===setId));});}
 
 var VIEWS={leerkracht:leerkracht,zin:zinStart,start:start,block:blockPage,home:home,flash:flashStart,match:matchStart,fill:function(){quizStart("fill");},quiz:function(){quizStart("quiz");},list:list,race:raceSetup,type:typeStart,test:testIntro,klas:klasStart};
-function go(v){if(ORDER.indexOf(v)>=0&&!isOpen(v))v="home";if(v==="start"&&ACTIEF)v="block";if(S&&S.timer)clearInterval(S.timer);S=null;raceClose();closeFin();curPager=null;view=v;
+function go(v){if(ORDER.indexOf(v)>=0&&!isOpen(v))v="home";if(v!=="start"&&v!=="leerkracht"&&!blkOpen(blk)){if(OPEN)setBlock(OPEN[0]);}if(v==="start"&&ACTIEF)v="block";if(S&&S.timer)clearInterval(S.timer);S=null;raceClose();closeFin();curPager=null;view=v;
   var plain=v==="start"||v==="block"||v==="home";
   stage.className=plain?"":"panel";topEl.hidden=v==="start"||v==="block"||v==="leerkracht";
   if(v==="start")document.body.removeAttribute("data-blk");else document.body.setAttribute("data-blk",blk);
@@ -1153,7 +1161,7 @@ function start(){
   stage.innerHTML='<div class="start"><div class="start-bar"><span></span>'+fsBtn()+'</div><p class="eyebrow">Woordenschat · groep 8</p><h1 class="start-h start-big">Themawoorden</h1>'
    +'<p class="start-lead">Kies een thema en leer de 40 woorden die erbij horen.</p>'
    +(inSmallFrame()?'<p class="note">Is het beeld klein? Tik rechtsboven op Volledig scherm.</p>':'')
-   +'<div class="themes'+(BLOCKS.length<=3?' themes-few':'')+(BLOCKS.length>6?' themes-many':'')+'">'+BLOCKS.filter(function(b){return !ACTIEF||ACTIEF.split(":")[0]===b.id;}).map(function(b){
+   +'<div class="themes'+(aantalOpen()<=3?' themes-few':'')+(aantalOpen()>6?' themes-many':'')+'">'+BLOCKS.filter(function(b){return (!ACTIEF||ACTIEF.split(":")[0]===b.id)&&blkOpen(b.id);}).map(function(b){
       return '<button class="mode theme" data-blk="'+b.id+'" data-a="pickblk" data-v="'+b.id+'">'
        +routeSvg(b,"hero",{cls:"theme-svg",main:"tr-"+b.id,tokens:[{id:"tt-"+b.id,team:0}]})
        +'<span class="mode-name">'+b.naam+'</span><span class="mode-desc">'+b.words.length+' woorden in twee weken</span>'+meter(stats(words(b.id,"all")))+'</button>';
@@ -1458,13 +1466,19 @@ function leerkracht(){
    +'<section class="lk-blok"><h3>Stappen</h3><p class="note">Vink uit wat je klas overslaat.</p><div class="lk-stappen">'
    +ORDER.map(function(k){return '<label class="check"><input type="checkbox" id="lk-s-'+k+'"'+(uit[k]?'':' checked')+'> '+stapNaam[k]+'</label>';}).join("")+'</div>'
    +'<label class="check lk-alles"><input type="checkbox" id="lk-alles"'+(f.alles!==false?' checked':'')+'> Alle stappen meteen open voor iedereen</label></section>'
+   +'<section class="lk-blok lk-themas"><h3>Thema\u2019s voor de leerlingen</h3><p class="note">Vink aan welke thema\u2019s de leerlingen zien. De rest blijft dicht.</p><div class="lk-stappen">'
+   +BLOCKS.map(function(b){var aan=!Array.isArray(f.open)||!f.open.length||f.open.indexOf(b.id)>=0;return '<label class="check"><input type="checkbox" id="lk-t-'+b.id+'"'+(aan?' checked':'')+'> '+esc(b.naam)+'</label>';}).join("")+'</div>'
+   +'<div class="lk-chips"><button class="link" data-a="lkthema" data-v="alle">Alles aan</button><button class="link" data-a="lkthema" data-v="geen">Alles uit</button></div></section>'
    +'<section class="lk-blok"><h3>Thema en week</h3><p class="note">Kies wat de leerlingen deze week oefenen.</p><select class="lk-sel" id="lk-act"><option value="">Leerlingen kiezen zelf</option>'
    +BLOCKS.map(function(b){return [["w1","week 1"],["w2","week 2"],["all","alle woorden"]].map(function(x){var v=b.id+":"+x[0];return '<option value="'+v+'"'+(f.actief===v?' selected':'')+'>'+esc(b.naam)+' · '+x[1]+'</option>';}).join("");}).join("")
    +'</select></section></div>'
    +'<div class="row"><button class="btn btn-primary" data-a="lksave"'+(LKBEZIG?' disabled':'')+'>Opslaan voor alle iPads</button></div><p class="lk-meld" aria-live="polite">'+esc(LKMELD)+'</p></div>';
   stage.innerHTML=h;}
 function lkLeesForm(){var f=LKFORM||{}, p=el("lk-pin"), a=el("lk-act"), o={min:Number(f.min)>=0.5?Number(f.min):0.8,uit:{},alles:!!(el("lk-alles")&&el("lk-alles").checked),actief:a?a.value:""};
-  ORDER.forEach(function(k){var c=el("lk-s-"+k);if(c&&!c.checked)o.uit[k]=true;});return o;}
+  ORDER.forEach(function(k){var c=el("lk-s-"+k);if(c&&!c.checked)o.uit[k]=true;});
+  var op=BLOCKS.filter(function(b){var c=el("lk-t-"+b.id);return !c||c.checked;}).map(function(b){return b.id;});
+  if(o.actief&&op.indexOf(o.actief.split(":")[0])<0)op.push(o.actief.split(":")[0]);
+  o.open=op.length===BLOCKS.length?[]:op;return o;}
 
 /* ---------- Eigen zin: zelf een zin maken met drie woorden ---------- */
 function stam(w){var b=norm(bare(w)), d=b.split(" ").filter(function(x){return x.length>3&&["zich","naar","met","een","aan","van","als","in","ergens","iets","eraan","ermee"].indexOf(x)<0;});
@@ -1627,16 +1641,18 @@ stage.addEventListener("click",function(e){
   else if(a==="lklogin"){LKBEZIG=true;LKMELD="Kies je Google-account in het venster dat opent…";leerkracht();
     window.twFB.login().then(function(){LKBEZIG=false;LKMELD="";LKFORM=null;leerkracht();},function(e){LKBEZIG=false;LKMELD=lkFout(e);leerkracht();});}
   else if(a==="lkuit"){window.twFB.uit().then(function(){LKFORM=null;LKMELD="";leerkracht();});}
+  else if(a==="lkthema"){BLOCKS.forEach(function(b){var c=el("lk-t-"+b.id);if(c)c.checked=(v==="alle");});}
   else if(a==="lkmin"){LKFORM=lkLeesForm();LKFORM.min=Number(v);leerkracht();}
   else if(a==="lksave"){var o=lkLeesForm();
     if(ORDER.every(function(k){return o.uit[k];})){LKMELD="Laat minstens één stap aan staan.";LKFORM=o;leerkracht();return;}
+    if(!o.actief&&BLOCKS.every(function(b){var c=el("lk-t-"+b.id);return c&&!c.checked;})){LKMELD="Zet minstens één thema open.";LKFORM=o;leerkracht();return;}
     LKBEZIG=true;LKFORM=o;LKMELD="Opslaan…";leerkracht();
     window.twFB.bewaar(o).then(function(){LKBEZIG=false;LKMELD="Opgeslagen. De iPads krijgen dit zodra ze Taalwoorden openen.";window.twInst(o);leerkracht();},
       function(e){LKBEZIG=false;LKMELD=lkFout(e);leerkracht();});}
   else if(a==="zcheck")zinCheck();
   else if(a==="znext")zinNext();
   else if(a==="kpick"){}
-  else if(a==="pickblk"){setBlock(v);go("block");}
+  else if(a==="pickblk"){if(!blkOpen(v))return;setBlock(v);go("block");}
   else if(a==="pickset"){if(ACTIEF&&ACTIEF.split(":")[1]!==v)return;setId=v;save();setButtons();updateRiver();go("home");}
   else if(a==="reset"){stap[sKey()]=0;pool().forEach(function(x){lvl[x.id]=0;rep[x.id]=0;due[x.id]=0;});checkFin();save();updateRiver();home();}
   else if(a==="flip"){S.flipped=!S.flipped;renderFlash();}
@@ -1701,10 +1717,10 @@ try{
       try{await F.signInWithPopup(auth,pr);}catch(e){if(e&&e.code==="auth/popup-blocked"){await F.signInWithRedirect(auth,pr);return;}throw e;}},
     uit:()=>F.signOut(auth),
     lees:async()=>{const s=await F.getDoc(ref);return s.exists()?s.data():null;},
-    bewaar:(o)=>F.setDoc(ref,{min:o.min,uit:o.uit,alles:o.alles,actief:o.actief,owner:user.uid,t:Date.now()})};
+    bewaar:(o)=>F.setDoc(ref,{min:o.min,uit:o.uit,alles:o.alles,actief:o.actief,open:Array.isArray(o.open)?o.open:[],owner:user.uid,t:Date.now()})};
   F.onAuthStateChanged(auth,(u)=>{user=u&&!u.isAnonymous?u:null;if(window.twFBklaar)window.twFBklaar();});
   if(window.twFBklaar)window.twFBklaar();
-  F.getDoc(ref).then((s)=>{if(s.exists()&&window.twInst){const d=s.data();window.twInst({min:d.min,uit:d.uit,alles:d.alles,actief:d.actief});}}).catch(()=>{});
+  F.getDoc(ref).then((s)=>{if(s.exists()&&window.twInst){const d=s.data();window.twInst({min:d.min,uit:d.uit,alles:d.alles,actief:d.actief,open:d.open});}}).catch(()=>{});
 }catch(e){console.warn(e);}
 </script>
 </body></html>
