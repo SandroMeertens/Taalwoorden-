@@ -21,6 +21,20 @@
 /* Elk thema heeft eigen kleuren. Rivieren gebruikt de basiskleuren hierboven. */
 [data-blk="culturen"]{--bg:#F7F4EC;--ink:#2A3150;--ink-soft:#555C77;--line:#DDD8CB;--river:#4A68C8;--river-pale:#DEE6F9;--bank:#E6DFCD;
   --band:#F1E1B4;--on-band:#2A3150;--band-soft:#5B5F78;--band-line:rgba(42,49,80,.26);--rt-bank:#DDC88E;--rt-todo:#FCF6E3;--rt-done:#4A68C8;--rt-goal:#4A68C8;--tk-ink:#2A3150}
+[data-blk="virussen"]{--bg:#F1F8F2;--ink:#173F2A;--ink-soft:#466553;--line:#CFE3D4;--river:#23824F;--river-pale:#D6EFDF;--bank:#D3EAD9;
+  --band:#CDEBD6;--on-band:#173F2A;--band-soft:#3E6A50;--band-line:rgba(23,63,42,.26);--rt-bank:#A8D9B8;--rt-todo:#F3FCF5;--rt-done:#23824F;--rt-goal:#23824F;--tk-ink:#173F2A}
+[data-blk="helden"]{--bg:#FBF3EF;--ink:#4A1D14;--ink-soft:#73483D;--line:#EBD6CE;--river:#B83A22;--river-pale:#F8DDD4;--bank:#F1DCD2;
+  --band:#F7D3C4;--on-band:#4A1D14;--band-soft:#7A4436;--band-line:rgba(74,29,20,.26);--rt-bank:#EDB7A2;--rt-todo:#FFF6F2;--rt-done:#B83A22;--rt-goal:#B83A22;--tk-ink:#4A1D14}
+[data-blk="horen"]{--bg:#F5F2FB;--ink:#2E2152;--ink-soft:#594C7A;--line:#DDD5EE;--river:#6544C2;--river-pale:#E6DEFA;--bank:#E1D9F2;
+  --band:#DED3F5;--on-band:#2E2152;--band-soft:#5A4A84;--band-line:rgba(46,33,82,.26);--rt-bank:#C3B2EA;--rt-todo:#FAF8FF;--rt-done:#6544C2;--rt-goal:#6544C2;--tk-ink:#2E2152}
+[data-blk="media"]{--bg:#F0F5FC;--ink:#14325C;--ink-soft:#435C80;--line:#D1DFF1;--river:#2563C4;--river-pale:#D9E7FB;--bank:#D6E3F5;
+  --band:#CFE0F8;--on-band:#14325C;--band-soft:#3E5F8C;--band-line:rgba(20,50,92,.26);--rt-bank:#A9C6EE;--rt-todo:#F6FAFF;--rt-done:#2563C4;--rt-goal:#2563C4;--tk-ink:#14325C}
+[data-blk="schrijven"]{--bg:#FAF5EC;--ink:#3D2810;--ink-soft:#6A5338;--line:#E8DCC8;--river:#8E5414;--river-pale:#F3E3CB;--bank:#EEE0C8;
+  --band:#F1DFBF;--on-band:#3D2810;--band-soft:#6E5230;--band-line:rgba(61,40,16,.26);--rt-bank:#DEC08F;--rt-todo:#FFFAF1;--rt-done:#8E5414;--rt-goal:#8E5414;--tk-ink:#3D2810}
+[data-blk="snelheid"]{--bg:#FBF4EE;--ink:#3A2414;--ink-soft:#6B4F3B;--line:#ECDACB;--river:#C4520E;--river-pale:#FCE2CF;--bank:#E9E2DC;
+  --band:#FFD9BD;--on-band:#3A2414;--band-soft:#74492B;--band-line:rgba(58,36,20,.26);--rt-bank:#8E8A86;--rt-todo:#F4F1EE;--rt-done:#C4520E;--rt-goal:#C4520E;--tk-ink:#3A2414}
+.tk-emo,.d-emo{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+
 
 *{box-sizing:border-box}
 /* De hele pagina schaalt mee met het kader waarin hij staat: een browser, een digibord of een ingesloten kader (bijvoorbeeld in Canva).
@@ -236,6 +250,8 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,6vw,2.1rem)
 .start-river{display:block;width:100%;height:auto}
 .themes{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:.75rem;width:100%}
 .themes-few{grid-template-columns:minmax(0,1fr)}
+/* Veel thema's: kleinere kaarten, op een breed scherm vier naast elkaar. */
+.themes-many{grid-template-columns:repeat(auto-fit,minmax(14.5rem,1fr))} .themes-many .theme{padding:.8rem 1rem .95rem}
 .theme{background:var(--band);color:var(--on-band);border-color:var(--band);padding:1.1rem 1.3rem 1.3rem}
 .theme .mode-desc,.theme .week-n{color:var(--band-soft)}
 .theme .meter{background:var(--rt-todo)} .theme .meter span{background:var(--rt-done)}
@@ -496,7 +512,313 @@ var BLOCKS=[
  ],
  paren:[[0,28],[1,3],[4,21],[21,31],[4,31],[8,9],[2,25],[16,17],[24,39],[32,35],[33,35],[7,14],[23,37],[17,36],[8,38],[26,37],[11,25],[34,35]],
  skip:{1:[3],3:[1],2:[25,15,18],4:[21,31],6:[15,18],19:[22],21:[31,4],23:[37],24:[39],25:[2],31:[21,4],36:[27,37],39:[24]},
- nooit:[[15,18],[12,29],[10,12],[10,29],[5,17]]}
+ nooit:[[15,18],[12,29],[10,12],[10,29],[5,17]]},
+
+{id:"virussen", naam:"Virussen", titel:"Virussen", kind:"trail", token:"emo", emo:"🛡️", eind:"💚", deco:["🦠", "🧫", "💉"],
+ lead:"Met elk goed antwoord komt je schild verder: van besmet tot helemaal gezond.",
+ labels:["besmet", "afweer", "vaccin", "gezond"], klaar:"Gezond: alle {n} geleerd!",
+ race:"Afweerrace", teams:["Schild geel", "Schild rood"], raceVraag:"Welk schild is het eerst gezond?",
+ raceRegel:"Het schild dat het eerst bij gezond is, wint.", verder:"Jouw schild gaat verder.", wint:"is het eerst gezond!", finTitel:"Je bent helemaal gezond!",
+ words:[
+["de bacterie", "eencellige microbe", "n", 1, "Onder de microscoop zag je ___: één cel met een staartje dat heen en weer zwiepte.", "Van ___ in een wondje kan je knie rood en dik worden.", "In yoghurt zit ___ die goed is voor je buik."],
+["bacterieel", "dat wat met bacteriën te maken heeft", "a", 1, "De ontsteking was ___, dus Sem kreeg antibiotica van de dokter.", "Is een infectie ___, dan kan de huisarts een antibioticakuur voorschrijven.", "Keelpijn is soms ___ en soms komt het door een virus."],
+["cruciaal", "zeer belangrijk; beslissend", "a", 1, "Handen wassen is ___ als je wilt voorkomen dat ziektekiemen zich verspreiden.", "De laatste minuut van de finale was ___: wie dan scoorde, won de beker.", "Voor een goede proef is het ___ dat je alles precies opschrijft."],
+["desalniettemin", "toch; ondanks alles", "a", 1, "Lotte had koorts; ___ wilde ze per se naar het schoolreisje.", "De proef mislukte drie keer; ___ gaf de onderzoeker niet op.", "Het regende hard; ___ gingen we met de hele klas naar buiten."],
+["de immuniteit", "de weerstand; een bepaalde ziekte niet kunnen krijgen", "n", 1, "Na de waterpokken heb je ___ tegen die ziekte: je krijgt ze niet nog een keer.", "Door de prik bouw je ___ op tegen mazelen.", "Onderzoekers meten hoe lang ___ na een vaccin blijft werken."],
+["immuun", "niet vatbaar voor een bepaalde ziekte", "a", 1, "Omdat Noor de mazelen al heeft gehad, is ze er nu ___ voor.", "Wie ingeënt is tegen polio, is ___ voor die ziekte.", "Mijn broertje lijkt wel ___ voor verkoudheid: hij is nooit snotterig."],
+["het immuunsysteem", "afweersysteem van het lichaam dat beschermt tegen ziekte", "n", 1, "Witte bloedcellen zijn de soldaten van ___: ze vallen indringers aan.", "Als je goed slaapt en gezond eet, blijft ___ sterk.", "Koorts is een teken dat ___ hard aan het werk is tegen een infectie."],
+["inenten", "vaccineren; een stof in het lichaam spuiten waarmee bescherming tegen een bacterie of virus wordt opgebouwd", "v", 1, "Voor de reis naar Afrika moest Daan zich laten ___ tegen gele koorts.", "Op het consultatiebureau gaat de verpleegkundige de baby ___ tegen kinkhoest.", "De dierenarts kwam de kalfjes ___ zodat ze niet ziek zouden worden."],
+["de kop opsteken", "tevoorschijn komen", "v", 1, "Elke winter zie je de griep weer ___ in de klas.", "Als je de keuken niet schoonhoudt, kan schimmel ___.", "Na een paar warme dagen zag de boer de ziekte in zijn aardappels ___."],
+["legio", "ontzettend veel", "a", 1, "Op een vieze telefoon zitten ___ bacteriën.", "Er zijn ___ manieren om je weerstand te verbeteren.", "In het museum zag je ___ oude potjes met medicijnen."],
+["de microbe", "de ziektekiem; wezentje dat te klein is om met het blote oog te kunnen zien", "n", 1, "Je ziet ___ alleen met een microscoop, zo klein is hij.", "Antoni van Leeuwenhoek was de eerste die ___ door zijn lens zag bewegen.", "Een druppel slootwater lijkt schoon, maar onder het glas zwemt er ___ in."],
+["migreren", "zich verplaatsen", "v", 1, "Elk najaar zie je zwaluwen naar het warme zuiden ___.", "Sommige virussen kunnen van dieren naar mensen ___.", "Vroeger moesten veel families ___ om werk te vinden in een ander land."],
+["de strijd aangaan", "ergens tegen vechten", "v", 1, "Het lichaam gaat met witte bloedcellen ___ tegen de indringers.", "Artsen over de hele wereld willen ___ met malaria.", "De brandweer moest ___ met het vuur dat zich snel verspreidde."],
+["vaccineren", "inenten; een stof in het lichaam spuiten waarmee bescherming tegen een bacterie of virus wordt opgebouwd", "v", 1, "De GGD gaat alle kinderen van negen jaar ___ tegen DTP en BMR.", "Door op tijd te ___ verdween de ziekte pokken helemaal van de wereld.", "De arts wil de oudere mensen in het najaar ___ tegen de griep."],
+["viraal", "dat wat met virussen te maken heeft", "a", 1, "Een verkoudheid is ___: antibiotica helpen er niet tegen.", "De dokter dacht dat de longontsteking ___ was en niet door bacteriën kwam.", "De ziekte mazelen is ___: hij wordt veroorzaakt door een virus."],
+["het virus", "piepkleine microbe die een ziekte kan verwekken; kan zichzelf niet vermenigvuldigen", "n", 1, "Als je niest, verspreid je ___ van de griep via kleine druppeltjes.", "Zonder een cel om in te kruipen kan ___ zich niet vermenigvuldigen.", "Tegen ___ van de waterpokken bestaat gelukkig een vaccin."],
+["de voorzorgsmaatregel", "een handeling die je doet om te voorkomen dat je ziek wordt", "n", 1, "Een mondkapje dragen in het ziekenhuis is ___ om besmetting te voorkomen.", "Als ___ desinfecteert de kok elke ochtend het aanrecht.", "Hoesten in je elleboog is ___ die iedereen kan nemen tegen verspreiding van ziekte."],
+["zich vermenigvuldigen", "meer worden; in aantal toenemen", "v", 1, "In warme melk kunnen bacteriën ___: na een paar uur zijn het er miljoenen.", "Een virus kan alleen in een cel ___.", "Konijnen kunnen in korte tijd ___ als er genoeg voedsel is."],
+["zich voortplanten", "reproduceren; voor nakomelingen zorgen", "v", 1, "Zalmen zwemmen de rivier op, want daar willen ze ___.", "Planten kunnen ___ met zaadjes die de wind meeneemt.", "In het voorjaar gaan de meeste vogels ___: ze bouwen een nest en leggen eieren."],
+["de ziektekiem", "microbe waar je ziek van wordt", "n", 1, "Door je handen te wassen spoel je ___ weg voordat hij in je mond komt.", "De verpleegkundige ontsmette de wond, zodat ___ geen kans kreeg.", "Via een niesbui kan ___ zich in de klas verspreiden."],
+["afweren", "tegenhouden; op afstand houden", "v", 2, "Met een goed werkend immuunsysteem kan je lichaam de meeste virussen ___.", "De keeper wist elke bal ___ en hield zo zijn doel schoon.", "Met een muggennet kun je de muggen ___ terwijl je slaapt."],
+["de antibiotica", "het medicijn; pillen die helpen tegen bacteriële infecties", "n", 2, "Je moet ___ helemaal opmaken, ook als je je al beter voelt.", "Tegen een virus helpt ___ niet; dat werkt alleen tegen bacteriën.", "De huisarts schreef ___ voor tegen de ontstoken blaas."],
+["bijdragen aan", "meehelpen", "v", 2, "Elke leerling kan ___ een schone klas door zijn afval op te ruimen.", "Genoeg slapen kan ___ een sterke weerstand.", "Met de flessenactie wil de school ___ het goede doel."],
+["conserveren", "bewaren; manier om voedsel langer houdbaar te maken", "v", 2, "Vroeger gebruikten mensen zout om vis te ___ voor de winter.", "Door groente in te vriezen kun je haar maandenlang ___.", "Oma wilde de kersen ___ in potten met suikerwater."],
+["constant", "de hele tijd; continu", "a", 2, "In de koelkast blijft de temperatuur ___ rond de vier graden.", "Je hart klopt ___, dag en nacht, zonder ooit te stoppen.", "De zieke jongen moest ___ hoesten en kon daardoor niet slapen."],
+["constateren", "vaststellen; zien dat het zo is", "v", 2, "Na het bloedonderzoek kon de arts ___ dat het een bacteriële infectie was.", "De juf moest ___ dat er weer drie kinderen ziek thuis zaten.", "Onder de microscoop kon de laborant ___ dat er schimmel in het brood zat."],
+["de darmflora", "de bacteriën die in je darmen leven", "n", 2, "Miljarden goede bacteriën vormen samen ___ in je buik.", "Door vezelrijk eten blijft ___ gezond en heb je minder buikpijn.", "Antibiotica kan ook de goede bacteriën van ___ doden."],
+["eencellig", "iets wat uit één cel bestaat", "a", 2, "Een bacterie is ___: het hele diertje is maar één cel groot.", "Het pantoffeldiertje is een ___ wezentje dat in slootwater leeft.", "Mensen bestaan uit miljarden cellen, maar gist is ___."],
+["het eiwit", "proteïne; bouwstof voor lichaamscellen", "n", 2, "Je spieren groeien door ___ dat in vlees, bonen en eieren zit.", "Je lichaam gebruikt ___ uit je eten om nieuwe cellen te bouwen.", "Antistoffen in je bloed zijn gemaakt van ___."],
+["de fermentatie", "het proces van fermenteren", "n", 2, "Bij ___ veranderen gist en bacteriën de suiker in melk tot yoghurt.", "Door ___ wordt witte kool na een paar weken zuurkool.", "De bubbels in brooddeeg ontstaan tijdens ___ door gist."],
+["fermenteren", "veranderen van de zuurgraad, smaak, geur of houdbaarheid van een product door microben", "v", 2, "In Korea laten ze kool in potten ___ tot kimchi.", "Melk gaat ___ als je er goede bacteriën aan toevoegt; zo maak je yoghurt.", "Cacaobonen moeten eerst een week ___ voordat je er chocolade van kunt maken."],
+["incidenteel", "af en toe", "a", 2, "Bij ons op school komt hoofdluis ___ voor, gelukkig niet vaak.", "De bus is meestal op tijd en maar ___ te laat.", "Die ziekte zie je in Nederland alleen nog ___, bij een enkel kind."],
+["op natuurlijke wijze", "natuurlijk; zonder hulp van buitenaf", "a", 2, "Je lichaam geneest een kleine schaafwond ___, zonder medicijnen.", "In het bos verdwijnen afgevallen bladeren ___ doordat bacteriën ze afbreken.", "Na de waterpokken heb je ___ weerstand opgebouwd, zonder prik."],
+["de overhand krijgen", "gaan overheersen", "v", 2, "Als je te weinig slaapt, kunnen de ziektekiemen ___ in je lichaam.", "In de tweede helft leek de thuisclub ___ en scoorden ze twee keer.", "Wie niet poetst, ziet slechte bacteriën ___ in zijn mond."],
+["pasteuriseren", "verhitten van voedsel tot minstens 72 graden om ziektekiemen te verminderen", "v", 2, "De fabriek moet de melk ___ voordat hij in de winkel mag liggen.", "Louis Pasteur bedacht dat je wijn kon ___ zodat hij niet bederft.", "Door sap kort te ___ blijft het smaak houden en gaan de meeste kiemen dood."],
+["resistent", "bestand zijn tegen; weerstand hebben", "a", 2, "Sommige bacteriën zijn ___ geworden: antibiotica doen hun niets meer.", "Deze appelsoort is ___ tegen schimmel en blijft daardoor gezond.", "Omdat het onkruid ___ was, hielp het spuiten niet meer."],
+["steriliseren", "verhitten van voedsel of voorwerpen tot minstens 100 graden om ziektekiemen te doden", "v", 2, "In het ziekenhuis moet de verpleegkundige de scharen ___ zodat alle kiemen dood zijn.", "Voor je zelf jam maakt, moet je de potjes in kokend water ___.", "Ouders van een baby moeten de flesjes vaak ___."],
+["het symptoom", "een verschijnsel horend bij een bepaalde ziekte", "n", 2, "Koorts is ___ dat je bij griep vaak ziet.", "Rode vlekjes op je huid zijn ___ van de mazelen.", "Hoofdpijn was ___ dat Tim als eerste merkte, daarna kwam de keelpijn."],
+["de weerstand", "de mate waarin je lichaam je beschermt tegen ziektes", "n", 2, "Door veel groente te eten houd je ___ op peil.", "Na de operatie was ___ van opa laag, dus hij werd snel verkouden.", "Sporten en buiten spelen zijn goed voor ___ van je lichaam."],
+["wetenschappelijk", "dat wat met de wetenschap te maken heeft", "a", 2, "In een ___ onderzoek testen ze een nieuw vaccin bij duizenden mensen.", "Dat knoflook tegen verkoudheid helpt, is niet ___ bewezen.", "Onderzoekers werken ___: ze meten alles en controleren elkaars resultaten."]
+ ],
+ paren:[[0, 15], [1, 14], [4, 5], [5, 6], [4, 6], [24, 25], [24, 31], [29, 30], [34, 36], [20, 12], [3, 2], [26, 0], [28, 27], [38, 6], [33, 8], [11, 8]],
+ skip:{0:[10, 15, 19],4:[6, 38],5:[35],6:[4, 38],8:[17, 33],10:[0, 15, 19],12:[20],15:[0, 10, 19],17:[8, 18, 33],18:[17],19:[0, 10, 15],20:[12],23:[30, 34, 36],30:[23],33:[8, 17],34:[23, 36],35:[5],36:[23, 34],38:[4, 6]},
+ nooit:[[7, 13], [10, 19], [10, 15], [0, 10], [0, 19], [15, 19], [4, 38], [5, 35], [17, 18]]},
+
+{id:"helden", naam:"Helden", titel:"Helden", kind:"trail", token:"emo", emo:"🦸", eind:"🏆", deco:["🔥", "🛟", "🎖️"],
+ lead:"Met elk goed antwoord komt je held dichter bij het standbeeld op de sokkel.",
+ labels:["start", "moed", "redding", "sokkel"], klaar:"Op de sokkel: alle {n} geleerd!",
+ race:"Heldenrace", teams:["Held geel", "Held rood"], raceVraag:"Welke held staat het eerst op de sokkel?",
+ raceRegel:"De held die het eerst op de sokkel staat, wint.", verder:"Jouw held gaat verder.", wint:"staat het eerst op de sokkel!", finTitel:"Je staat op de sokkel!",
+ words:[
+["bevlogen", "heel enthousiast", "a", 1, "De ___ juf vertelde zo boeiend over ridders dat iedereen stil werd.", "Mijn oom is een ___ voetbaltrainer: hij praat er de hele dag over.", "Met ___ stem vertelde de gids over de redding van de bemanning."],
+["de bezieling", "het grote enthousiasme waarmee je iets doet", "n", 1, "Het publiek kreeg kippenvel van ___ waarmee ze piano speelde.", "Je ziet ___ in zijn ogen als hij over zijn dierenasiel praat.", "Zonder ___ wordt een toneelstuk saai, hoe goed je je tekst ook kent."],
+["doortastend", "flink en krachtig, zonder aarzelen", "a", 1, "De conducteur was ___: hij greep meteen de noodrem toen hij het kind zag.", "Door ___ op te treden voorkwam de juf een grote ruzie op het plein.", "Een goede aanvoerder is ___: hij neemt snel een besluit."],
+["de drijfveer", "iets dat je ertoe aanzet om iets te doen, motief", "n", 1, "Haar zieke zusje was ___ om dokter te worden.", "Wat is ___ van iemand die elke dag zwerfafval opruimt?", "Geld was niet ___ van de uitvinder; hij wilde mensen helpen."],
+["een lintje verdienen", "iets bijzonders doen voor de samenleving", "v", 1, "Na vijftig jaar vrijwilligerswerk in het verzorgingshuis zou oma wel ___.", "Iemand die zoveel mensen uit het water heeft gered, moet ___.", "Volgens de buurt zou de vrouw van de voedselbank echt ___."],
+["heroïsch", "erg dapper en moedig, als een held", "a", 1, "De redding van de hond uit het ijskoude water was echt ___.", "Wat de piloot deed was ___: hij landde het brandende vliegtuig veilig.", "Het was een ___ gevecht: de kleine ploeg hield de grote favoriet tegen."],
+["in de waagschaal stellen", "riskeren, aan groot gevaar blootstellen", "v", 1, "De brandweerman durfde zijn eigen leven ___ om het meisje te redden.", "Wie te hard fietst in het donker, kan zijn gezondheid ___.", "De verzetsstrijders moesten hun vrijheid ___ om onderduikers te helpen."],
+["nastreven", "iets proberen te bereiken", "v", 1, "Malala bleef haar droom ___: onderwijs voor alle meisjes.", "Je moet een doel ___, ook als het een tijdje niet lukt.", "Elke sporter wil een gouden medaille ___."],
+["nobel", "met goede en eerlijke bedoelingen", "a", 1, "Het is ___ dat je je zakgeld aan het dierenasiel geeft.", "De ridder had een ___ doel: hij wilde de armen beschermen.", "Eerlijk toegeven dat je fout zat, is heel ___."],
+["onbaatzuchtig", "niet uit op eigen voordeel", "a", 1, "Ze hielp de oude buurman ___, zonder er ook maar iets voor terug te vragen.", "Een vrijwilliger in het buurthuis werkt ___: hij krijgt er niets voor.", "Het was ___ van Jesse om zijn prijs te delen met de hele klas."],
+["onbevreesd", "dapper, zonder angst", "a", 1, "De bergbeklimmer klom ___ verder, ook al stormde het.", "De kleine hond stond ___ tegenover de grote stier.", "De ontdekkingsreiziger voer ___ naar onbekende eilanden."],
+["onthalen", "ontvangen, binnenhalen", "v", 1, "Het hele dorp kwam de winnaars ___ met vlaggen en muziek.", "De burgemeester wilde de sporters ___ op het stadhuis.", "Na zijn lange reis liet zijn familie hem ___ met taart."],
+["onverschrokken", "dapper, zonder angst", "a", 1, "De ___ redder dook in de woeste zee om de zwemmer te halen.", "Ze bleef ___ staan toen de grote jongens begonnen te schelden.", "De ___ verslaggever ging midden in de storm staan voor zijn verhaal."],
+["onverzettelijk", "onbuigzaam, vaststaand", "a", 1, "De verdediger was ___: geen spits kwam langs hem heen.", "Mijn moeder bleef ___: ik mocht echt geen telefoon op mijn kamer.", "Rosa Parks bleef ___ en weigerde op te staan in de bus."],
+["standvastig", "vaststaand, volhoudend", "a", 1, "Ondanks alle tegenslag bleef ze ___ trainen voor de marathon.", "Hij bleef ___ bij zijn verhaal, ook toen niemand hem geloofde.", "Een ___ karakter helpt als je iets moeilijks wilt bereiken."],
+["stoïcijns", "onverstoorbaar", "a", 1, "Terwijl iedereen gilde in de achtbaan, keek Bas ___ voor zich uit.", "De wachter van het paleis bleef ___ staan, hoe gek de toeristen ook deden.", "Ze onderging de prik ___, zonder één spier te vertrekken."],
+["triomferen", "een overwinning behalen", "v", 1, "Na een spannende finale mocht onze klas ___ bij het voetbaltoernooi.", "In het sprookje zal het goede altijd ___ over het kwade.", "De underdog wist toch te ___ over de wereldkampioen."],
+["welgemeend", "oprecht, eerlijk", "a", 1, "Na de ruzie waren de excuses van Ilse ___: ze had echt spijt.", "Het was een ___ compliment: hij vond je tekening echt prachtig.", "De redder kreeg een ___ bedankje van de familie."],
+["zich opofferen", "je beschikbaar stellen om iets te doen dat goed of nuttig is en dat niemand anders wil doen", "v", 1, "Niemand wilde de vieze bak schoonmaken, dus moest iemand ___.", "Bij de schoolmusical wilde Tom ___ om de achterkant van het paard te spelen.", "Een goede leider durft ___ voor de groep."],
+["zodanig", "in die mate, op zo'n manier", "a", 1, "Het stormde ___ dat de wedstrijd werd afgelast.", "Hij was ___ moe dat hij in de bus in slaap viel.", "De brug was ___ beschadigd dat niemand er meer over mocht."],
+["adoreren", "heel erg bewonderen, aanbidden", "v", 2, "Mijn zusje lijkt haar favoriete zangeres te ___: haar kamer hangt vol posters.", "Fans kunnen een voetballer ___ alsof hij perfect is.", "Kleine kinderen kunnen hun grote broer ___."],
+["geducht", "waar je ontzag voor hebt, die je vreest", "a", 2, "De tegenstander was ___: hij had dit seizoen nog geen wedstrijd verloren.", "Het leger van Napoleon was ___: andere landen waren er bang voor.", "In de oceaan is de haai ___: veel vissen zwemmen voor hem weg."],
+["gevierd", "door iedereen geprezen, bewonderd", "a", 2, "Na de Olympische Spelen werd de schaatser ___ als een held.", "Na haar redding werd de vrouw in het hele land ___.", "Het optreden van de zangeres werd ___ met een staande ovatie."],
+["idealiseren", "iets of iemand mooier voorstellen dan het/diegene is", "v", 2, "Als je je idool gaat ___, vergeet je dat hij ook fouten maakt.", "Opa kan zijn jeugd ___: alles was vroeger beter, zegt hij.", "In films kunnen ze het leven van een held ___."],
+["het imago", "beeld dat mensen van je hebben", "n", 2, "Na de ruzie op tv was ___ van de zanger flink beschadigd.", "De club wil ___ verbeteren en doet daarom veel voor de buurt.", "Door de reclame kreeg het merk ___ van stoer en sportief."],
+["minachten", "op iets of iemand neerkijken", "v", 2, "Het is gemeen om iemand te ___ omdat hij andere kleren draagt.", "De rijke ridder leek de arme boeren te ___.", "Je moet niemand ___ om zijn afkomst."],
+["naarmate", "in verhouding tot", "a", 2, "De held werd beroemder ___ meer mensen zijn verhaal hoorden.", "Je wordt beter ___ je vaker oefent.", "Het werd kouder ___ we hoger de berg op klommen."],
+["de neergang", "achteruitgang, afgang", "n", 2, "Na de ruzies in het team begon ___ van de club.", "Door het schandaal volgde ___ van de beroemde zanger.", "Het boek beschrijft de opkomst en ___ van het Romeinse Rijk."],
+["de nominatie", "voordracht", "n", 2, "De film kreeg ___ voor een Oscar, maar won hem niet.", "Door ___ maakt de juf kans op de prijs voor beste leerkracht.", "Ze was blij met ___ voor de Gouden Griffel."],
+["nomineren", "bepalen dat iemand in aanmerking komt voor een prijs", "v", 2, "De jury gaat drie boeken ___ voor de prijs.", "Je mag een held uit je buurt ___ voor de vrijwilligersprijs.", "De leerlingen wilden hun conciërge ___ als beste collega van het jaar."],
+["onovertroffen", "er is geen betere", "a", 2, "Haar wereldrecord is al twintig jaar ___.", "De taart van oma is ___: niemand bakt hem lekkerder.", "Met zijn ___ techniek won de schaatser alles."],
+["onvolprezen", "je kunt er nooit genoeg goeds over zeggen", "a", 2, "De vrijwilligers van de reddingsbrigade zijn ___: zonder hen zouden er veel meer ongelukken gebeuren.", "Het ___ werk van de verpleegkundigen kreeg eindelijk aandacht.", "Onze ___ conciërge regelt altijd alles."],
+["de persoonsverheerlijking", "iemand overdreven vereren om wie hij of zij is", "n", 2, "De enorme posters van de dictator in elke straat waren een voorbeeld van ___.", "Bij ___ wordt een leider behandeld alsof hij nooit iets fout doet.", "Gouden beelden en liedjes over de koning: ___ ging steeds verder."],
+["de reputatie", "de goede of slechte naam waarom je bekend bent", "n", 2, "Die bakker heeft ___ dat hij het lekkerste brood van de stad maakt.", "Door te liegen kun je ___ in één keer kwijtraken.", "De school heeft ___ van een school waar kinderen goed leren lezen."],
+["de sokkel", "voetstuk onder een standbeeld", "n", 2, "Op ___ staat in grote letters de naam van de held.", "Het bronzen beeld werd voorzichtig op ___ getild.", "Een duif zat op ___ onder het standbeeld van de dichter."],
+["van vlees en bloed zijn", "mens zijn, met goede én slechte kanten", "v", 2, "Ook helden maken fouten; ze blijven gewoon mensen die ___.", "We vergeten weleens dat beroemde voetballers ook ___.", "In het boek merk je dat koningen ook ___, met angsten en twijfels."],
+["verafgoden", "als een god vereren", "v", 2, "Sommige fans lijken hun zanger te ___: ze slapen dagen voor de deur van de concertzaal.", "In Egypte gingen de mensen de farao ___.", "Je kunt een sporter bewonderen zonder hem te ___."],
+["vermaard", "beroemd", "a", 2, "Rembrandt is ___ om zijn schilderijen; zijn werk hangt in het Rijksmuseum.", "Deze chef-kok is ___: mensen komen van heinde en verre om bij hem te eten.", "De stad is ___ om zijn grachten."],
+["versus", "tegen, tegenover", "a", 2, "Vanavond is de wedstrijd Ajax ___ Feyenoord.", "In het debat ging het om de stad ___ het platteland.", "De film draait om een kleine held ___ een grote draak."],
+["zich vereenzelvigen met", "je met iemand identificeren, je in iemand of iets herkennen", "v", 2, "Veel kinderen gaan ___ de hoofdpersoon van hun lievelingsboek.", "Na de film ging mijn broertje ___ de superheld: hij droeg dagenlang een cape.", "Lezers kunnen makkelijk ___ iemand die hetzelfde meemaakt."]
+ ],
+ paren:[[28, 29], [30, 31], [20, 25], [22, 21], [3, 1], [11, 16], [23, 36], [27, 22], [34, 32], [19, 26], [37, 30], [8, 17], [2, 13], [15, 14]],
+ skip:{2:[5, 10, 12, 13],5:[2, 10, 12, 30, 31],7:[6],8:[9, 17],9:[8, 17],10:[5, 12, 13, 14, 15],12:[5, 10, 13, 14, 15],13:[2, 10, 12, 14, 15, 21],14:[10, 12, 13, 15],15:[10, 12, 13, 14],17:[8, 9],18:[6],20:[36, 23],21:[13, 22, 30, 37],22:[31, 37],23:[20, 36],30:[21, 31, 37],31:[22, 30, 37],36:[20],37:[22, 30, 31]},
+ nooit:[[10, 12], [13, 14], [20, 36], [24, 33], [22, 37], [5, 10], [5, 12], [0, 1]]},
+
+{id:"horen", naam:"Laat je horen", titel:"Laat je horen", kind:"trail", token:"emo", emo:"📣", eind:"🎤", deco:["💬", "⚖️", "🗳️"],
+ lead:"Met elk goed antwoord komt je megafoon verder: van je mening naar het podium.",
+ labels:["mening", "argument", "debat", "podium"], klaar:"Op het podium: alle {n} geleerd!",
+ race:"Debatrace", teams:["Megafoon geel", "Megafoon rood"], raceVraag:"Welke megafoon is het eerst bij het podium?",
+ raceRegel:"De megafoon die het eerst bij het podium is, wint.", verder:"Jouw megafoon gaat verder.", wint:"is het eerst bij het podium!", finTitel:"Je staat op het podium!",
+ words:[
+["alhoewel", "ondanks het feit dat …; aan de andere kant ...", "a", 1, "Ik ga mee naar het park, ___ ik eigenlijk liever thuis was gebleven.", "De spreekbeurt ging goed, ___ ik in het begin heel zenuwachtig was.", "We wonnen de wedstrijd, ___ de andere ploeg beter speelde."],
+["het argument", "een goede reden waarmee je je mening onderbouwt", "n", 1, "Volgens ___ voor een langere pauze letten kinderen daarna beter op.", "Fietsen is goed voor het milieu: dat was ___ waarmee ze iedereen overtuigde.", "Als je ___ niet goed uitlegt, neemt niemand je mening over."],
+["het betoog", "een standpunt met argumenten waarmee je een ander wilt overtuigen", "n", 1, "In ___ legde Fien uit waarom de school een moestuin moet krijgen.", "Na ___ van de leerlingenraad stemde de directeur in met een nieuw klimrek.", "Je begint ___ met je standpunt en eindigt met een conclusie."],
+["de betweter", "iemand die denkt alles beter te weten", "n", 1, "Bram is echt ___: hij verbetert de juf zelfs als ze gelijk heeft.", "Niemand wil met ___ samenwerken die nooit luistert.", "In de groep speelde Thijs ___ die iedereen steeds verbeterde."],
+["de dialoog", "een gesprek of overleg tussen twee mensen of groepen", "n", 1, "De burgemeester ging ___ aan met de buurtbewoners over het nieuwe park.", "In ___ tussen de twee klassen werd de ruzie uitgepraat.", "Een toneelstuk bestaat vaak uit ___ tussen twee personages."],
+["discussiëren", "met elkaar van gedachten wisselen, verschillende standpunten bespreken", "v", 1, "In de kring mochten we ___ over de vraag of huiswerk zinvol is.", "Mijn ouders kunnen uren ___ over politiek.", "Het is leuk om te ___ als iedereen naar elkaar luistert."],
+["doordraven", "steeds maar over iets blijven redeneren", "v", 1, "Als Sanne eenmaal begint over paarden, kan ze eindeloos ___.", "Laat hem niet ___; we hebben maar tien minuten voor de vergadering.", "De verkoper bleef maar ___ over zijn telefoons."],
+["de ergernis", "iets waar je je aan ergert, de irritatie", "n", 1, "Tot ___ van de buren blafte de hond de hele nacht.", "Afval op straat is ___ waar de hele buurt over klaagt.", "Met ___ keek de juf naar de rommel op de tafels."],
+["hilarisch", "heel erg grappig", "a", 1, "De film was zo ___ dat we bijna van onze stoel vielen.", "Het filmpje van de vallende kat was zo ___ dat het miljoenen keren werd bekeken.", "De meester vertelde een ___ verhaal over zijn eerste schooldag."],
+["in tegenstelling tot", "het tegenovergestelde van", "a", 1, "Ik houd ___ mijn broer helemaal niet van spruitjes.", "Lisa is rustig, ___ haar drukke tweelingzus.", "Dit jaar won onze klas het toernooi, ___ vorig jaar."],
+["kortom", "kort gezegd, samenvattend", "a", 1, "Het is goedkoop, gezond en snel klaar; ___, een perfect ontbijt.", "Ze traint elke dag en eet gezond: ___, ze is echt een topsporter.", "Iedereen was ziek en het regende; ___, het feest ging niet door."],
+["kritiek geven", "een oordeel geven over iets of iemand, positief of negatief", "v", 1, "Na de presentatie mocht de klas ___ op de spreekbeurt.", "Het is knap als je op een vriendelijke manier kunt ___.", "De jury moest ___ op elk optreden in de talentenjacht."],
+["een mening onderbouwen", "argumenten geven bij een standpunt", "v", 1, "In een betoog moet je ___ met feiten en voorbeelden.", "Wie wil overtuigen, moet ___ en niet alleen roepen dat hij gelijk heeft.", "Het is lastig om ___ als je er weinig van weet."],
+["niet op je mondje gevallen zijn", "niet verlegen zijn, zeggen waar het op staat", "v", 1, "Om bij een debat te winnen, moet je ___.", "Als voorzitter van de leerlingenraad moet je wel ___.", "Een goede verslaggever durft alles te vragen; je moet echt ___."],
+["ongenuanceerd", "iets zeggen zonder rekening te houden met de verschillende kanten ervan", "a", 1, "De uitspraak 'alle jongeren zijn lui' is ___.", "Op internet reageren mensen vaak ___ en snel.", "Zijn mening was ___: hij keek maar naar één kant van het verhaal."],
+["het standpunt", "het uitgangspunt waardoor je mening bepaald wordt", "n", 1, "Bij het debat was ___ van Noor dat elk kind een huisdier moet mogen hebben.", "Bij een debat kies je ___ en verdedig je dat met argumenten.", "De wethouder veranderde ___ na het gesprek met de buurt."],
+["het tegenargument", "een argument dat je tegen een mening of standpunt inbrengt", "n", 1, "Slecht voor je tanden is ___ dat de juf gaf tegen snoep op school.", "Bedenk bij je betoog ook ___ en weerleg dat.", "Op elk argument van Tim had Noa ___ klaar."],
+["tolerant", "met een open houding tegenover andere gewoontes of denkbeelden dan de jouwe", "a", 1, "Onze klas is ___: iedereen mag zijn wie hij is.", "Nederland staat bekend als een ___ land.", "Je moet ___ zijn tegenover mensen met een ander geloof."],
+["voor je mening uitkomen", "duidelijk laten weten hoe je ergens over denkt", "v", 1, "Het is moedig om ___, ook als de rest van de groep het anders ziet.", "In de leerlingenraad leer je ___.", "Je moet ___, maar ook naar anderen luisteren."],
+["vrijheid van meningsuiting", "de vrijheid om alles te kunnen zeggen, schrijven, lezen en publiceren", "n", 1, "Dankzij ___ mag een krant kritiek hebben op de regering.", "In sommige landen is er geen ___ en kun je in de gevangenis belanden om een grap.", "In de Grondwet staat ___, maar je mag niet zomaar iemand beledigen."],
+["agressief", "gauw geweld gebruikend, klaar om aan te vallen", "a", 2, "De hond werd ___ en begon te grommen toen iemand zijn bal pakte.", "Als je ___ reageert, wordt een ruzie alleen maar groter.", "Na de verloren wedstrijd gedroegen sommige supporters zich ___."],
+["de bedoeling achterhalen", "het doel of de betekenis ontdekken", "v", 2, "Lees de tekst goed, dan kun je ___ van de schrijver.", "Het was lastig om ___ van het vage bericht.", "Door door te vragen kon de juf ___ van zijn grap."],
+["beledigend", "kwetsend", "a", 2, "Schelden over iemands uiterlijk is ___.", "De opmerking over haar kleren was ___ en maakte haar verdrietig.", "De voetballer kreeg een rode kaart, want zijn gebaar was ___."],
+["de conclusie", "eindoordeel, dat wat je uiteindelijk ergens van vindt", "n", 2, "Na alle argumenten kwam de klas tot ___ dat er een fietsenrek moest komen.", "Aan het eind van een betoog schrijf je ___.", "Trek niet te snel ___ voordat je alle kanten hebt gehoord."],
+["de confrontatie aangaan", "een stevig gesprek voeren om iets te bereiken bij de ander", "v", 2, "Isa durfde ___ met de jongen die steeds haar spullen afpakte.", "Soms moet je ___ om een probleem op te lossen.", "Hij wilde liever niet ___, dus zei hij niets."],
+["dankzij", "door", "a", 2, "De spreekbeurt is goed gelukt ___ jouw hulp.", "De actie was een succes ___ alle kinderen die meededen.", "We kwamen op tijd ___ de snelle bus."],
+["diverse", "verschillende", "a", 2, "In de klas hebben we ___ meningen over huiswerk.", "De juf liet ___ filmpjes zien over het onderwerp.", "Er kwamen ___ argumenten op tafel tijdens het debat."],
+["eromheen draaien", "niet ronduit zeggen wat je denkt", "v", 2, "Je moet niet ___; zeg gewoon wat er aan de hand is.", "Mijn broertje kan ___ als hij iets kapot heeft gemaakt.", "De politicus bleef ___ en gaf geen echt antwoord."],
+["fatsoenlijk", "netjes, goed opgevoed", "a", 2, "Ook als je boos bent, kun je ___ blijven praten.", "Een ___ mens laat een oudere dame voorgaan.", "Het is niet ___ om iemand uit te lachen."],
+["formuleren", "iets onder woorden brengen", "v", 2, "Probeer je vraag duidelijk te ___, zodat iedereen hem begrijpt.", "Het was moeilijk om ___ wat ik precies voelde.", "Voor het debat moest elk team een standpunt ___."],
+["frustreren", "dwarszitten", "v", 2, "Het kan je ___ als niemand naar je mening luistert.", "Steeds verliezen kan een speler flink ___.", "Die trage computer kan me echt ___."],
+["invloed uitoefenen", "je macht gebruiken om iets te veranderen", "v", 2, "Met een petitie kun je ___ op de gemeente.", "Influencers kunnen ___ op wat kinderen willen kopen.", "De leerlingenraad wil ___ op de regels van het schoolplein."],
+["onrecht aandoen", "oneerlijk behandelen", "v", 2, "Je moet iemand geen ___ door hem de schuld te geven zonder bewijs.", "De scheidsrechter leek ons team ___ met die strafschop.", "Wie roddelt, kan een ander ___."],
+["oproepen tot", "dringend vragen", "v", 2, "De burgemeester wilde iedereen ___ rust na de rellen.", "Op de posters wilde de school ___ minder plastic gebruik.", "De actievoerders gingen ___ actie tegen het kappen van de bomen."],
+["protesteren", "laten merken dat je het ergens niet mee eens bent, je tegen iets verzetten", "v", 2, "Duizenden jongeren gingen op het plein ___ voor een beter klimaat.", "De kinderen wilden ___ tegen het sluiten van het zwembad.", "Je mag ___, maar wel zonder geweld."],
+["respectvol", "met waardering of eerbied", "a", 2, "Ook als je het oneens bent, kun je ___ reageren.", "Het museum ging ___ om met de spullen uit de oorlog.", "Luister ___ naar elkaar tijdens de kringgesprekken."],
+["het resultaat", "opbrengst, uitkomst", "n", 2, "Na de stemming was ___ dat we op schoolreis naar de dierentuin gaan.", "Dankzij het protest was ___ dat het zwembad openbleef.", "Na weken oefenen zag je ___: hij las veel vloeiender."],
+["valselijk beschuldigen", "onterecht beschuldigen", "v", 2, "Je mag iemand niet ___ van diefstal als je geen bewijs hebt.", "In het boek ging de koning de stalknecht ___.", "Het voelt heel oneerlijk als ze je ___."],
+["zeggen waar het op staat", "precies zeggen wat je vindt", "v", 2, "Oma durft altijd te ___, ook tegen de dokter.", "Soms moet je gewoon ___ in plaats van eromheen te praten.", "De coach ging na de slechte wedstrijd ___."],
+["zelfverzekerd", "zeker van jezelf, vol zelfvertrouwen", "a", 2, "Mila liep ___ het podium op voor haar spreekbeurt.", "Na veel oefenen voelde hij zich ___ voor de toets.", "Ze klonk ___ toen ze haar standpunt verdedigde."]
+ ],
+ paren:[[1, 16], [1, 2], [2, 15], [15, 23], [4, 5], [6, 27], [11, 34], [12, 1], [22, 20], [25, 0], [9, 0], [10, 23], [35, 28], [33, 31], [37, 32], [3, 17], [7, 30]],
+ skip:{1:[16],2:[1, 4, 15, 16, 23],5:[6, 34],6:[5, 27],11:[34],13:[18, 38],14:[20, 22],15:[1, 2, 16, 23],16:[1],17:[28, 35],18:[13, 38],20:[14, 22],22:[14, 20],23:[1, 15, 36],24:[18, 38],27:[6],28:[17, 35],31:[33],33:[31],34:[11],35:[17, 28],36:[23],38:[13, 18, 24]},
+ nooit:[[13, 38], [18, 38], [13, 18]]},
+
+{id:"media", naam:"Media", titel:"Media", kind:"trail", token:"emo", emo:"📱", eind:"📰", deco:["💬", "🔍", "✅"],
+ lead:"Met elk goed antwoord komt je telefoon verder: van bericht via factcheck naar echt nieuws.",
+ labels:["bericht", "bron", "factcheck", "nieuws"], klaar:"Echt nieuws: alle {n} geleerd!",
+ race:"Mediarace", teams:["Telefoon geel", "Telefoon rood"], raceVraag:"Welke telefoon is het eerst bij het echte nieuws?",
+ raceRegel:"De telefoon die het eerst bij het nieuws is, wint.", verder:"Jouw telefoon gaat verder.", wint:"is het eerst bij het nieuws!", finTitel:"Je hebt het echte nieuws!",
+ words:[
+["het amusement", "iets wat bedoeld is om mensen te vermaken en plezier te geven", "n", 1, "Op de kermis is van alles te doen voor ___: draaimolens, spookhuizen en suikerspinnen.", "De quiz op zaterdagavond is bedoeld als ___; je leert er niet veel van.", "In de middeleeuwen zorgden narren aan het hof voor ___."],
+["audiovisueel", "om naar te luisteren en naar te kijken", "a", 1, "Een film is ___: je hoort geluid en ziet beelden.", "Het museum gebruikt ___ materiaal, zoals filmpjes met uitleg.", "De presentatie van Ruben was ___, met video en muziek."],
+["bevooroordeeld", "je mening al hebben gevormd zonder alle feiten te kennen", "a", 1, "De scheidsrechter leek ___: hij floot steeds tegen hetzelfde team.", "Wie ___ is, luistert niet meer naar de andere kant van het verhaal.", "Ze was ___ over het nieuwe meisje, terwijl ze haar nog niet eens had gesproken."],
+["bingen", "meerdere afleveringen van een serie kijken of een paar films achter elkaar kijken", "v", 1, "In de vakantie wilde Mees de hele nieuwe serie ___ op één dag.", "Als je tot diep in de nacht gaat ___, ben je de volgende dag moe.", "Mijn zus kan een heel weekend films ___."],
+["de correspondent", "iemand die vanaf een bepaalde plek nieuws doorgeeft aan een krant of een nieuwsprogramma", "n", 1, "Vanuit Washington vertelde ___ in het journaal wat de president had gezegd.", "Voor de krant maakte ___ in Afrika een reportage over de droogte.", "De krant stuurde ___ naar het rampgebied om verslag te doen."],
+["de desinformatie", "misleidende informatie die met kwade bedoelingen wordt verspreid", "n", 1, "Het nepaccount verspreidde expres ___ om mensen bang te maken voor de verkiezingen.", "Bij ___ weet de afzender heel goed dat het niet klopt.", "Tijdens een oorlog gebruiken landen ___ om de vijand in verwarring te brengen."],
+["het entertainment", "iets wat bedoeld is om mensen te vermaken", "n", 1, "In het pretpark is ___ voor jong en oud.", "Gamen en series kijken zijn vormen van ___.", "De goochelaar zorgde voor ___ op het feest."],
+["interactief", "er is een wisselwerking tussen het medium en de gebruiker", "a", 1, "Het digibord is ___: je kunt erop tikken en dingen verschuiven.", "Het museum is ___: je mag zelf knoppen indrukken en proefjes doen.", "Een game is ___, want wat jij doet bepaalt wat er gebeurt."],
+["lanceren", "de wereld in sturen, aan het publiek bekendmaken", "v", 1, "Het bedrijf gaat volgende week een nieuwe telefoon ___.", "De zangeres wilde haar nieuwe nummer ___ op de radio.", "Met een groot feest wilde de school de nieuwe website ___."],
+["lief en leed delen", "alle leuke en droevige dingen met elkaar beleven", "v", 1, "In onze straat blijven de buren al jaren ___; ze helpen elkaar altijd.", "Echte vrienden blijven ___, ook als het even moeilijk gaat.", "In de appgroep van de familie wil oma ___ met iedereen."],
+["de media", "alle middelen waarmee informatie wordt verspreid, zoals internet, televisie, radio, kranten en tijdschriften", "n", 1, "Het nieuws over de redding stond overal in ___: op tv, op de radio en online.", "De voetballer praat liever niet met ___ na een verloren wedstrijd.", "Via ___ hoor je elke dag wat er in de wereld gebeurt."],
+["de misinformatie", "informatie die niet klopt en zonder schadelijke bedoelingen wordt verspreid", "n", 1, "Oma stuurde per ongeluk ___ door: ze dacht echt dat het bericht klopte.", "Bij ___ weet degene die het deelt niet dat het fout is.", "Door een tikfout in het artikel ontstond ___ over de datum van het concert."],
+["het nepnieuws", "verzonnen nieuws dat heel erg op echt nieuws lijkt", "n", 1, "Het bericht dat de school een maand dicht zou gaan, bleek ___.", "Vaak ziet ___ eruit als een echte nieuwssite, met een kop en een foto.", "Voordat je iets deelt, check je of je niet ___ verspreidt."],
+["posten", "een bericht op sociale media plaatsen", "v", 1, "Lotte wilde een foto van haar nieuwe puppy ___.", "Denk goed na voordat je iets gaat ___; internet vergeet niets.", "Hij bleef elk uur een filmpje ___ op zijn kanaal."],
+["het profiel", "beschrijving van iemand en zijn eigenschappen", "n", 1, "Op ___ van de gamer stond dat hij uit Groningen kwam en van voetbal hield.", "Zet niet te veel persoonlijke dingen op ___ van je account.", "De politie maakte ___ van de dader: lang, donker haar en een bril."],
+["de propaganda", "een grote groep mensen proberen te overtuigen van een bepaald idee", "n", 1, "Op de posters van de dictator stond alleen ___ over hoe goed hij was.", "In de Tweede Wereldoorlog gebruikten de Duitsers films en radio voor ___.", "Bij ___ zie je maar één kant en wordt de rest verzwegen."],
+["regisseren", "de leiding hebben bij de uitvoering van een toneelstuk of de opname van een film of bij een tv-uitzending", "v", 1, "Meester Kees gaat de eindmusical van groep 8 ___.", "Steven Spielberg wilde als kind al films ___.", "Voor de schoolfilm mocht Zara zelf ___ en de acteurs aanwijzingen geven."],
+["een scala aan", "diverse, een heel aantal", "a", 1, "Op het streamingplatform vind je ___ series en films.", "De bibliotheek heeft ___ boeken over de ruimte.", "Het festival bood ___ activiteiten voor kinderen."],
+["vooringenomen", "zonder alle feiten te kennen je al een mening vormen", "a", 1, "De juryleden mochten niet ___ zijn; ze moesten alle optredens eerlijk beoordelen.", "Hij was ___ over het boek omdat de kaft hem niet beviel.", "Een goede journalist is niet ___ en hoort alle kanten."],
+["zich met iemand identificeren", "het gevoel hebben dat je op iemand lijkt", "v", 1, "Kijkers willen ___ die hetzelfde meemaakt als zij.", "In een goede serie kan iedereen ___ die op hem lijkt.", "Fans gaan ___ uit de film en praten zelfs zoals hij."],
+["anoniem", "van iemand die je niet kent en de naam niet weet", "a", 2, "De gemene reactie werd ___ geplaatst, dus niemand wist wie het was.", "Het briefje in de bus was ___: er stond geen naam onder.", "Op internet denken mensen soms dat ze ___ zijn, maar dat is vaak niet zo."],
+["argeloos", "nietsvermoedend, zich niet bewust van mogelijke gevaren", "a", 2, "Tim klikte ___ op de link, en toen was zijn account gehackt.", "Het hertje liep ___ het open veld op, waar de wolf wachtte.", "Ze gaf ___ haar adres aan de onbekende gamer."],
+["de bubbel", "de leef- en denkwereld van iemand waarin je weinig andersdenkenden ontmoet", "n", 2, "Doordat je alleen video's ziet die je leuk vindt, kom je in ___ terecht.", "In ___ van zijn vrienden dacht iedereen hetzelfde over de wedstrijd.", "Probeer eens uit ___ te stappen en andere meningen te lezen."],
+["de censuur", "het tegenhouden of verbieden van een publicatie", "n", 2, "In dat land bepaalt ___ welke berichten op tv mogen.", "Door ___ werd het boek over de koning verboden.", "Journalisten protesteerden tegen ___ van hun artikelen."],
+["de complottheorie", "de overtuiging dat een gebeurtenis het gevolg is van een geheim plan", "n", 2, "Volgens ___ is de maanlanding opgenomen in een filmstudio.", "Op internet circuleert ___ dat de regering iets geheimhoudt over het weer.", "Hij gelooft in ___ dat beroemdheden eigenlijk robots zijn."],
+["curieus", "heel vreemd, heel merkwaardig", "a", 2, "Het was ___ dat de video tegelijk op honderd accounts verscheen.", "In het rariteitenkabinet lag een ___ voorwerp: een mes met twaalf lemmetjes.", "Wat een ___ verhaal: een hond die de bus naar school neemt!"],
+["deepfake", "digitaal bewerkt met AI; een deepfake foto is een digitaal bewerkte foto die net echt lijkt", "n", 2, "Het filmpje van de premier die rapte, was een ___ die met AI was gemaakt.", "Met een ___ kun je iemand dingen laten zeggen die hij nooit heeft gezegd.", "De foto leek echt, maar het bleek een ___."],
+["ergens op bedacht zijn", "erop voorbereid zijn dat er iets (vervelends) kan gebeuren", "v", 2, "Als je online speelt, moet je ___ dat niet iedereen is wie hij zegt.", "Bij vreemde berichten moet je ___ dat het oplichting kan zijn.", "Fietsers moeten ___ dat een autodeur ineens open kan gaan."],
+["factchecken", "nagaan of beweringen kloppen", "v", 2, "Voordat de krant het artikel plaatst, moet de redactie alles ___.", "Je kunt een bericht ___ door te kijken of betrouwbare sites hetzelfde zeggen.", "Na het debat gingen journalisten de uitspraken van de politici ___."],
+["goedgelovig", "als je snel denkt dat wat anderen zeggen klopt", "a", 2, "Mijn broertje is ___: hij dacht echt dat je van wortels in het donker kunt zien.", "Oplichters hopen dat je ___ bent en alles gelooft.", "Wees niet zo ___: niet alles wat online staat, is waar."],
+["liken", "online laten weten dat je iets leuk of goed vindt", "v", 2, "Duizenden mensen gingen de foto van de babypanda ___.", "Je hoeft niet elk filmpje te ___ om het leuk te vinden.", "Hij vroeg al zijn vrienden om zijn nieuwe video te ___."],
+["naïef", "goed van vertrouwen, goedgelovig", "a", 2, "Het was ___ om te denken dat je echt een gratis telefoon kon winnen.", "De prins was ___ en geloofde alles wat de sluwe vos hem vertelde.", "Ze was nog jong en ___ en vertrouwde iedereen."],
+["ontkrachten", "debunken, met feiten en bewijzen laten zien dat iets niet klopt", "v", 2, "De wetenschapper kon het gerucht ___ met duidelijke metingen.", "Met een foto van de echte situatie wist de krant het nepbericht te ___.", "Het is lastig om een complottheorie te ___ bij mensen die geen feiten willen horen."],
+["ophitsen", "kwaad en opgewonden maken", "v", 2, "Sommige accounts willen mensen met boze berichten tegen elkaar ___.", "Je moet je niet laten ___ door die jongens op het plein.", "De leider wilde de menigte ___ tot ze gingen schreeuwen."],
+["de opinie", "de mening", "n", 2, "In de krant staat ___ van een schrijver over het nieuwe schoolplan.", "In de krant gaf de directeur ___ over een telefoonverbod op school.", "Een column geeft ___ van één persoon, geen neutraal nieuws."],
+["het platform", "online omgeving waar mensen met elkaar kunnen communiceren en informatie kunnen plaatsen", "n", 2, "Op ___ voor video's kun je filmpjes delen met de hele wereld.", "Ouders lezen de berichten van school op ___ van de app.", "Kinderen onder de dertien mogen vaak nog geen account op ___ maken."],
+["polariseren", "spanning en onenigheid tussen mensen groter maken", "v", 2, "Boze berichten kunnen een discussie ___, tot niemand nog naar elkaar luistert.", "Als je mensen in twee kampen verdeelt, ga je ___.", "Sommige talkshows lijken het debat expres te ___."],
+["publiek", "openbaar, algemeen, wat iedereen weet of wat van iedereen is", "a", 2, "Als je account ___ is, kan iedereen je foto's zien.", "De bibliotheek is een ___ gebouw waar iedereen naar binnen mag.", "Na het interview was zijn geheim ineens ___."],
+["de satire", "spottend plaatje, filmpje, beeld of artikel om iets of iemand te bekritiseren", "n", 2, "Het grappige filmpje over de minister was ___, geen echt nieuws.", "In ___ wordt een politicus vaak overdreven belachelijk gemaakt.", "De Speld is een site vol ___: de berichten zijn expres verzonnen."],
+["trollen", "online nare berichten plaatsen om anderen boos te maken", "v", 2, "Hij begon in het forum te ___ met gemene opmerkingen over iedereen.", "Wie gaat ___, kan uit de gamechat worden gezet.", "Negeer accounts die alleen maar willen ___."]
+ ],
+ paren:[[5, 11], [5, 12], [11, 12], [13, 30], [13, 39], [3, 6], [2, 20], [15, 38], [23, 15], [24, 12], [26, 12], [28, 32], [33, 36], [34, 14], [35, 10], [37, 20], [25, 21], [4, 16], [8, 13], [7, 1]],
+ skip:{0:[6],1:[7],2:[18],5:[12, 11],6:[0],7:[1],8:[13],10:[35],11:[12, 5],12:[5, 11],13:[8, 30],15:[5, 11, 12, 38],18:[2],20:[21, 29, 31],21:[29, 31],28:[32],29:[31, 21],30:[13],31:[29, 21],32:[28],33:[36],35:[10],36:[33],38:[15]},
+ nooit:[[0, 6], [2, 18], [29, 31], [21, 31], [21, 29]]},
+
+{id:"schrijven", naam:"Schrijven", titel:"Schrijven", kind:"trail", token:"emo", emo:"✏️", eind:"📚", deco:["💡", "📝", "📮"],
+ lead:"Met elk goed antwoord komt je potlood verder: van idee tot bestseller.",
+ labels:["idee", "manuscript", "uitgever", "bestseller"], klaar:"Een bestseller: alle {n} geleerd!",
+ race:"Schrijfrace", teams:["Potlood geel", "Potlood rood"], raceVraag:"Welk potlood schrijft het eerst een bestseller?",
+ raceRegel:"Het potlood dat het eerst bij de bestseller is, wint.", verder:"Jouw potlood schrijft verder.", wint:"heeft het eerst een bestseller!", finTitel:"Je hebt een bestseller!",
+ words:[
+["het aanstormend talent", "een snel opkomend talent", "n", 1, "De twaalfjarige schrijfster is ___ van dit jaar: iedereen praat over haar eerste boek.", "De trainer zag in de jonge spits ___ van de club.", "Op het festival trad ___ op dat volgend jaar vast beroemd is."],
+["alert", "waakzaam, oplettend", "a", 1, "De detective in het boek bleef ___ en zag elk klein spoor.", "Als schrijver moet je ___ zijn op mooie zinnen die je om je heen hoort.", "De bewaker was niet ___ en merkte niet dat het schilderij verdween."],
+["arriveren", "aankomen", "v", 1, "De schrijfster zou om tien uur op school ___ voor haar lezing.", "In hoofdstuk één zie je de hoofdpersoon ___ in een vreemde stad.", "De gasten zullen pas na het eten ___."],
+["benaderen", "contact zoeken om iemand iets te vragen", "v", 1, "Een uitgeverij wilde de jonge schrijver ___ voor een nieuw boek.", "Je kunt de bibliotheek ___ om een schrijver op school uit te nodigen.", "Na haar succes gingen tv-programma's haar ___ voor een interview."],
+["de bestseller", "iets wat goed verkocht wordt", "n", 1, "Zijn eerste boek werd meteen ___: er gingen honderdduizend exemplaren over de toonbank.", "In de boekwinkel ligt ___ van deze maand vooraan op een grote stapel.", "Harry Potter is ___ die in tachtig talen is vertaald."],
+["creëren", "iets maken, laten ontstaan", "v", 1, "Met een paar woorden kan een schrijver een hele wereld ___.", "De kunstenaar wilde iets ___ wat nog nooit iemand had gezien.", "In de schrijfles mochten we een eigen personage ___."],
+["daadwerkelijk", "echt, werkelijk", "a", 1, "Na jaren dromen heeft ze ___ een boek geschreven.", "Het verhaal is ___ gebeurd; het is geen verzinsel.", "Of de schrijver ___ komt, horen we morgen pas."],
+["debuteren", "voor het eerst optreden of van zich doen horen", "v", 1, "Op haar vijftiende mocht ze ___ met een dichtbundel.", "Hij zal volgend jaar ___ als schrijver van een jeugdboek.", "De jonge actrice ging ___ in een musical in het theater."],
+["hardvochtig", "zonder medelijden", "a", 1, "De stiefmoeder was ___: ze liet Assepoester de hele dag schrobben.", "In het verhaal is de koning ___: hij straft iedereen zonder genade.", "Het was ___ om de zwerfkat in de kou te laten staan."],
+["de hype", "iets nieuws wat tijdelijk veel aandacht trekt in de media", "n", 1, "Dat boek was ___: een maand lang las iedereen het, daarna niemand meer.", "Na ___ rond de nieuwe game werd het weer rustig.", "Is dit speelgoed echt goed, of is het gewoon ___?"],
+["kritisch", "met veel op- en aanmerkingen", "a", 1, "De redacteur las het verhaal ___ en zette overal rode strepen.", "Wees ___ als je je eigen tekst nakijkt.", "Mijn juf is ___ op spelfouten in een opstel."],
+["de literair agent", "iemand die schrijvers helpt om hun boeken uitgegeven en vertaald te krijgen", "n", 1, "Het manuscript werd door ___ naar tien uitgeverijen gestuurd.", "Dankzij ___ werd haar boek ook in Duitsland uitgegeven.", "Een schrijver met ___ hoeft zelf niet met uitgevers te onderhandelen."],
+["het manuscript", "geschreven tekst die nog niet gedrukt is", "n", 1, "Na twee jaar schrijven stuurde ze ___ naar de uitgeverij.", "Op ___ stonden nog veel doorhalingen en aantekeningen.", "De uitgever las ___ en besloot er een boek van te maken."],
+["provisorisch", "voorlopig, als noodvoorziening", "a", 1, "Na de storm werd het dak ___ gerepareerd met een zeil.", "De titel was nog ___, tot de schrijver een betere wist.", "In de tent maakten we een ___ bureau van twee kisten."],
+["reikhalzend uitzien naar", "vol verlangen uitzien naar", "v", 1, "Fans gaan ___ het nieuwe deel van de serie.", "Alle kinderen blijven ___ de zomervakantie.", "Ik ga ___ de verschijning van haar volgende boek."],
+["retourneren", "terugsturen", "v", 1, "De uitgeverij ging het manuscript ___ met een briefje: helaas, niet geschikt.", "Je kunt het boek binnen veertien dagen ___ als je het niet goed vindt.", "De bibliotheek wil dat je de boeken op tijd gaat ___."],
+["de review", "de beoordeling, de recensie", "n", 1, "In ___ in de krant kreeg het boek vijf sterren.", "Voordat ik een boek koop, lees ik eerst ___ op internet.", "Voor de leesclub schreef Jens ___ van zijn lievelingsboek."],
+["sympathiek", "heel aardig", "a", 1, "De hoofdpersoon is zo ___ dat je hoopt dat het goed met hem afloopt.", "De schrijfster was erg ___ en signeerde alle boeken.", "Tijdens het interview kwam hij heel ___ over."],
+["de synopsis", "de korte inhoudsbeschrijving, de verhaallijn", "n", 1, "Op de achterkant van het boek staat ___ in vijf zinnen.", "Voor de uitgever schreef ze eerst ___ van haar verhaal.", "In ___ lees je in het kort waar de film over gaat."],
+["de woordspeling", "woordgrap", "n", 1, "De machinist zei: 'Vandaag gaat het als een trein.' Dat is ___ die iedereen leuk vond.", "In de moppentrommel staat ___ die ik niet snapte.", "In de mop 'Wat zegt een tomaat? Ik ben rood van schaamte' zit ___."],
+["aangrijpend", "ontroerend", "a", 2, "Het einde van het boek was zo ___ dat ik moest huilen.", "Het verhaal van het vluchtelingenmeisje was zo ___ dat de hele klas stil werd.", "Opa vertelde een ___ verhaal over de oorlog."],
+["aanvankelijk", "in het begin", "a", 2, "Ik vond het boek ___ saai, maar later kon ik niet stoppen met lezen.", "De schrijfster wilde ___ dokter worden.", "Het plan leek ___ goed, maar het mislukte toch."],
+["de beeldspraak", "vorm van taalgebruik waarbij je iets duidelijk maakt door een beeld op te roepen of te beschrijven", "n", 2, "'Ze heeft een hart van goud' is ___: haar hart is niet echt van goud.", "Met ___ beschrijft de dichter het gevoel van verdriet als een donkere wolk.", "In de zin 'de zon lachte' zit ___."],
+["bemachtigen", "met moeite te pakken krijgen", "v", 2, "Met veel geluk wist ze nog een kaartje te ___ voor de voorstelling.", "In het verhaal wil de dief de gouden sleutel ___.", "Het was lastig om het nieuwste boek te ___, want het was overal uitverkocht."],
+["het element", "het onderdeel", "n", 2, "In een detectiveverhaal is spanning ___ dat niet mag ontbreken.", "De draak is ___ dat elk sprookje spannender maakt.", "Humor is ___ dat in al haar boeken terugkomt."],
+["feministisch", "strevend naar gelijke rechten voor vrouwen", "a", 2, "Het boek is ___: het vertelt dat meisjes evenveel kansen verdienen als jongens.", "De ideeën van Aletta Jacobs waren ___: ze vond dat vrouwen moesten mogen stemmen.", "Haar verhalen zijn ___: de heldinnen strijden voor gelijke rechten."],
+["het genre", "de soort, gezegd van boeken, beeldende kunst, films en muziek", "n", 2, "Fantasy is ___ waar ik het meest van houd.", "Bij muziek is rap ___ waar mijn broer het meest van houdt.", "Op het etiket van het boek zie je ___: fantasy, detective of humor."],
+["intrigeren", "nieuwsgierig maken", "v", 2, "De mysterieuze titel kan lezers ___.", "Een spannende eerste zin moet je ___ zodat je verder wilt lezen.", "Het geheime briefje bleef haar ___."],
+["de non-fictie", "boeken die op feiten gebaseerd zijn, geen fictie", "n", 2, "Een boek over dinosaurussen met echte feiten hoort bij ___.", "Voor je werkstuk zoek je in de kast met ___.", "Een boek over echte ontdekkingsreizigers valt onder ___."],
+["ontheemd", "uit de vertrouwde omgeving verjaagd", "a", 2, "Door de oorlog raakten duizenden families ___.", "De hoofdpersoon voelde zich ___ in het nieuwe land, ver van zijn dorp.", "Na de overstroming waren veel mensen ___ en zochten ze een nieuw huis."],
+["opportunistisch", "je gedragend zoals het jou het best uitkomt", "a", 2, "Het was ___ van Joep om pas vriendjes te worden toen Sam een trampoline kreeg.", "De vos was ___: hij koos steeds de kant van wie aan het winnen was.", "Het is ___ om alleen te zeggen wat de meeste stemmen oplevert."],
+["overlaten aan", "iemand voor iets laten zorgen", "v", 2, "De schrijver wilde de tekeningen ___ een illustrator.", "Je kunt het koken gerust ___ mijn vader.", "Het einde van het verhaal wil ze ___ de fantasie van de lezer."],
+["de profiteur", "iemand die ten koste van anderen ergens voordeel uit haalt", "n", 2, "In het verhaal is de oom ___: hij leeft van het geld van zijn neefje.", "In ons groepje deed ___ niets, maar wilde wel een tien.", "Tijdens de oorlog verdiende ___ veel geld aan de schaarste."],
+["de proloog", "het voorwoord, de inleiding", "n", 2, "In ___ lees je al een tipje van het geheim, nog voor het eerste hoofdstuk.", "Sla ___ niet over, want daar staat belangrijke informatie.", "Het toneelstuk begon met ___, uitgesproken door een verteller."],
+["ritselen", "iets handig regelen, maar niet helemaal volgens de regels", "v", 2, "Pim wist nog een paar extra kaartjes te ___ via zijn oom.", "In het boek moet de held een sleutel ___ van de bewaker.", "Tijdens de oorlog moesten mensen eten ___ op de zwarte markt."],
+["ronselen", "iemand overhalen om iets te doen, soms door middel van bedrog", "v", 2, "De piraten kwamen in de haven matrozen ___ voor hun schip.", "De bende probeerde kinderen te ___ om voor hen te stelen.", "Het leger ging vroeger jongens ___ met beloftes van rijkdom."],
+["de setting", "de omstandigheden waaronder iets gebeurt", "n", 2, "In dit verhaal is ___ een spookachtig kasteel in de winter.", "Bij dit avonturenboek is ___ een verlaten eiland midden in de oceaan.", "De schrijver koos een school als ___ voor zijn verhaal."],
+["de verhaallijn", "begin, verloop en einde van een verhaal", "n", 2, "In de film was ___ zo ingewikkeld dat ik het einde niet snapte.", "Voordat je gaat schrijven, bedenk je eerst ___.", "In deel twee loopt ___ verder waar deel één ophield."],
+["zich ontfermen over", "voor iets of iemand zorgen", "v", 2, "De oude vrouw wilde ___ het verdwaalde katje.", "In het verhaal gaat de juf ___ het weesmeisje.", "Een buurman bood aan ___ de planten tijdens de vakantie."],
+["zijn toevlucht zoeken bij", "bescherming zoeken bij iets of iemand", "v", 2, "Toen het onweerde, wilde het jongetje ___ zijn grote zus.", "De vluchteling moest ___ vrienden in een ander land.", "De hoofdpersoon ging ___ de wijze kluizenaar in het bos."]
+ ],
+ paren:[[34, 35], [30, 32], [22, 19], [12, 4], [16, 10], [33, 18], [36, 26], [37, 33], [2, 7], [3, 35], [15, 2], [23, 34], [20, 17], [21, 6], [0, 4], [11, 32], [9, 4], [29, 39], [38, 31], [27, 5]],
+ skip:{1:[10],2:[7],4:[9],7:[2],9:[4],10:[1],12:[18],13:[6],18:[12, 33, 37],19:[22],22:[19],23:[34],24:[26],26:[24],31:[38],33:[18],34:[23],37:[18],38:[31, 39],39:[38]},
+ nooit:[[18, 37]]},
+
+{id:"snelheid", naam:"Snelheid", titel:"Snelheid", kind:"trail", token:"emo", emo:"🏎️", eind:"🏁", deco:["🚦", "💨", "⏱️"], flip:1,
+ lead:"Met elk goed antwoord scheurt je raceauto verder over het circuit, tot aan de finish.",
+ labels:["start", "ronde 1", "ronde 2", "finish"], klaar:"Over de finish: alle {n} geleerd!",
+ race:"Snelheidsrace", teams:["Auto geel", "Auto rood"], raceVraag:"Welke auto is het eerst over de finish?",
+ raceRegel:"De auto die het eerst over de finish is, wint.", verder:"Jouw auto scheurt verder.", wint:"is het eerst over de finish!", finTitel:"Je bent over de finish!",
+ words:[
+["accelereren", "steeds sneller gaan, meer vaart maken", "v", 1, "Als het stoplicht op groen springt, kan de elektrische auto razendsnel ___.", "Bij het opstijgen moet het vliegtuig flink ___ over de startbaan.", "Na de bocht begon de schaatser te ___ richting de finish."],
+["adembenemend", "heel spannend", "a", 1, "De finale was ___: pas in de laatste seconde viel de beslissing.", "De sprong van de motorcrosser over de schans was ___.", "De achtbaan is ___; je houdt je adem in tijdens de looping."],
+["afleggen", "tot het einde volgen", "v", 1, "De wielrenners moeten vandaag tweehonderd kilometer ___.", "Bij de avondvierdaagse moet je elke avond tien kilometer ___.", "De marathonloper wilde het hele parcours ___ zonder te stoppen."],
+["gepast", "zoals het hoort, precies goed", "a", 1, "In de woonwijk is dertig kilometer per uur ___.", "Bij een begrafenis is felgekleurde kleding niet ___.", "Ze gaf een ___ antwoord: niet te kort en niet te lang."],
+["gestroomlijnd", "met vloeiende lijnen, waardoor je minder weerstand van lucht of water hebt", "a", 1, "Een dolfijn heeft een ___ lichaam en glijdt daardoor snel door het water.", "De helm van de wielrenner is ___: hij lijkt wel een druppel.", "De neus van de hogesnelheidstrein is ___."],
+["het hek is van de dam", "alle grenzen worden overschreden", "v", 1, "Zodra de juf de klas uitloopt, ___ en rent iedereen rond.", "Op het laatste schoolfeest ___: er werd met taart gegooid.", "Als de ouders weg zijn, ___ en eten de kinderen alleen nog chips."],
+["iemand het nakijken geven", "iemand achter je laten, beter zijn dan iemand anders", "v", 1, "Met een sterke eindsprint kon ze in de laatste bocht ___.", "Op zijn nieuwe racefiets wilde Jip in de wedstrijd ___.", "De kleine kart bleek snel genoeg om ___."],
+["ontzaglijk", "heel erg, heel veel, heel groot", "a", 1, "Een raket gaat ___ snel: duizenden kilometers per uur.", "Er stond een ___ lange file op de snelweg.", "De piloot had ___ veel ervaring met snelle vliegtuigen."],
+["rondtollen", "op één plaats blijven ronddraaien", "v", 1, "Na de klap zag je de auto ___ op het natte wegdek.", "De kunstschaatsster kon wel twintig keer ___ zonder om te vallen.", "Een tol blijft lang ___ op de gladde tafel."],
+["het slakkengangetje", "een heel laag tempo, heel traag", "n", 1, "In de file reden we met ___ naar huis.", "Opa wandelt in ___ door het park, want hij heeft alle tijd.", "Met ___ kom je nooit op tijd op school."],
+["de snelheidsduivel", "iemand die het leuk vindt om heel snel te gaan", "n", 1, "Mijn tante is ___: ze gaat het liefst in de snelste achtbaan.", "Op de skipiste suisde ___ langs alle andere skiërs.", "Mijn broertje is ___ op zijn step; niemand kan hem bijhouden."],
+["spurten", "sprinten, hard lopen of rijden over een korte afstand", "v", 1, "Op de laatste honderd meter begon de loper te ___.", "Om de bus nog te halen moest Fleur ___.", "Bij tikkertje moet je kort ___ om weg te komen."],
+["stationair", "stilstaand", "a", 1, "Laat de motor niet ___ draaien als je stilstaat; dat is slecht voor het milieu.", "De satelliet lijkt ___ boven de aarde te hangen.", "Bij het stoplicht stond de bus ___ te wachten."],
+["ten opzichte van", "vergeleken met", "a", 1, "Een slak is langzaam ___ een haas.", "Ik zwem nu veel sneller ___ vorig jaar.", "De trein gaat hard ___ de fietsers langs het spoor."],
+["de topsnelheid", "de hoogste snelheid die iets of iemand kan halen", "n", 1, "Een jachtluipaard haalt ___ van honderd kilometer per uur.", "Bij deze scooter is ___ vijfentwintig kilometer per uur.", "Op het rechte stuk bereikte de raceauto ___."],
+["het uithoudingsvermogen", "de tijd dat je je in kunt spannen zonder rust te nemen", "n", 1, "Om een marathon uit te lopen moet ___ heel groot zijn.", "Door elke dag te fietsen verbeterde ___ van Lars.", "Een langeafstandsloper traint vooral ___, een sprinter vooral zijn snelheid."],
+["uitsluitend", "enkel en alleen", "a", 1, "Op deze baan mogen ___ fietsers rijden.", "De race is ___ voor kinderen onder de twaalf.", "Hij eet voor de wedstrijd ___ pasta."],
+["voortrazen", "heel snel voortbewegen", "v", 1, "Op de snelweg zie je de auto's ___.", "De sneltrein bleef ___ door het vlakke land.", "Tijdens de storm zag je de wolken ___ langs de hemel."],
+["de waarneming", "het zien of horen van iets", "n", 1, "Volgens ___ van de flitspaal reed de auto honderd kilometer per uur.", "De vogelaar schreef ___ van de zeldzame zeearend meteen op in zijn schriftje.", "Door ___ van de scheidsrechter werd het doelpunt afgekeurd."],
+["zoeven", "je snel voortbewegen", "v", 1, "De skiërs zie je over de witte helling naar beneden ___.", "Op zijn nieuwe step kon Noah door de gang ___.", "Je hoorde de pijl langs het doel ___."],
+["absoluut", "helemaal, volstrekt", "a", 2, "Het is ___ verboden om op de snelweg te fietsen.", "Hij was ___ de snelste van de hele klas.", "Ik weet ___ zeker dat ik de deur op slot heb gedaan."],
+["aerodynamisch", "met vloeiende lijnen, waardoor je minder weerstand van lucht of water hebt", "a", 2, "Deze racefiets is ___ en snijdt door de lucht.", "Schaatsers dragen een ___ pak om sneller te gaan.", "Ingenieurs testen in een windtunnel hoe ___ een auto is."],
+["bij lange na niet", "zeker niet, helemaal niet", "a", 2, "Mijn fiets is ___ zo snel als een brommer.", "Met tien minuten oefenen ben je ___ klaar voor een marathon.", "Het record is ___ verbroken; hij was twee seconden te langzaam."],
+["buiten beschouwing laten", "iets niet laten meetellen", "v", 2, "De jury moest de tijd van de gevallen renner ___.", "Als we de valse start ___, won Emma de race.", "Bij het gemiddelde mag je die ene mislukte meting ___."],
+["de classificatie", "de indeling in klassen of groepen", "n", 2, "In ___ van de Tour de France staat hij op de derde plaats.", "Volgens ___ van dieren hoort een walvis bij de zoogdieren.", "De scheidsrechter maakte ___ per leeftijd."],
+["flitsen", "heel snel bewegen, voorbijschieten", "v", 2, "Je zag de raceauto's langs de tribune ___.", "De bliksem leek door de lucht te ___.", "De vissen schoten weg en je zag ze tussen de stenen ___."],
+["de geluidsbarrière", "het punt waarop je sneller gaat dan de snelheid van het geluid", "n", 2, "Toen de straaljager door ___ ging, hoorde je een harde knal.", "In 1947 doorbrak een piloot voor het eerst ___.", "Een kogel kan sneller gaan dan ___."],
+["ongetwijfeld", "vast en zeker", "a", 2, "Met deze snelle schaatsen wint ze ___ een medaille.", "Hij komt ___ te laat, want hij is altijd laat.", "Dat record wordt ___ ooit verbroken."],
+["op gang brengen", "ervoor zorgen dat iets of iemand meer snelheid krijgt", "v", 2, "Met een duw kun je de zware kar ___.", "Je moet de oude stoomtrein langzaam ___.", "Met een paar flinke trappers kun je de fiets ___."],
+["opvoeren", "de snelheid verhogen", "v", 2, "Het is verboden om een brommer te ___ zodat hij harder kan.", "De coureur wilde het tempo nog verder ___.", "Ze ging na de helft van de race het tempo ___."],
+["het perspectief", "de manier waarop je tegen iets aankijkt, het gezichtspunt", "n", 2, "Vanuit ___ van een slak gaat een fietser heel snel.", "Op de foto lijkt de auto groot door ___.", "Probeer de race eens te bekijken vanuit ___ van de verliezer."],
+["riskeren", "het risico lopen dat iets gebeurt", "v", 2, "Wie door rood rijdt, gaat een ongeluk ___.", "De schaatser wilde in de bocht niet te veel ___.", "Je wilt toch geen boete ___ door te hard te rijden?"],
+["de slipstream", "de ruimte achter een bewegend persoon of voertuig, waar de weerstand van de lucht lager is", "n", 2, "De wielrenner fietste in ___ van zijn ploegmaat en spaarde zo kracht.", "In ___ van de vrachtwagen voelde de fietser bijna geen wind.", "Door in ___ te blijven kon de coureur op het laatst inhalen."],
+["snellen", "snel naar iets of iemand toe bewegen", "v", 2, "De ambulance kwam naar het ongeluk ___.", "Na de bel zag je alle kinderen naar buiten ___.", "De brandweer moest naar het brandende huis ___."],
+["de sprinter", "een sporter die heel goed is in wedstrijden over een korte afstand", "n", 2, "Usain Bolt is ___ die de honderd meter in minder dan tien seconden liep.", "De etappe werd gewonnen door ___ met de sterkste eindsprint.", "Op de korte afstand was ___ niet te verslaan."],
+["toereikend", "genoeg, voldoende", "a", 2, "Haar snelheid was niet ___ om de wereldkampioen in te halen.", "Is je zakgeld ___ voor een nieuwe fiets?", "Er was ___ tijd om alles af te maken."],
+["verbluffend", "verbazingwekkend", "a", 2, "Met een ___ snelle tijd verbrak hij het wereldrecord.", "De truc van de goochelaar was ___.", "Het is ___ hoe snel een kolibrie met zijn vleugels slaat."],
+["verpulveren", "met een groot verschil verslaan, veel beter zijn dan", "v", 2, "Ze wilde het oude record ___ met wel tien seconden.", "Het sterke team ging de tegenstander ___: het werd 9-0.", "Met zijn nieuwe auto kon de coureur alle rondetijden ___."],
+["voortstuwen", "naar voren duwen, meestal door een motor", "v", 2, "Een schroef onder de boot kan het schip ___.", "Raketmotoren moeten de raket de ruimte in ___.", "Met grote slagen wist de roeier zijn boot ___."],
+["zich storten", "je naar beneden laten vallen", "v", 2, "De skiër durfde ___ van de steilste helling.", "Een valk kan ___ op zijn prooi met meer dan driehonderd kilometer per uur.", "Bij het bungeejumpen moet je ___ van een hoge brug."]
+ ],
+ paren:[[11, 34], [14, 26], [9, 10], [25, 33], [12, 8], [20, 27], [22, 20], [1, 36], [6, 37], [13, 30], [15, 14], [32, 4], [16, 35], [3, 35], [2, 38], [31, 39]],
+ skip:{0:[29],1:[36],3:[35],6:[37],7:[20, 36],10:[34],11:[17, 33],17:[19, 25, 33],19:[17, 25, 33],20:[27],25:[17, 19],27:[20],28:[29, 38],29:[0, 28],33:[11, 17, 19],34:[10],35:[3],36:[1, 7],37:[6],38:[28]},
+ nooit:[[4, 21], [0, 29], [17, 19], [19, 25], [17, 25], [0, 28], [28, 29], [19, 33]]}
 ];
 
 /* Alle woorden achter elkaar, met een vast nummer per woord. */
@@ -707,9 +1029,11 @@ function routeSvg(b,v,o){
   if(g.sr)s+='<circle class="r-spring" cx="'+g.sx+'" cy="'+g.sy+'" r="'+g.sr+'"/>';
   if(b.kind==="path")s+='<g class="r-end" transform="translate('+g.tmp[0]+' '+g.tmp[1]+') scale('+g.tmp[2]+')"><path d="M0 32 L48 0 L96 32 Z"/><rect x="2" y="32" width="92" height="6"/>'
     +'<rect x="10" y="40" width="10" height="38"/><rect x="32" y="40" width="10" height="38"/><rect x="54" y="40" width="10" height="38"/><rect x="76" y="40" width="10" height="38"/><rect x="0" y="78" width="96" height="12"/></g>';
-  if(v!=="race")s+='<g class="deco" data-kind="'+b.kind+'" data-v="'+v+'"></g>';
+  if(b.kind==="trail"){var ee=g.d.trim().split(/[ ,]+/), ex=Number(ee[ee.length-2]), ey=Number(ee[ee.length-1]);
+    s+='<text class="d-emo" x="'+ex+'" y="'+(ey+12*g.k)+'" text-anchor="middle" font-size="'+(34*g.k).toFixed(1)+'">'+b.eind+'</text>';}
+  if(v!=="race")s+='<g class="deco" data-kind="'+b.kind+'" data-v="'+v+'" data-b="'+b.id+'"></g>';
   (o.tokens||[]).forEach(function(t){
-    s+='<g'+(t.id?' id="'+t.id+'"':'')+(t.cls?' class="'+t.cls+'"':'')+' style="transform:'+place(g,g.sx,g.sy,t.off,t.xoff)+'"><g class="tok-in">'+TOKEN[b.token][t.team]+'</g></g>';});
+    s+='<g'+(t.id?' id="'+t.id+'"':'')+(t.cls?' class="'+t.cls+'"':'')+' style="transform:'+place(g,g.sx,g.sy,t.off,t.xoff)+'"><g class="tok-in">'+(b.emo?emoTok(b,t.team):TOKEN[b.token][t.team])+'</g></g>';});
   return s+'</svg>';
 }
 /* Herkenningspunten: bergen, stuwdam, brug en bomen bij de rivier; opgraving, vergrootglas, piramide en ruïne bij vroege culturen. */
@@ -718,9 +1042,11 @@ function decoAll(){
   for(var i=0;i<gs.length;i++){var g=gs[i];if(g.childNodes.length)continue;
     var path=g.ownerSVGElement.querySelector(".r-water"), gg=geo(g.getAttribute("data-v"),g.getAttribute("data-kind")), len=0;
     try{len=path.getTotalLength();}catch(e){}
-    if(len)g.innerHTML=decoHtml(g.getAttribute("data-kind"),path,len,gg);}
+    if(len)g.innerHTML=decoHtml(g.getAttribute("data-kind"),path,len,gg,BYID[g.getAttribute("data-b")]);}
 }
-function decoHtml(kind,path,len,g){
+/* Pion van een thema met een emoji: een gekleurd rondje (geel of rood team) met het plaatje erop. */
+function emoTok(b,team){return '<circle class="tk tk-'+(team?'b':'a')+'" cy="-17" r="16"/><text class="tk-emo" y="-10" text-anchor="middle" font-size="19"'+(b.flip?' transform="scale(-1,1)"':'')+'>'+b.emo+'</text>';}
+function decoHtml(kind,path,len,g,b){
   var k=g.k, h="", mid=Number(g.vb.split(" ")[3])/2, w2=(g.bank+12)/k;
   function at(f){var a=path.getPointAtLength(len*f), b=path.getPointAtLength(Math.min(len,len*f+2));return {x:a.x,y:a.y,r:Math.atan2(b.y-a.y,b.x-a.x)};}
   /* naast de route, aan de kant waar de meeste ruimte is */
@@ -743,6 +1069,10 @@ function decoHtml(kind,path,len,g){
     stand(.75,'<path class="d-far" d="M-36 0 V-34 H36 V0 H26 V-14 a8 8 0 0 0 -16 0 V0 H8 V-14 a8 8 0 0 0 -16 0 V0 H-10 V-14 a8 8 0 0 0 -16 0 V0 Z"/>');
     [.13,.37,.62,.87].forEach(function(f){stand(f,'<ellipse class="d-green" cx="0" cy="-15" rx="4.5" ry="13"/><path class="d-line" d="M0 -2V0"/>');});
     [.25,.5,.75].forEach(function(f){h+='<g transform="translate('+(g.sx+(g.ex-g.sx)*f).toFixed(1)+' '+bot.toFixed(1)+') scale('+k+')"><rect class="d-dark" x="-3" y="0" width="6" height="9" rx="2"/></g>';});
+  }else if(kind==="trail"){
+    /* langs het pad: drie herkenningspunten van het thema */
+    var dc=(b&&b.deco)||[];
+    [.27,.5,.73].forEach(function(f,i){if(dc[i])put(f,16,'<text class="d-emo" y="7" text-anchor="middle" font-size="22">'+dc[i]+'</text>');});
   }else{
     h+='<g transform="translate('+g.sx+' '+g.sy+') scale('+k+')"><path class="d-line" d="M-14 -48h34v24h-34zM-3 -48v24M9 -48v24M-14 -36h34"/></g>';
     put(.3,16,'<circle class="d-line" r="8"/><path class="d-line" d="M6 6L14 14"/>');
@@ -823,7 +1153,7 @@ function start(){
   stage.innerHTML='<div class="start"><div class="start-bar"><span></span>'+fsBtn()+'</div><p class="eyebrow">Woordenschat · groep 8</p><h1 class="start-h start-big">Themawoorden</h1>'
    +'<p class="start-lead">Kies een thema en leer de 40 woorden die erbij horen.</p>'
    +(inSmallFrame()?'<p class="note">Is het beeld klein? Tik rechtsboven op Volledig scherm.</p>':'')
-   +'<div class="themes'+(BLOCKS.length<=3?' themes-few':'')+'">'+BLOCKS.filter(function(b){return !ACTIEF||ACTIEF.split(":")[0]===b.id;}).map(function(b){
+   +'<div class="themes'+(BLOCKS.length<=3?' themes-few':'')+(BLOCKS.length>6?' themes-many':'')+'">'+BLOCKS.filter(function(b){return !ACTIEF||ACTIEF.split(":")[0]===b.id;}).map(function(b){
       return '<button class="mode theme" data-blk="'+b.id+'" data-a="pickblk" data-v="'+b.id+'">'
        +routeSvg(b,"hero",{cls:"theme-svg",main:"tr-"+b.id,tokens:[{id:"tt-"+b.id,team:0}]})
        +'<span class="mode-name">'+b.naam+'</span><span class="mode-desc">'+b.words.length+' woorden in twee weken</span>'+meter(stats(words(b.id,"all")))+'</button>';
