@@ -1,5 +1,5 @@
 /* Taalwoorden werkt ook zonder internet. De pagina zelf: eerst online kijken (voor updates), anders de bewaarde versie. Lettertypes en plaatjes: uit de bewaarde versie. */
-var CACHE="taalwoorden-v7";
+var CACHE="taalwoorden-v8";
 self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png","./apple-touch-icon.png","./vendor/firebase.js"]);}));self.skipWaiting();});
 self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});
 self.addEventListener("fetch",function(e){var r=e.request;if(r.method!=="GET")return;var u=new URL(r.url);
