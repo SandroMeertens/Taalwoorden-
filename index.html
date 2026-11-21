@@ -46,15 +46,22 @@
 #intro.land .in-word span,#intro.land .in-tag{animation:none}
 #intro.weg{opacity:0;transform:scale(1.06);pointer-events:none}
 #intro .in-c{display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:1rem;text-align:center;width:min(92vw,46rem)}
-#intro .in-mark{width:clamp(6rem,22vmin,10rem);height:clamp(6rem,22vmin,10rem);animation:inPop .7s cubic-bezier(.2,1.6,.4,1) .1s both}
+#intro .in-mark{width:clamp(7.5rem,30vmin,13rem);height:clamp(7.5rem,30vmin,13rem);animation:inPop .7s cubic-bezier(.2,1.6,.4,1) .1s both}
+#intro .in-mark svg{animation:inBeat .45s ease-out 1.05s}
+@keyframes inBeat{40%{transform:scale(1.12) rotate(-4deg)}}
+/* zwevende letters op de achtergrond */
+#intro .in-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+#intro .in-bg span{position:absolute;bottom:-20%;font-family:var(--display);font-weight:800;line-height:1;color:#fff;opacity:0;animation:inZweef linear infinite}
+@keyframes inZweef{0%{transform:translateY(0) rotate(var(--r));opacity:0}12%{opacity:var(--o)}85%{opacity:var(--o)}100%{transform:translateY(-135vh) rotate(calc(var(--r)*-1));opacity:0}}
+#intro.land .in-bg{opacity:0;transition:opacity .3s}
 #intro .in-mark svg{width:100%;height:100%;filter:drop-shadow(0 10px 24px rgba(0,0,0,.3))}
 #intro .in-word{margin:.3rem 0 0;font-family:var(--display);font-weight:800;font-size:clamp(2.8rem,11vmin,6rem);line-height:1;letter-spacing:-.02em;display:flex}
 #intro .in-word span{display:inline-block;animation:inUp .55s cubic-bezier(.2,1.4,.4,1) both}
 #intro .in-word .y{color:#F4B942}
-#intro .in-route{width:100%;height:auto;margin-top:-.2rem;overflow:visible}
-#intro .in-route path{fill:none;stroke:rgba(255,255,255,.85);stroke-width:7;stroke-linecap:round;stroke-dasharray:700;stroke-dashoffset:700;animation:inDraw 1.1s ease-out 1.15s forwards}
-#intro .in-route text{font-size:34px;opacity:0;animation:inPop .45s cubic-bezier(.2,1.6,.4,1) both;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
-#intro .in-tag{margin:.2rem 0 0;font-family:var(--display);font-weight:600;font-size:clamp(1rem,3.2vmin,1.5rem);letter-spacing:.14em;text-transform:uppercase;opacity:0;animation:inFade .5s ease 2.2s forwards}
+#intro .in-route{width:100%;height:auto;margin-top:clamp(.8rem,3vmin,1.6rem);overflow:visible}
+#intro .in-route path{fill:none;stroke:rgba(255,255,255,.85);stroke-width:8;stroke-linecap:round;stroke-dasharray:700;stroke-dashoffset:700;animation:inDraw 1.1s ease-out 1.15s forwards}
+#intro .in-route text{font-size:46px;opacity:0;animation:inPop .45s cubic-bezier(.2,1.6,.4,1) both;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+#intro .in-tag{margin:.4rem 0 0;font-family:var(--display);font-weight:700;font-size:clamp(1rem,3.4vmin,1.7rem);letter-spacing:.14em;text-transform:uppercase;opacity:0;animation:inFade .5s ease 2s forwards}
 #intro .in-skip{position:absolute;right:max(1rem,env(safe-area-inset-right));bottom:max(1rem,env(safe-area-inset-bottom));min-height:2.75rem;padding:.5rem 1.1rem;border-radius:999px;border:2px solid rgba(255,255,255,.7);background:rgba(255,255,255,.12);color:#fff;font:inherit;font-weight:700;cursor:pointer}
 #intro .in-skip:focus-visible{outline:3px solid #F4B942;outline-offset:3px}
 @keyframes inPop{from{opacity:0;transform:scale(.3) rotate(-12deg)}to{opacity:1;transform:none}}
@@ -1838,7 +1845,9 @@ function intro(){
   var emo={rivieren:"🛶",culturen:"🏺"}, lijst=BLOCKS.map(function(b){return {e:b.emo||emo[b.id]||"⭐",f:!!b.flip};}).slice(0,8);
   var d="M20 50C120 8 190 88 300 46S490 6 580 44", pts=[];
   var rt='<svg class="in-route" viewBox="0 0 600 90"><path d="'+d+'"/>';
-  var ok='<div id="intro" role="dialog" aria-label="Taalwoorden start"><div class="in-c"><div class="in-mark">'+logoSvg()+'</div><h1 class="in-word" aria-label="Taalwoorden">'+woord+'</h1>'
+  var bg="";for(var j=0;j<14;j++){var ch="ABCDEFGHIJKLMNOPRSTUVWZ".charAt(Math.floor(Math.random()*23));
+    bg+='<span style="left:'+(Math.random()*94).toFixed(1)+'%;font-size:'+(3+Math.random()*7).toFixed(1)+'rem;--o:'+(.05+Math.random()*.09).toFixed(2)+';--r:'+((Math.random()-.5)*50).toFixed(0)+'deg;animation-duration:'+(5+Math.random()*5).toFixed(1)+'s;animation-delay:-'+(Math.random()*5).toFixed(1)+'s">'+ch+'</span>';}
+  var ok='<div id="intro" role="dialog" aria-label="Taalwoorden start"><div class="in-bg" aria-hidden="true">'+bg+'</div><div class="in-c"><div class="in-mark">'+logoSvg()+'</div><h1 class="in-word" aria-label="Taalwoorden">'+woord+'</h1>'
     +rt+'<g class="in-emo"></g></svg><p class="in-tag">Woordenschat · groep 8</p></div><button class="in-skip" type="button">Overslaan</button></div>';
   document.body.insertAdjacentHTML("beforeend",ok);
   var box=document.getElementById("intro"), p=box.querySelector(".in-route path"), g=box.querySelector(".in-emo");
@@ -1853,7 +1862,7 @@ function intro(){
       setTimeout(function(){doel.style.opacity="";if(doel.animate)doel.animate([{transform:"scale(1.3) rotate(-8deg)"},{transform:"none"}],{duration:420,easing:"cubic-bezier(.2,1.6,.4,1)"});box.remove();},820);return;}
     box.classList.add("weg");setTimeout(function(){box.remove();},500);}
   box.addEventListener("click",weg);document.addEventListener("keydown",function k(e){document.removeEventListener("keydown",k);weg();});
-  setTimeout(weg,3600);}
+  setTimeout(weg,3100);}
 load();setBlock(blk);try{pasToe(JSON.parse(localStorage.getItem(INSTKEY)||"{}")||{});}catch(e){}fsPaint();go("start");intro();
 })();
 </script>
