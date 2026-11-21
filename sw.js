@@ -2,7 +2,7 @@
    De pagina: eerst online kijken (voor updates), maar nooit langer dan 3 seconden wachten; dan de bewaarde versie.
    Lettertypes en plaatjes: uit de bewaarde versie. Het grote Firebase-bestand wordt niet vooraf bewaard
    (alleen de leerkracht heeft het nodig), zodat een update op de iPads weinig downloadt. */
-var CACHE="taalwoorden-v18";
+var CACHE="taalwoorden-v19";
 var VOORAF=["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png","./apple-touch-icon.png","./favicon.svg",
   "./fonts/bricolage-grotesque-latin-opsz-normal.woff2","./fonts/atkinson-hyperlegible-latin-400-normal.woff2","./fonts/atkinson-hyperlegible-latin-700-normal.woff2"];
 self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(VOORAF.map(function(u){return /fonts\//.test(u)?u:new Request(u,{cache:"reload"});}));}));self.skipWaiting();});
