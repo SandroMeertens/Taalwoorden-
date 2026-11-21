@@ -1254,8 +1254,8 @@ function meter(st){return '<span class="meter" aria-hidden="true"><span style="w
 
 /* ---------- Startpagina: kies een thema ---------- */
 function start(){
-  stage.innerHTML='<div class="start"><div class="start-bar">'+logoKlein()+fsBtn()+'</div><p class="eyebrow">Woordenschat · groep 8</p><h1 class="start-h start-big">Themawoorden</h1>'
-   +'<p class="start-lead">Kies een thema en leer de 40 woorden die erbij horen.</p>'
+  stage.innerHTML='<div class="start"><div class="start-bar">'+logoKlein()+fsBtn()+'</div><h1 class="start-h start-big">Kies een thema</h1>'
+   +'<p class="start-lead">Leer de 40 woorden die erbij horen.</p>'
    +(inSmallFrame()?'<p class="note">Is het beeld klein? Tik rechtsboven op Volledig scherm.</p>':'')
    +'<div class="themes'+(aantalOpen()<=3?' themes-few':'')+(aantalOpen()>6?' themes-many':'')+'">'+BLOCKS.filter(function(b){return (!ACTIEF||ACTIEF.split(":")[0]===b.id)&&blkOpen(b.id);}).map(function(b){
       return '<button class="mode theme" data-blk="'+b.id+'" data-a="pickblk" data-v="'+b.id+'">'
