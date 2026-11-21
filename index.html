@@ -113,8 +113,8 @@
    De lettergrootte volgt de krapste maat van het kader, zodat alles altijd op één scherm past en in het midden staat.
    Alleen op een staande telefoon scrolt de pagina gewoon. */
 html{font-size:16px}
-@media (min-width:521px), (min-aspect-ratio:3/4){ html{font-size:clamp(6px,min(2.15vw,1.78vh),34px);font-size:clamp(6px,min(2.15vw,1.78dvh),34px)} }
-@media (min-aspect-ratio:5/4){ html{font-size:clamp(6px,min(1.5vw,2.3vh),34px);font-size:clamp(6px,min(1.5vw,2.3dvh),34px)} }
+@media (min-width:521px) and (min-height:560px), (min-aspect-ratio:3/4) and (min-height:560px){ html{font-size:clamp(6px,min(2.15vw,1.78vh),34px);font-size:clamp(6px,min(2.15vw,1.78dvh),34px)} }
+@media (min-aspect-ratio:5/4) and (min-height:560px){ html{font-size:clamp(6px,min(1.5vw,2.3vh),34px);font-size:clamp(6px,min(1.5vw,2.3dvh),34px)} }
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:var(--fs-1);line-height:1.5;min-height:100vh;min-height:100dvh}
 body[data-deep]{background:var(--band);color:var(--on-band)}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -376,8 +376,11 @@ body[data-deep] .start .link{color:var(--on-band)}
 @media (max-width:400px){ .start-bar .fs-btn{padding:.3rem .65rem} .start-bar .fs-btn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap} }
 /* Smalle schermen (telefoon): alles onder elkaar. */
 @media (max-width:520px) and (max-aspect-ratio:3/4){
-  .top-info{flex-wrap:wrap}
-  .r-status{white-space:normal}
+  .top-info{flex-wrap:nowrap;gap:.7rem}
+  .top-info .fs-ic{margin-left:auto}
+  .top-info .r-status{min-width:0}
+  .r-status{white-space:nowrap}
+  .timer{font-size:0;white-space:nowrap} .timer::before{content:"⏱";font-size:1rem;margin-right:.25rem} .timer b{font-size:1.15rem}
   .modes{grid-template-columns:minmax(0,1fr)}
   .duos,.duos.duos3,.lk-grid{grid-template-columns:minmax(0,1fr)}
   .kopts{grid-template-columns:minmax(0,1fr)}
@@ -390,7 +393,7 @@ body[data-deep] .start .link{color:var(--on-band)}
   .bar-mid{order:3;flex-basis:100%;text-align:left}
 }
 /* Eén scherm: op iPad en digibord past alles zonder scrollen. */
-@media (min-width:521px), (min-aspect-ratio:3/4){
+@media (min-width:521px) and (min-height:560px), (min-aspect-ratio:3/4) and (min-height:560px){
   html{height:100%}
   body{height:100%;min-height:0;overflow:hidden}
   .wrap{height:100%;padding-block:.75rem;gap:.75rem}
@@ -413,7 +416,10 @@ body[data-deep] .start .link{color:var(--on-band)}
   .fb{flex-direction:row;align-items:center;justify-content:space-between;min-height:3.2rem}
   .fb .row{flex:0 0 auto}
   .panel>.wl{flex:0 1 auto;min-height:0;overflow:hidden}
-  .panel>.klas{flex:1 1 0}
+  .panel>.klas{flex:0 1 auto}
+  /* Oefeningen: de kopregel blijft bovenaan, vraag en antwoorden staan midden in het vlak in plaats van bovenin. */
+  #stage.panel>.bar+*{margin-top:auto}
+  #stage.panel>:last-child{margin-bottom:auto}
 }
 
 .race{position:fixed;inset:0;z-index:50;background:var(--bg);color:var(--ink);display:grid;gap:8px;padding:calc(8px + env(safe-area-inset-top,0px)) 8px calc(8px + env(safe-area-inset-bottom,0px));touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
