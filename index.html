@@ -1,5 +1,5 @@
 <!doctype html><html lang="nl"><head><meta charset=utf8><meta name="color-scheme" content="only light"><title>Taalwoorden groep 8</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Taalwoorden"><meta name="theme-color" content="#14879B"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><style>/* Lettertypes staan op de eigen site: sneller laden en ook zonder internet. */@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-display:swap;font-weight:200 800;src:url(fonts/bricolage-grotesque-latin-opsz-normal.woff2) format("woff2-variations"),url(fonts/bricolage-grotesque-latin-opsz-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:"Atkinson Hyperlegible";font-style:normal;font-display:swap;font-weight:400;src:url(fonts/atkinson-hyperlegible-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:"Atkinson Hyperlegible";font-style:normal;font-display:swap;font-weight:700;src:url(fonts/atkinson-hyperlegible-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style>
 <style>
 /* Layout: één scherm zonder scrollen. Bovenaan een smalle band (titel, meanderende rivier als voortgang, weekkeuze); daaronder één speelvlak dat de rest van het scherm vult. Alles schaalt mee met het scherm, van iPad tot digibord. */
 :root{
@@ -1568,6 +1568,7 @@ function leerkracht(){
   var fb=window.twFB, u=fb&&fb.user();
   var h='<div class="lk"><div class="bar"><button class="link" data-a="go" data-v="start">← Terug</button><span class="count">Leerkracht</span></div><h2 class="end-h">Instellingen voor de klas</h2>';
   if(!fb){stage.innerHTML=h+'<p>Inloggen kan alleen op de website van Taalwoorden.</p></div>';return;}
+  if(fb.laadt&&fb.laadt()){stage.innerHTML=h+'<p>Even laden…</p></div>';return;}
   if(!u){stage.innerHTML=h+'<p>Log in met je <b>schoolaccount</b> (Google). Andere accounts kunnen niets opslaan. Wat je hier instelt, geldt op alle iPads die Taalwoorden openen.</p>'
     +'<div class="row"><button class="btn btn-primary lk-btn" data-a="lklogin"'+(LKBEZIG?' disabled':'')+'>Inloggen met Google</button></div><p class="lk-meld" aria-live="polite">'+esc(LKMELD)+'</p></div>';return;}
   if(!LKFORM){stage.innerHTML=h+'<p>Instellingen ophalen…</p></div>';
@@ -1892,22 +1893,31 @@ load();setBlock(blk);try{pasToe(JSON.parse(localStorage.getItem(INSTKEY)||"{}")|
 
 <script>if("serviceWorker" in navigator&&/github\.io$/.test(location.hostname)){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
 <script type="module">
-/* Inloggen voor de leerkracht en de instellingen voor alle iPads (eigen Firebase-project "taalwoorden").
-   Dit is geen wachtwoord: de beveiliging zit in de regels van de database. */
+/* Instellingen en inloggen voor de leerkracht (eigen Firebase-project "taalwoorden").
+   Leerlingen lezen alleen de instellingen: dat is één klein verzoek. Het grote Firebase-bestand
+   wordt pas geladen als iemand het leerkrachtscherm opent. De sleutel hieronder is geen wachtwoord:
+   de beveiliging zit in de regels van de database. */
 const cfg={apiKey:"AIzaSyDJaJZ6kkFfouvkbXSL83kRPJkDd80_15k",authDomain:"taalwoorden.firebaseapp.com",projectId:"taalwoorden",storageBucket:"taalwoorden.firebasestorage.app",messagingSenderId:"225493093962",appId:"1:225493093962:web:182a20ed8e1bf07dd1a0b3"};
-try{
-  const F=await import("./vendor/firebase.js");
-  const app=F.initializeApp(cfg,"taalwoorden"), auth=F.getAuth(app), db=F.initializeFirestore(app,{}), ref=F.doc(db,"taalwoorden","instellingen");
-  let user=null;
-  window.twFB={user:()=>user,
-    login:async()=>{const pr=new F.GoogleAuthProvider();pr.setCustomParameters({prompt:"select_account"});
-      try{await F.signInWithPopup(auth,pr);}catch(e){if(e&&e.code==="auth/popup-blocked"){await F.signInWithRedirect(auth,pr);return;}throw e;}},
-    uit:()=>F.signOut(auth),
-    lees:async()=>{const s=await F.getDoc(ref);return s.exists()?s.data():null;},
-    bewaar:(o)=>F.setDoc(ref,{min:o.min,uit:o.uit,alles:o.alles,actief:o.actief,open:Array.isArray(o.open)?o.open:[],owner:user.uid,t:Date.now()})};
-  F.onAuthStateChanged(auth,(u)=>{user=u&&!u.isAnonymous?u:null;if(window.twFBklaar)window.twFBklaar();});
-  if(window.twFBklaar)window.twFBklaar();
-  F.getDoc(ref).then((s)=>{if(s.exists()&&window.twInst){const d=s.data();window.twInst({min:d.min,uit:d.uit,alles:d.alles,actief:d.actief,open:d.open});}}).catch(()=>{});
-}catch(e){console.warn(e);}
+const DOC="https://firestore.googleapis.com/v1/projects/taalwoorden/databases/(default)/documents/taalwoorden/instellingen?key="+cfg.apiKey;
+function waarde(v){if(!v)return undefined;if("booleanValue" in v)return v.booleanValue;if("integerValue" in v)return Number(v.integerValue);
+  if("doubleValue" in v)return v.doubleValue;if("stringValue" in v)return v.stringValue;if("nullValue" in v)return null;
+  if("arrayValue" in v)return (v.arrayValue.values||[]).map(waarde);
+  if("mapValue" in v){const o={},f=v.mapValue.fields||{};for(const k in f)o[k]=waarde(f[k]);return o;}return undefined;}
+/* Instellingen voor alle iPads ophalen, zonder Firebase te laden. */
+fetch(DOC,{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.fields&&window.twInst){const o={};for(const k in d.fields)o[k]=waarde(d.fields[k]);
+  window.twInst({min:o.min,uit:o.uit,alles:o.alles,actief:o.actief,open:o.open});}}).catch(()=>{});
+let F=null,app,auth,ref,user=null,klaar=false,bezig=null;
+function laad(){if(!bezig)bezig=import("./vendor/firebase.js").then(m=>{F=m;app=F.initializeApp(cfg,"taalwoorden");auth=F.getAuth(app);
+  ref=F.doc(F.initializeFirestore(app,{}),"taalwoorden","instellingen");
+  F.onAuthStateChanged(auth,u=>{user=u&&!u.isAnonymous?u:null;klaar=true;if(window.twFBklaar)window.twFBklaar();});});return bezig;}
+window.twFB={user:()=>user, laadt:()=>{if(!klaar)laad();return !klaar;},
+  login:async()=>{await laad();const pr=new F.GoogleAuthProvider();pr.setCustomParameters({prompt:"select_account"});
+    try{await F.signInWithPopup(auth,pr);}catch(e){if(e&&e.code==="auth/popup-blocked"){try{sessionStorage.setItem("tw.redirect","1");}catch(x){}await F.signInWithRedirect(auth,pr);return;}throw e;}},
+  uit:async()=>{await laad();return F.signOut(auth);},
+  lees:async()=>{await laad();const s=await F.getDoc(ref);return s.exists()?s.data():null;},
+  bewaar:async(o)=>{await laad();return F.setDoc(ref,{min:o.min,uit:o.uit,alles:o.alles,actief:o.actief,open:Array.isArray(o.open)?o.open:[],owner:user.uid,t:Date.now()});}};
+/* Terug van inloggen via een doorverwijzing: dan Firebase meteen laden om het inloggen af te maken. */
+try{if(sessionStorage.getItem("tw.redirect")){sessionStorage.removeItem("tw.redirect");laad();}}catch(e){}
+if(window.twFBklaar)window.twFBklaar();
 </script>
 </body></html>
