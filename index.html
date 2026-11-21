@@ -191,7 +191,9 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,6vw,2.1rem)
 .lk-pin{flex:none;width:12rem;max-width:100%;min-height:3rem;height:auto;letter-spacing:.2em}.lk-grid{align-items:start}.lk .lk-blok>*{flex:none}
 .lk-sel{font:inherit;font-size:var(--fs-1);padding:.5rem .7rem;border:2px solid var(--line);border-radius:.8rem;background:var(--surface);color:var(--ink);max-width:100%}
 .lk-meld{margin:0;font-weight:700;min-height:1.4em}
-.spk{border:0;background:none;padding:.1rem .3rem;font-size:1.1em;line-height:1;cursor:pointer;vertical-align:middle;border-radius:.4rem}
+.spk{position:relative;border:0;background:none;padding:.1rem .3rem;font-size:1.1em;line-height:1;cursor:pointer;vertical-align:middle;border-radius:.4rem}
+/* Groter tikvlak voor het voorleesknopje, zonder dat de regel hoger wordt. */
+.spk::after{content:"";position:absolute;inset:-.6rem -.45rem}
 .spk:hover{background:var(--river-pale)}
 .count .spk{margin-right:.5rem}
 .wl-w .spk{font-size:.9em;margin-right:.2rem}
@@ -361,6 +363,10 @@ body[data-deep] .start .link{color:var(--on-band)}
 }
 /* Vanaf iPad liggend staan aantal en oefentijd rechts op dezelfde regel als de titel. */
 @media (min-aspect-ratio:5/4){ .top-info{flex:1 1 0;justify-content:flex-end} .modes{max-height:24rem} .themes-few{grid-template-columns:repeat(auto-fit,minmax(18rem,1fr))} .start-big{font-size:clamp(2.8rem,10vw,5.6rem)} }
+/* Staand scherm (iPad staand, iPad mini): toets over de hele breedte, race en klassenquiz naast elkaar. */
+@media (max-aspect-ratio:5/4){ .duos.duos3{grid-template-columns:repeat(2,minmax(0,1fr))} .duos.duos3>:first-child{grid-column:1 / -1} }
+/* Kleine telefoon: bij 'Volledig scherm' alleen het icoon (de tekst blijft voor de schermlezer). */
+@media (max-width:400px){ .start-bar .fs-btn{padding:.3rem .65rem} .start-bar .fs-btn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap} }
 /* Smalle schermen (telefoon): alles onder elkaar. */
 @media (max-width:520px) and (max-aspect-ratio:3/4){
   .top-info{flex-wrap:wrap}
